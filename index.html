@@ -1,49 +1,338 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Subscriptions - Price List</title>
+    <title>Cozu Store - Daftar Harga Akun Premium Murah & Bergaransi</title>
+    <meta name="description" content="Penyedia akun premium Netflix, Canva, Bstation, CapCut, dan aplikasi lainnya dengan harga termurah, proses kilat, dan garansi full.">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="text-gray-900">
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
 
-    <!-- Header Section -->
-    <header class="bg-white border-b border-gray-200 py-8 px-4 text-center">
-        <h1 class="text-3xl md:text-4xl font-bold text-blue-900 mb-2">Cozu Store</h1>
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Daftar Harga Langganan</h1>
-        <p class="text-gray-500 max-w-lg mx-auto">Pilih aplikasi favoritmu dan nikmati fitur premium dengan harga terbaik dan proses cepat.</p>
+    <!-- Header / Hero Section -->
+    <header class="bg-white border-b border-slate-200/80 pt-10 pb-8 px-4 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-3">
+                Cozu Store <span class="text-slate-400 font-light">|</span> <span class="text-brand">Katalog Premium</span>
+            </h1>
+            <p class="text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-4">
+                Nikmati akses aplikasi favorit tanpa batas dengan harga terjangkau, legal, dan dukungan garansi aktivasi terpercaya.
+            </p>
+            
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 mb-6 shadow-sm">
+                <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Proses Cepat & Garansi Penuh</span>
+            </div>
+
+            <!-- Value Props Badges -->
+            <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium text-slate-600">
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-bolt text-amber-500"></i>
+                    <span>Proses 5-15 Menit</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-emerald-500"></i>
+                    <span>Full Garansi</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <i class="fa-solid fa-headset text-indigo-500"></i>
+                    <span>Fast Response Support</span>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-8">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow">
         
-        <!-- App Selection Tabs (Horizontal Scroll on Mobile) -->
-        <div class="flex overflow-x-auto no-scrollbar border-b border-gray-200 mb-8 space-x-8 justify-start md:justify-center">
-            <div id="app-tabs" class="flex space-x-6 pb-2">
-                <!-- Tabs will be generated here -->
+        <!-- Section "Cara Kerja" (How it Works) -->
+        <section class="mb-10 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col items-center card-hover">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-extrabold text-sm mb-3">1</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">Pilih Aplikasi</h4>
+                    <p class="text-xs text-slate-500">Pilih aplikasi dan durasi paket langganan yang kamu butuhkan.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col items-center card-hover">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-extrabold text-sm mb-3">2</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">Pesan via WhatsApp</h4>
+                    <p class="text-xs text-slate-500">Klik "Beli Sekarang", kirim pesan otomatis & lakukan pembayaran.</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col items-center card-hover">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-extrabold text-sm mb-3">3</div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">Akun Langsung Aktif</h4>
+                    <p class="text-xs text-slate-500">Akun dikirim dalam 5-15 menit dengan garansi penuh.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Filter Bar -->
+        <div class="max-w-md mx-auto mb-6">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                </div>
+                <input type="text" 
+                       id="app-search" 
+                       placeholder="Cari aplikasi (misal: Netflix, Canva, CapCut...)" 
+                       class="w-full pl-10 pr-10 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent transition-all shadow-sm">
+                <button id="clear-search" class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Sticky App Selection Tabs -->
+        <div class="sticky-tabs-container py-2 mb-8 border-b border-slate-200">
+            <div class="flex overflow-x-auto no-scrollbar justify-start md:justify-center">
+                <div id="app-tabs" class="flex space-x-3 sm:space-x-6 pb-1">
+                    <!-- Tabs will be rendered here via JS -->
+                </div>
             </div>
         </div>
 
         <!-- Pricing Cards Container -->
-        <div id="pricing-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Cards will be generated here -->
+        <div id="pricing-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <!-- Cards will be rendered here via JS -->
         </div>
 
-        <!-- Contact Section -->
-        <div class="mt-20 text-center bg-indigo-600 rounded-2xl p-10 text-white shadow-xl">
-            <h2 class="text-2xl font-bold mb-4">Butuh Aplikasi Lain?</h2>
-            <p class="mb-6 opacity-90 text-lg">Hubungi admin untuk request aplikasi</p>
-            <a href="https://wa.me/6287862481038" class="bg-white text-indigo-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors inline-block">
-                <i class="fab fa-whatsapp mr-2"></i> Chat WhatsApp Sekarang
-            </a>
+        <!-- Empty State Container (Hidden by default) -->
+        <div id="empty-state" class="hidden text-center py-16">
+            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                <i class="fa-solid fa-box-open text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 mb-1">Aplikasi Tidak Ditemukan</h3>
+            <p class="text-slate-500 text-sm max-w-sm mx-auto mb-5">Aplikasi yang kamu cari belum tersedia di katalog atau kata kunci salah.</p>
+            <button onclick="resetSearch()" class="text-xs font-semibold px-4 py-2 bg-slate-200 hover:bg-slate-300 rounded-lg text-slate-700 transition">
+                Reset Pencarian
+            </button>
+        </div>
+
+        <!-- Testimonials / Social Proof Section (Carousel) -->
+        <section class="mt-20 pt-10 border-t border-slate-200/80">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Apa Kata Pelanggan Kami?</h2>
+                    <p class="text-slate-500 text-sm sm:text-base mt-1">Ratusan transaksi sukses dengan pelanggan yang puas menggunakan layanan Cozu Store.</p>
+                </div>
+                <!-- Carousel Navigation Controls -->
+                <div class="flex items-center gap-2">
+                    <button onclick="scrollTestimonials(-1)" 
+                            aria-label="Testimoni Sebelumnya"
+                            class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-100 hover:text-slate-900 active:scale-95 transition-all">
+                        <i class="fa-solid fa-chevron-left text-sm"></i>
+                    </button>
+                    <button onclick="scrollTestimonials(1)" 
+                            aria-label="Testimoni Selanjutnya"
+                            class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-100 hover:text-slate-900 active:scale-95 transition-all">
+                        <i class="fa-solid fa-chevron-right text-sm"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Testimonials Carousel -->
+            <div id="testimonial-carousel" 
+                 class="carousel-container flex gap-6 overflow-x-auto no-scrollbar pb-4 pt-1">
+                
+                <!-- Testimonial 1 -->
+                <div class="carousel-item w-[88%] sm:w-[360px] md:w-[370px] bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between card-hover">
+                    <div>
+                        <div class="flex text-amber-400 text-sm mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4">"pelayannya cepett bgt dan ngga ribet buat loginnya, adminnya fastt resp & ramah harganya terjangkau bgt buat anak koss yang pgen netflix ann🥺🫰🏻🫰🏻🫰🏻❤️❤️luv"</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+                        <div class="w-9 h-9 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center text-xs">
+                            YP
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-900">Yuppy</p>
+                            <p class="text-[11px] text-slate-400 flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500"></i> Pembeli Terverifikasi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="carousel-item w-[88%] sm:w-[360px] md:w-[370px] bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between card-hover">
+                    <div>
+                        <div class="flex text-amber-400 text-sm mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4">"Canva Pro-nya murah banget dan langsung masuk via link tim. Brand kit dan fitur AI semuanya kebuka tanpa kendala. Mantap!"</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+                        <div class="w-9 h-9 rounded-full bg-cyan-100 text-cyan-600 font-bold flex items-center justify-center text-xs">
+                            SN
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-900">Siti Nurhaliza</p>
+                            <p class="text-[11px] text-slate-400 flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500"></i> Pembeli Terverifikasi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="carousel-item w-[88%] sm:w-[360px] md:w-[370px] bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between card-hover">
+                    <div>
+                        <div class="flex text-amber-400 text-sm mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4">"Sempat ada kendala login langsung diganti akun baru sama adminnya dalam hitungan menit. Garansinya beneran terbukti amanah."</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+                        <div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 font-bold flex items-center justify-center text-xs">
+                            BP
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-900">Bagas Pratama</p>
+                            <p class="text-[11px] text-slate-400 flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500"></i> Pembeli Terverifikasi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 4 -->
+                <div class="carousel-item w-[88%] sm:w-[360px] md:w-[370px] bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between card-hover">
+                    <div>
+                        <div class="flex text-amber-400 text-sm mb-3">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4">"CapCut Pro-nya worth it banget buat editing video konten TikTok tanpa watermark. Proses aktivasi langsung sat-set gak pake lama."</p>
+                    </div>
+                    <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+                        <div class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-xs">
+                            DA
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-900">Dwi Anggraini</p>
+                            <p class="text-[11px] text-slate-400 flex items-center gap-1"><i class="fa-solid fa-circle-check text-emerald-500"></i> Pembeli Terverifikasi</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="mt-20 pt-10 border-t border-slate-200/80">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+                <p class="text-slate-500 text-sm sm:text-base mt-2">Semua informasi penting seputar pemesanan dan garansi akun.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-3.5">
+                <!-- FAQ Item 1 -->
+                <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm transition-all duration-200 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-900 text-sm sm:text-base select-none">
+                        <span>Bagaimana cara memesan & proses transaksinya?</span>
+                        <span class="accordion-icon ml-4 text-slate-400 transition-transform duration-200 group-open:rotate-180">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </span>
+                    </summary>
+                    <div class="mt-3 text-slate-600 text-sm leading-relaxed pt-3 border-t border-slate-100">
+                        Pilih aplikasi dan paket yang kamu inginkan, lalu klik tombol <strong>"Beli Sekarang"</strong>. Kamu akan langsung dialihkan ke WhatsApp Admin dengan format pesanan otomatis. Lakukan pembayaran, dan admin akan segera memproses akunmu dalam 5-15 menit.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 2 -->
+                <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm transition-all duration-200 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-900 text-sm sm:text-base select-none">
+                        <span>Bagaimana kebijakan garansi jika akun bermasalah?</span>
+                        <span class="accordion-icon ml-4 text-slate-400 transition-transform duration-200 group-open:rotate-180">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </span>
+                    </summary>
+                    <div class="mt-3 text-slate-600 text-sm leading-relaxed pt-3 border-t border-slate-100">
+                        Kami memberikan <strong>Full Garansi</strong> selama durasi paket yang kamu beli. Jika terjadi kendala login atau akun tiba-tiba terputus, cukup hubungi WhatsApp Admin dengan menyertakan bukti screenshot, dan kami akan membantu perbaikan atau mengganti dengan akun baru.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 3 -->
+                <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm transition-all duration-200 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-900 text-sm sm:text-base select-none">
+                        <span>Apa perbedaan Sharing Profile dan Semi Private / Private?</span>
+                        <span class="accordion-icon ml-4 text-slate-400 transition-transform duration-200 group-open:rotate-180">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </span>
+                    </summary>
+                    <div class="mt-3 text-slate-600 text-sm leading-relaxed pt-3 border-t border-slate-100">
+                        <strong>Sharing Profile:</strong> Kamu mendapatkan 1 profile khusus untuk 1 device (tidak boleh ganti-ganti device).<br>
+                        <strong>Private / Semi Private:</strong> Lebih fleksibel, batas device lebih leluasa dan minim risiko limit akun.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 4 -->
+                <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm transition-all duration-200 cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-900 text-sm sm:text-base select-none">
+                        <span>Metode pembayaran apa saja yang diterima?</span>
+                        <span class="accordion-icon ml-4 text-slate-400 transition-transform duration-200 group-open:rotate-180">
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </span>
+                    </summary>
+                    <div class="mt-3 text-slate-600 text-sm leading-relaxed pt-3 border-t border-slate-100">
+                        Kami menerima pembayaran via <strong>QRIS (Semua E-Wallet & Mobile Banking)</strong>, DANA, GoPay, OVO, ShopeePay, serta transfer Bank (BCA, Mandiri, BRI, BNI).
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Contact & Request Section -->
+        <div class="mt-16 sm:mt-20 text-center bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+            <div class="relative z-10 max-w-xl mx-auto">
+                <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+                    <i class="fa-brands fa-whatsapp text-2xl text-emerald-400"></i>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">Butuh Aplikasi Lain yang Belum Terdaftar?</h2>
+                <p class="mb-8 text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Kami juga melayani pesanan khusus seperti Spotify, YouTube Premium, Disney+ Hotstar, dan lainnya.
+                </p>
+                <a href="https://wa.me/6287862481038?text=Halo%20Admin%20Cozu%20Store%2C%20saya%20mau%20tanya%2Frequest%20aplikasi%20premium..." 
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3.5 rounded-full font-bold transition-all shadow-lg hover:shadow-emerald-500/25 inline-flex items-center gap-2 text-sm sm:text-base">
+                    <i class="fab fa-whatsapp text-lg"></i>
+                    <span>Chat Admin via WhatsApp</span>
+                </a>
+            </div>
         </div>
     </main>
 
-    <footer class="py-10 text-center text-gray-400 text-sm">
-        &copy; 2026 Cozu Store. All rights reserved.
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-8 px-4 text-center text-slate-500 text-xs sm:text-sm mt-12">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 <strong>Cozu Store</strong>. All rights reserved.</p>
+            <p class="text-xs text-slate-400">Akun Legal & Bergaransi Resmi Pelanggan</p>
+        </div>
     </footer>
+
+    <!-- Floating Scroll to Top Button -->
+    <button id="scroll-to-top" 
+            onclick="scrollToTop()" 
+            aria-label="Kembali ke atas"
+            class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-slate-900 text-white shadow-xl flex items-center justify-center hover:bg-slate-800 active:scale-90 transition-all hidden-btn">
+        <i class="fa-solid fa-arrow-up text-sm"></i>
+    </button>
+
+    <!-- Application Script -->
     <script src="script.js"></script>
 </body>
 </html>
