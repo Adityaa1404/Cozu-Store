@@ -144,3 +144,142 @@ details[open] .accordion-icon {
 .animate-fade-in {
     animation: fadeIn 0.3s ease-out forwards;
 }
+
+/* Cart Drawer Transitions */
+#cart-drawer-backdrop {
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#cart-drawer-panel {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-closed #cart-drawer-backdrop {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.drawer-closed #cart-drawer-panel {
+    transform: translateX(100%);
+}
+
+.drawer-open #cart-drawer-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.drawer-open #cart-drawer-panel {
+    transform: translateX(0);
+}
+
+/* Mobile drawer adaptation (slides up on small screens if desired) */
+@media (max-width: 640px) {
+    .drawer-closed #cart-drawer-panel {
+        transform: translateY(100%);
+    }
+    .drawer-open #cart-drawer-panel {
+        transform: translateY(0);
+    }
+}
+
+/* Badge Counter Pulse & Pop Animation */
+@keyframes badgePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.35); }
+    100% { transform: scale(1); }
+}
+
+.badge-pop {
+    animation: badgePop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Floating Action Buttons */
+#cart-floating-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#cart-floating-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+}
+
+/* Toast Notifications */
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-16px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes toastSlideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.95);
+    }
+}
+
+.toast-in {
+    animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-out {
+    animation: toastSlideOut 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Quantity Stepper Buttons */
+.qty-btn {
+    transition: all 0.15s ease-in-out;
+}
+
+.qty-btn:active {
+    transform: scale(0.9);
+}
+
+/* Category Filter Pills */
+.category-pill {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
+
+.category-pill.active {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.16);
+    border-color: #0f172a !important;
+}
+
+.category-pill.active .pill-count {
+    background-color: rgba(255, 255, 255, 0.22) !important;
+    color: #ffffff !important;
+}
+
+.category-pill:not(.active):hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: translateY(-1.5px);
+}
+
+/* Smooth Grid Transition */
+.grid-fade-enter {
+    animation: gridFade 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes gridFade {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
