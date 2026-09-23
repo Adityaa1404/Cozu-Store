@@ -238,10 +238,6 @@ details[open] .accordion-icon {
     transition: all 0.15s ease-in-out;
 }
 
-.qty-btn:active {
-    transform: scale(0.9);
-}
-
 /* Category Filter Pills */
 .category-pill {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -281,5 +277,56 @@ details[open] .accordion-icon {
         transform: translateY(0);
     }
 }
+
+/* Navigation Styles */
+.nav-link {
+    color: #64748b;
+}
+
+.nav-link:hover {
+    color: #0f172a;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.nav-link.active {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.nav-link.active i {
+    color: #0f172a !important;
+}
+
+.mobile-nav-link {
+    color: #64748b;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-nav-link:hover {
+    color: #0f172a;
+}
+
+.mobile-nav-link.active {
+    color: #0f172a !important;
+    background-color: #f1f5f9;
+    font-weight: 700;
+}
+
+.mobile-nav-link.active i {
+    color: #0f172a !important;
+    transform: scale(1.12);
+}
+
+.mobile-nav-link i {
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+}
+
+/* Scroll margin offset for smooth scroll target */
+.scroll-mt-24 {
+    scroll-margin-top: 5.5rem;
+}
+
+
 
 

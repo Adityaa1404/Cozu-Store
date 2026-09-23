@@ -1447,6 +1447,93 @@ function dismissToast(toastId) {
     }, 250);
 }
 
+/**
+ * Navigation Scroll Spy & Hash Router
+ */
+function initNavbarNavigation() {
+    const sectionIds = ['home', 'layanan', 'testimoni', 'faq'];
+    const desktopNavLinks = document.querySelectorAll('.nav-link[data-nav]');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link[data-nav]');
+
+    function updateActiveNav(activeId) {
+        desktopNavLinks.forEach(link => {
+            if (link.getAttribute('data-nav') === activeId) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        mobileNavLinks.forEach(link => {
+            if (link.getAttribute('data-nav') === activeId) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    function onScroll() {
+        const scrollPosition = window.scrollY + 180;
+        let currentId = 'home';
+
+        for (let i = sectionIds.length - 1; i >= 0; i--) {
+            const el = document.getElementById(sectionIds[i]);
+            if (el && scrollPosition >= el.offsetTop) {
+                currentId = sectionIds[i];
+                break;
+            }
+        }
+
+        updateActiveNav(currentId);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Smooth click handler for all nav links
+    const allLinks = [...desktopNavLinks, ...mobileNavLinks];
+    allLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('data-nav');
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+                e.preventDefault();
+                targetEl.scrollIntoView({ behavior: 'smooth' });
+                updateActiveNav(targetId);
+                if (window.history && window.history.pushState) {
+                    window.history.pushState(null, null, '#' + targetId);
+                }
+            }
+        });
+    });
+}
+
+// Backward compatibility alias
+const switchApp = setApp;
+
+function handleHashRoute() {
+    const rawHash = window.location.hash.replace('#', '').trim();
+    if (!rawHash) return;
+
+    // Check if hash matches an app ID first (e.g. #netflix, #canva)
+    const matchedApp = typeof appsData !== 'undefined' && appsData.find(a => a.id.toLowerCase() === rawHash.toLowerCase());
+    if (matchedApp) {
+        setApp(matchedApp.id, false);
+        const pricingEl = document.getElementById('layanan') || document.getElementById('pricing-container');
+        if (pricingEl) {
+            pricingEl.scrollIntoView({ behavior: 'smooth' });
+        }
+        return;
+    }
+
+    // Check if hash matches a section ID
+    const targetSection = document.getElementById(rawHash);
+    if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
 // Event Listeners for Keyboard & App Initialization
 window.addEventListener('hashchange', () => {
     handleHashRoute();
@@ -1460,9 +1547,17 @@ document.addEventListener('keydown', (e) => {
 
 // App Initialization
 function initCozuStore() {
+    activeCategory = 'all';
+    searchQuery = '';
+    if (Array.isArray(appsData) && appsData.length > 0) {
+        currentApp = appsData[0].id;
+        updateBrandTheme(appsData[0]);
+    }
     renderCategoryPills();
+    updateAppView();
     initSearch();
     initScrollToTop();
+    initNavbarNavigation();
     handleHashRoute();
     CartStore.init();
 }
@@ -1475,5 +1570,6 @@ document.addEventListener('DOMContentLoaded', () => {
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
     initCozuStore();
 }
+
 
 
