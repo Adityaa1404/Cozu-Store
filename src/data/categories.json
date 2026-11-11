@@ -1,0 +1,7 @@
+[
+  { "id": "all", "name": "Semua Aplikasi", "icon": "layers" },
+  { "id": "streaming", "name": "Streaming Video", "icon": "play" },
+  { "id": "design", "name": "Desain & Editing", "icon": "palette" },
+  { "id": "music", "name": "Musik & Audio", "icon": "music" },
+  { "id": "productivity", "name": "AI & Produktivitas", "icon": "sparkles" }
+]

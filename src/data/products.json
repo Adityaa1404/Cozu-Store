@@ -1,0 +1,243 @@
+[
+  {
+    "id": "netflix",
+    "name": "Netflix",
+    "category": "streaming",
+    "popularityScore": 100,
+    "icon": "tv",
+    "tagline": "Streaming film & series Ultra HD 4K tanpa ribet",
+    "plans": [
+      {
+        "name": "Sharing 1 Profile",
+        "bestSeller": false,
+        "durations": {
+          "daily": {
+            "price": "Rp 6.000",
+            "description": "Cocok untuk coba-coba singkat & nobar harian.",
+            "features": [
+              "Ultra HD 4K",
+              "1 User / 1 Profile",
+              "Login 1 Device (Tidak boleh pindah device)",
+              "Less Limit",
+              "Garansi aktivasi"
+            ]
+          },
+          "weekly": {
+            "price": "Rp 16.000",
+            "description": "Marathon series favoritmu tanpa khawatir habis dalam sehari.",
+            "features": [
+              "Ultra HD 4K",
+              "1 User / 1 Profile",
+              "Login 1 Device (Tidak boleh pindah device)",
+              "Less Limit",
+              "Full Garansi",
+              "Durasi 7 Hari"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Sharing 1 Profile",
+        "bestSeller": true,
+        "durations": {
+          "monthly": {
+            "price": "Rp 40.000",
+            "description": "Pilihan paling hemat & populer untuk penggunaan rutin harian.",
+            "features": [
+              "Ultra HD 4K",
+              "1 User / 1 Profile",
+              "Login 1 Device (Tidak boleh pindah device)",
+              "Less Limit",
+              "Full Garansi",
+              "Durasi 25 - 30 Hari"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Semi Private 1 Profile",
+        "bestSeller": false,
+        "durations": {
+          "monthly": {
+            "price": "Rp 45.000",
+            "description": "Akses lebih fleksibel dengan kemampuan login di 2 device sekaligus.",
+            "features": [
+              "Ultra HD 4K",
+              "1 User / 1 Profile",
+              "Bisa Login 2 Device",
+              "Anti On-Hold & Less Limit",
+              "Full Garansi",
+              "Durasi 25 - 30 Hari"
+            ]
+          }
+        }
+      }
+    ],
+    "checkoutFields": [
+      { "key": "netflixPhone", "label": "Nomor Customer", "type": "tel", "required": true },
+      { "key": "netflixDevice", "label": "Device & Merk Lengkap", "type": "text", "required": true },
+      { "key": "netflixLocation", "label": "Lokasi / Kota", "type": "text", "required": true }
+    ]
+  },
+  {
+    "id": "canva",
+    "name": "Canva",
+    "category": "design",
+    "popularityScore": 95,
+    "icon": "palette",
+    "tagline": "Akses 100M+ aset Pro, Magic Studio & Brand Kit",
+    "plans": [
+      {
+        "name": "Canva Pro (Tim)",
+        "bestSeller": false,
+        "durations": {
+          "monthly": {
+            "price": "Rp 4.000",
+            "description": "Paket standar untuk individu dengan akses penuh ke ratusan juta aset Pro.",
+            "features": [
+              "Akses 100M+ Foto & Video Premium",
+              "Magic Studio & AI Tools Lengkap",
+              "Undang & Gabung via Link",
+              "Garansi Durasi Penuh"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Canva Pro Design (Tim)",
+        "bestSeller": true,
+        "durations": {
+          "monthly": {
+            "price": "Rp 5.000",
+            "description": "Akses Pro dengan fitur kontrol desain & brand kit lengkap.",
+            "features": [
+              "Semua Fitur Canva Pro",
+              "Upload Custom Font Sendiri",
+              "Brand Kit & Custom Color Palette",
+              "Magic Switch & Resizer",
+              "Garansi Durasi Penuh"
+            ]
+          }
+        }
+      }
+    ],
+    "checkoutFields": [
+      { "key": "canvaEmail", "label": "Email Canva Anda", "type": "email", "required": true }
+    ]
+  },
+  {
+    "id": "capcut",
+    "name": "CapCut",
+    "category": "design",
+    "popularityScore": 90,
+    "icon": "scissors",
+    "tagline": "Editing video bebas watermark, AI & template Pro",
+    "plans": [
+      {
+        "name": "Sharing 2U (Khusus Android)",
+        "bestSeller": false,
+        "durations": {
+          "weekly": {
+            "price": "Rp 12.000",
+            "description": "Akses semua fitur premium CapCut dengan mudah.",
+            "features": [
+              "Semua Fitur CapCut Pro",
+              "Template Eksklusif",
+              "Bebas Watermark",
+              "Fitur AI Terbaru",
+              "Durasi 7 Hari",
+              "Full Garansi"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Private",
+        "bestSeller": true,
+        "durations": {
+          "weekly": {
+            "price": "Rp 18.000",
+            "description": "Akses semua fitur premium CapCut dengan mudah.",
+            "features": [
+              "Semua Fitur CapCut Pro",
+              "Template Eksklusif",
+              "Bebas Watermark",
+              "Fitur AI Terbaru",
+              "Durasi 7 Hari",
+              "Garansi 6 Hari"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Sharing 2U (Khusus Android)",
+        "bestSeller": false,
+        "durations": {
+          "monthly": {
+            "price": "Rp 25.000",
+            "description": "Akses semua fitur premium CapCut dengan mudah.",
+            "features": [
+              "Semua Fitur CapCut Pro",
+              "Template Eksklusif",
+              "Bebas Watermark",
+              "Fitur AI Terbaru",
+              "Durasi 25-30 Hari",
+              "Full Garansi"
+            ]
+          }
+        }
+      },
+      {
+        "name": "Private",
+        "bestSeller": false,
+        "durations": {
+          "monthly": {
+            "price": "Rp 42.000",
+            "description": "Akses semua fitur premium CapCut dengan mudah.",
+            "features": [
+              "Semua Fitur CapCut Pro",
+              "Template Eksklusif",
+              "Bebas Watermark",
+              "Fitur AI Terbaru",
+              "Durasi 25-30 Hari",
+              "Full Garansi"
+            ]
+          }
+        }
+      }
+    ],
+    "checkoutFields": [
+      { "key": "capcutEmail", "label": "Email CapCut Anda", "type": "email", "required": true }
+    ]
+  },
+  {
+    "id": "bstation",
+    "name": "Bstation",
+    "category": "streaming",
+    "popularityScore": 85,
+    "icon": "clapperboard",
+    "tagline": "Nonton anime & drama Asia bebas iklan Full HD 1080p",
+    "plans": [
+      {
+        "name": "Sharing 6 Members",
+        "bestSeller": true,
+        "durations": {
+          "monthly": {
+            "price": "Rp 8.000",
+            "description": "Nonton anime & drama favorit bebas iklan dengan resolusi tertinggi.",
+            "features": [
+              "Bebas Iklan Selamanya",
+              "Akses Konten VIP & Premiere",
+              "Login 1 Device",
+              "Streaming Full HD 1080p",
+              "Garansi Full 30 Hari"
+            ]
+          }
+        }
+      }
+    ],
+    "checkoutFields": [
+      { "key": "bstationEmail", "label": "Email Bstation Anda", "type": "email", "required": true }
+    ]
+  }
+]

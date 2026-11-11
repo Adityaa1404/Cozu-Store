@@ -1,0 +1,22 @@
+{
+  "name": "cozu-store",
+  "version": "2.0.0",
+  "description": "Cozu Store - Indonesian Digital Premium Account Reseller",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node test_cart.js"
+  },
+  "dependencies": {
+    "lucide": "^0.511.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "@tailwindcss/postcss": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "autoprefixer": "^10.4.0",
+    "terser": "^5.36.0"
+  }
+}
