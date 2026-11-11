@@ -4,6 +4,74 @@ export const durationLabels = {
   monthly: { label: 'Bulanan', unit: 'bulan' }
 };
 
+export const APP_THEMES = {
+  netflix: {
+    pastelSurface: 'bg-[#FBE3E4]/75 border-[#F3C2C5]',
+    pastelOrb: 'bg-[#FBE3E4] text-[#E11D48]',
+    badgeClass: 'bg-[#FBE3E4] text-[#9F1239] border-[#F3C2C5]',
+    heroGradient: 'from-[#FBE3E4] via-[#FCEBED] to-[#FFF6F6]',
+    orbShadow: 'drop-shadow(0 12px 20px rgba(225, 29, 72, 0.24))',
+    accentHex: '#E11D48',
+    surfaceHex: '#FBE3E4',
+    urlSlug: 'cozu.store/netflix',
+    shortLabel: 'Netflix 4K',
+    chips: ['Ultra HD 4K', 'Less Limit', 'Full Garansi']
+  },
+  canva: {
+    pastelSurface: 'bg-[#D5F5F6]/75 border-[#9FE4E6]',
+    pastelOrb: 'bg-[#D5F5F6] text-[#0891B2]',
+    badgeClass: 'bg-[#D5F5F6] text-[#155E75] border-[#9FE4E6]',
+    heroGradient: 'from-[#D5F5F6] via-[#E6FAFA] to-[#F3FEFE]',
+    orbShadow: 'drop-shadow(0 12px 20px rgba(8, 145, 178, 0.22))',
+    accentHex: '#0891B2',
+    surfaceHex: '#D5F5F6',
+    urlSlug: 'cozu.store/canva',
+    shortLabel: 'Canva Pro',
+    chips: ['100M+ Aset Pro', 'Brand Kit', 'Magic Studio']
+  },
+  capcut: {
+    pastelSurface: 'bg-[#EFF7D3]/80 border-[#D1E58F]',
+    pastelOrb: 'bg-[#EFF7D3] text-[#4D7C0F]',
+    badgeClass: 'bg-[#EFF7D3] text-[#3F6212] border-[#D1E58F]',
+    heroGradient: 'from-[#EFF7D3] via-[#F6FBE5] to-[#FBFEF4]',
+    orbShadow: 'drop-shadow(0 12px 20px rgba(77, 124, 15, 0.20))',
+    accentHex: '#4D7C0F',
+    surfaceHex: '#EFF7D3',
+    urlSlug: 'cozu.store/capcut',
+    shortLabel: 'CapCut Pro',
+    chips: ['Bebas Watermark', 'Fitur AI Pro', 'Full Garansi']
+  },
+  bstation: {
+    pastelSurface: 'bg-[#F3E5F5]/75 border-[#DFC0E3]',
+    pastelOrb: 'bg-[#F3E5F5] text-[#7C3AED]',
+    badgeClass: 'bg-[#F3E5F5] text-[#5B21B6] border-[#DFC0E3]',
+    heroGradient: 'from-[#F3E5F5] via-[#F8EFFA] to-[#FDF8FE]',
+    orbShadow: 'drop-shadow(0 12px 20px rgba(124, 58, 237, 0.22))',
+    accentHex: '#7C3AED',
+    surfaceHex: '#F3E5F5',
+    urlSlug: 'cozu.store/bstation',
+    shortLabel: 'Bstation VIP',
+    chips: ['Bebas Iklan', 'Full HD 1080p', 'Full Garansi']
+  }
+};
+
+const DEFAULT_THEME = {
+  pastelSurface: 'bg-brand-50/75 border-brand-200',
+  pastelOrb: 'bg-brand-50 text-brand-700',
+  badgeClass: 'bg-brand-50 text-brand-700 border-brand-200',
+  heroGradient: 'from-brand-50 via-white to-stone-50',
+  orbShadow: 'drop-shadow(0 12px 20px rgba(13, 148, 136, 0.2))',
+  accentHex: '#0D9488',
+  surfaceHex: '#F0FDFA',
+  urlSlug: 'cozu.store',
+  shortLabel: 'Akun Premium',
+  chips: ['Full Garansi', 'Proses Kilat', 'QRIS Ready']
+};
+
+export function getAppTheme(appId) {
+  return APP_THEMES[appId] || DEFAULT_THEME;
+}
+
 export function getIndonesianDate(date = new Date()) {
   const months = [
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
@@ -33,7 +101,7 @@ export function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-function getStartingPrice(app) {
+export function getStartingPrice(app) {
   if (!app || !Array.isArray(app.plans)) return 0;
   let min = Infinity;
   app.plans.forEach((plan) => {
@@ -74,6 +142,7 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
 
   container.innerHTML = apps
     .map((app) => {
+      const theme = getAppTheme(app.id);
       const startPrice = getStartingPrice(app);
       const totalVariants = countPlanCards(app);
       const gridColsClass =
@@ -90,53 +159,55 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
             const durMeta = durationLabels[durationKey] || { label: durationKey, unit: durationKey };
 
             return `
-              <div class="rounded-xl p-5 flex flex-col justify-between transition-all duration-200 ${
-                isBest
-                  ? 'bg-brand-50/50 ring-2 ring-brand-600'
-                  : 'bg-stone-50/70 border border-stone-200 hover:border-brand-300'
-              }">
-                <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 text-xs font-medium">
+              <div
+                data-catalog-card
+                data-motion-hover
+                class="h-full rounded-[20px] p-5 flex flex-col justify-between border transition-[box-shadow,border-color] duration-200 ${theme.pastelSurface} ${
+                  isBest ? 'ring-2 ring-brand-600/90 shadow-md' : 'hover:shadow-sm'
+                }"
+              >
+                <div class="flex flex-col flex-grow">
+                  <div class="flex items-center justify-between gap-2 mb-3.5">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/95 border border-stone-900/15 text-stone-900 text-xs font-semibold shadow-2xs shrink-0 whitespace-nowrap">
                       ${escapeHtml(durMeta.label)}
                     </span>
                     ${
                       isBest
-                        ? `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-400 text-stone-950 text-xs font-bold">
-                             <i data-lucide="flame" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                        ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-stone-950 border border-[#E05D44]/40 text-xs font-bold shadow-2xs shrink-0 whitespace-nowrap">
+                             <span class="w-2 h-2 rounded-full bg-[#E05D44]" aria-hidden="true"></span>
                              Paling Laris
                            </span>`
                         : ''
                     }
                   </div>
 
-                  <h4 class="font-display text-lg font-semibold text-stone-900 leading-snug">
+                  <h4 class="font-display text-lg font-bold text-stone-950 leading-snug">
                     ${escapeHtml(plan.name)}
                   </h4>
 
                   <div
-                    class="mt-3 pb-3.5 border-b border-stone-200/80 flex items-baseline gap-1"
+                    class="mt-2.5 pb-3.5 border-b border-stone-900/10 flex items-baseline gap-1"
                     aria-label="Harga: ${escapeHtml(durationData.price)} per ${escapeHtml(durMeta.unit)}"
                   >
                     <span class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-stone-950">
                       ${escapeHtml(durationData.price)}
                     </span>
-                    <span class="text-xs sm:text-sm text-stone-500 font-medium">
+                    <span class="text-xs sm:text-sm text-stone-700 font-semibold">
                       /${escapeHtml(durMeta.unit)}
                     </span>
                   </div>
 
                   ${
                     durationData.description
-                      ? `<p class="mt-3 text-sm text-stone-600 leading-relaxed min-h-[42px]">${escapeHtml(durationData.description)}</p>`
+                      ? `<p class="mt-3 text-sm text-stone-800 leading-relaxed min-h-[64px]">${escapeHtml(durationData.description)}</p>`
                       : ''
                   }
 
-                  <ul class="mt-4 mb-6 space-y-2.5">
+                  <ul class="mt-4 mb-6 space-y-2 rounded-2xl bg-white/75 border border-white/85 p-3.5 flex-1">
                     ${(durationData.features || [])
                       .map(
                         (feat) => `
-                          <li class="flex items-start gap-2 text-sm text-stone-700">
+                          <li class="flex items-start gap-2 text-xs sm:text-sm text-stone-800">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-700 shrink-0 mt-0.5" aria-hidden="true"></i>
                             <span class="leading-snug">${escapeHtml(feat)}</span>
                           </li>
@@ -146,32 +217,35 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
                   </ul>
                 </div>
 
-                <div class="flex flex-col gap-2 pt-2">
+                <div class="flex items-center gap-2.5 pt-1">
                   <button
                     type="button"
-                    data-catalog-action="direct-buy"
+                    data-catalog-action="buy"
+                    data-motion-press
                     data-app-id="${escapeHtml(app.id)}"
                     data-plan-name="${escapeHtml(plan.name)}"
                     data-price="${escapeHtml(durationData.price)}"
                     data-duration-key="${escapeHtml(durationKey)}"
                     data-duration-label="${escapeHtml(durMeta.label)}"
-                    class="w-full h-11 px-4 rounded-lg bg-brand-600 hover:bg-brand-700 active:scale-[0.98] text-white font-medium text-sm transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
+                    class="flex-1 h-11 px-4 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-1.5 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
                   >
-                    <span>Pesan Sekarang</span>
+                    <span>Beli Langsung</span>
                     <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                   </button>
                   <button
                     type="button"
-                    data-catalog-action="add-to-cart"
+                    data-catalog-action="add"
+                    data-motion-press
                     data-app-id="${escapeHtml(app.id)}"
                     data-plan-name="${escapeHtml(plan.name)}"
                     data-price="${escapeHtml(durationData.price)}"
                     data-duration-key="${escapeHtml(durationKey)}"
                     data-duration-label="${escapeHtml(durMeta.label)}"
-                    class="w-full h-11 px-4 rounded-lg bg-white hover:bg-brand-50 text-brand-700 border border-brand-200 hover:border-brand-300 active:scale-[0.98] font-medium text-sm transition-all flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
+                    aria-label="Tambah ${escapeHtml(app.name)} ${escapeHtml(plan.name)} (${escapeHtml(durMeta.label)}) ke keranjang"
+                    title="+ Keranjang"
+                    class="w-11 h-11 rounded-full bg-white hover:bg-brand-50 text-brand-700 border border-stone-200/90 hover:border-brand-300 shadow-xs transition-colors flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
                   >
-                    <i data-lucide="shopping-cart" class="w-4 h-4" aria-hidden="true"></i>
-                    <span>+ Keranjang</span>
+                    <i data-lucide="plus" class="w-5 h-5" aria-hidden="true"></i>
                   </button>
                 </div>
               </div>
@@ -184,25 +258,29 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
         <article
           id="app-${escapeHtml(app.id)}"
           aria-label="Produk: ${escapeHtml(app.name)}"
-          class="bg-white rounded-2xl border border-stone-200 p-5 sm:p-7 scroll-mt-24 transition-shadow"
+          class="bg-white rounded-[22px] border border-stone-200/80 shadow-soft-card p-5 sm:p-7 scroll-mt-28 transition-shadow"
         >
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-stone-100">
-            <div class="flex items-start sm:items-center gap-3.5">
-              <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center shrink-0" aria-hidden="true">
+            <div class="flex items-start sm:items-center gap-4">
+              <div
+                class="w-13 h-13 rounded-2xl ${theme.pastelOrb} ring-1 ring-white flex items-center justify-center shrink-0"
+                style="filter: ${theme.orbShadow}"
+                aria-hidden="true"
+              >
                 <i data-lucide="${escapeHtml(app.icon || 'layers')}" class="w-6 h-6"></i>
               </div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="font-display text-xl sm:text-2xl font-bold text-stone-900">
+                  <h3 class="font-display text-xl sm:text-2xl font-extrabold tracking-tight text-stone-950">
                     ${escapeHtml(app.name)}
                   </h3>
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-medium">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full border text-xs font-semibold ${theme.badgeClass}">
                     ${escapeHtml(categoryLabels[app.category] || app.category)}
                   </span>
                 </div>
                 ${
                   app.tagline
-                    ? `<p class="text-sm text-stone-500 mt-0.5">${escapeHtml(app.tagline)}</p>`
+                    ? `<p class="text-sm text-stone-700 mt-0.5">${escapeHtml(app.tagline)}</p>`
                     : ''
                 }
               </div>
@@ -212,7 +290,7 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
               <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-stone-100 text-stone-700 text-xs font-medium">
                 ${totalVariants} Pilihan Paket
               </span>
-              <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold">
+              <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200/70 text-xs font-bold">
                 Mulai ${escapeHtml(formatRupiah(startPrice))}
               </span>
             </div>
@@ -238,9 +316,9 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
         durationKey: btn.getAttribute('data-duration-key'),
         durationLabel: btn.getAttribute('data-duration-label')
       };
-      if (action === 'add-to-cart') {
+      if (action === 'add-to-cart' || action === 'add') {
         onAddToCart?.(payload);
-      } else if (action === 'direct-buy') {
+      } else if (action === 'direct-buy' || action === 'buy') {
         onDirectBuy?.(payload);
       }
     });
@@ -248,6 +326,7 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
   }
 
   document.dispatchEvent(new CustomEvent('cozu:icons', { detail: { root: container } }));
+  document.dispatchEvent(new CustomEvent('cozu:catalog-rendered', { detail: { root: container } }));
 }
 
 export function highlightAppSection(appId) {

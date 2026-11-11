@@ -24,7 +24,7 @@ export function initTestimonials(testimonials) {
           .join('');
 
         return `
-          <article class="carousel-item w-[85%] sm:w-[350px] md:w-[370px] bg-white rounded-2xl border border-stone-200 p-6 flex flex-col justify-between">
+          <article data-motion-hover class="carousel-item w-[85%] sm:w-[350px] md:w-[370px] bg-white rounded-[22px] border border-stone-200/80 shadow-soft-card p-6 flex flex-col justify-between">
             <div>
               <div class="flex items-center gap-1 mb-3" aria-label="Rating ${ratingCount} dari 5 bintang">
                 ${starsHtml}

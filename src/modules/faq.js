@@ -23,7 +23,14 @@ export function initFaq() {
       btn.setAttribute('aria-expanded', String(!isExpanded));
       const icon = btn.querySelector('[data-faq-icon]');
       if (icon) icon.classList.toggle('rotate-180', !isExpanded);
-      if (panel) panel.classList.toggle('hidden', isExpanded);
+      if (panel) {
+        panel.classList.toggle('hidden', isExpanded);
+        document.dispatchEvent(
+          new CustomEvent('cozu:faq-toggle', {
+            detail: { panel, expanded: !isExpanded }
+          })
+        );
+      }
     });
   });
 }

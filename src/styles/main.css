@@ -5,8 +5,19 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Inter', system-ui, sans-serif;
-    background-color: #FAFAF9;
+    background-color: #F6F3EC;
     color: #1C1917;
+  }
+
+  body {
+    background-color: #F6F3EC;
+    background-image:
+      radial-gradient(at 10% 6%, rgba(213, 245, 246, 0.55) 0px, transparent 42%),
+      radial-gradient(at 90% 10%, rgba(251, 227, 228, 0.45) 0px, transparent 40%),
+      radial-gradient(at 78% 72%, rgba(239, 247, 211, 0.35) 0px, transparent 45%),
+      linear-gradient(to right, rgba(28, 25, 23, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(28, 25, 23, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -14,11 +25,32 @@
   }
 }
 
-/* Glassmorphism surfaces (design.md) */
+/* Fixed GPU scroll progress bar */
+#top-scroll-progress {
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+/* Soft diffuse shadow & glassmorphism surfaces */
+.shadow-soft-card {
+  box-shadow: 0 20px 50px -12px rgba(40, 30, 20, 0.09);
+}
+
 .glass-surface {
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+}
+
+.header-top-mask {
+  background: linear-gradient(
+    to bottom,
+    #F6F3EC 0%,
+    #F6F3EC 58%,
+    rgba(246, 243, 236, 0.85) 82%,
+    rgba(246, 243, 236, 0) 100%
+  );
 }
 
 /* Hide scrollbars cleanly */
@@ -40,9 +72,9 @@
   flex-shrink: 0;
 }
 
-/* Scroll margin for sticky navbar */
+/* Scroll margin for floating sticky navbar */
 .scroll-mt-24 {
-  scroll-margin-top: 5.5rem;
+  scroll-margin-top: 6rem;
 }
 
 /* Navigation active states */
@@ -57,16 +89,30 @@
 .mobile-nav-link.active {
   color: #0F766E;
 }
+.mobile-nav-link.active .mobile-nav-icon {
+  background-color: #0D9488;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px -4px rgba(13, 148, 136, 0.45);
+}
 
 /* Category filter pills */
 .category-pill.active {
   background-color: #0F766E;
   color: #FFFFFF;
   border-color: #0F766E;
+  box-shadow: 0 10px 24px -8px rgba(15, 118, 110, 0.45);
 }
 .category-pill.active .pill-count {
   background-color: rgba(255, 255, 255, 0.22);
   color: #FFFFFF;
+}
+
+/* Hero deck progress fill */
+.deck-segment-fill {
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
 }
 
 /* Scroll to top visibility */
@@ -85,7 +131,7 @@
   pointer-events: none;
 }
 
-/* Cart drawer slide transitions */
+/* Cart drawer slide transitions (GPU transform + opacity only) */
 #cart-drawer-backdrop {
   transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -116,7 +162,7 @@
   }
 }
 
-/* Badge counter spring pop */
+/* Badge counter spring pop fallback */
 @keyframes badgePop {
   0% { transform: scale(1); }
   50% { transform: scale(1.25); }
@@ -156,20 +202,14 @@
 
 /* App highlight pulse on hash jump */
 @keyframes targetFlash {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
-  40% { box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.25); }
+  0%, 100% { box-shadow: 0 20px 50px -12px rgba(40, 30, 20, 0.09), 0 0 0 0 rgba(13, 148, 136, 0); }
+  40% { box-shadow: 0 20px 50px -12px rgba(40, 30, 20, 0.09), 0 0 0 4px rgba(13, 148, 136, 0.25); }
 }
 .target-highlight {
   animation: targetFlash 1.2s ease-out;
 }
 
-/* Comfortable touch targets for footer link lists (WCAG 2.5.8) */
-footer li a {
-  display: inline-block;
-  padding-block: 0.25rem;
-}
-
-/* Reduced motion support (design.md) */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

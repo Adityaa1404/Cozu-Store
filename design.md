@@ -868,4 +868,49 @@ module.exports = {
 
 ---
 
-*Generated for Cozu Store redesign. Spec version: alpha. Format: Google DESIGN.md (Apache-2.0).*
+## v3 ATM Addendum — Warm Neo-Editorial × Soft-UI Pastel Motion Upgrade
+
+> Incorporates the Soft-UI pastel commerce card system, neo-editorial warm cream canvas (`#F6F3EC`), `Instrument Serif` italic emphasis, 3D staggered hero showcase deck with floating dark-matte CLI widget, floating capsule navbar (`navbar.gallery`), editorial CTA (`cta.gallery`), mega-footer (`footer.design`), and GPU-composited `motion` v14 spring physics.
+
+### Extended Palette Tokens
+- `surface-page-warm`: `#F6F3EC` (Warm Ecru Cream canvas)
+- `pastel-netflix`: `#FBE3E4` (Soft Rose tint) / Accent `#E11D48`
+- `pastel-canva`: `#D5F5F6` (Soft Cyan tint) / Accent `#0891B2`
+- `pastel-capcut`: `#EFF7D3` (Soft Lime tint) / Accent `#4D7C0F`
+- `pastel-bstation`: `#F3E5F5` (Soft Lavender tint) / Accent `#7C3AED`
+- `editorial-coral`: `#E05D44` (Hot promo / Paling Laris spark)
+- `matte-dark`: `#141416` (Floating hero CLI preview widget & high-contrast CTA card)
+
+### Typography Addition
+- `font-editorial`: `"Instrument Serif", Georgia, serif` (italic display emphasis words)
+
+### Motion Tokens (`src/modules/motion.js` via `motion` v14)
+```js
+export const motionTokens = {
+  duration: { instant: 0.08, fast: 0.18, normal: 0.35, slow: 0.6, crawl: 0.9 },
+  easing: {
+    smooth: [0.22, 1, 0.36, 1],
+    sharp: [0.4, 0, 0.2, 1],
+    bounce: [0.34, 1.56, 0.64, 1],
+  },
+  distance: { xs: 4, sm: 8, md: 16, lg: 24, xl: 48 },
+  scale: { subtle: 0.98, press: 0.95, pop: 1.04 },
+};
+
+export const springs = {
+  snappy: { type: 'spring', stiffness: 300, damping: 28 },
+  gentle: { type: 'spring', stiffness: 120, damping: 14 },
+  bouncy: { type: 'spring', stiffness: 400, damping: 12 },
+  instant: { type: 'spring', stiffness: 600, damping: 35 },
+  release: { type: 'spring', stiffness: 200, damping: 20 },
+};
+```
+**Strict Motion Guardrails**:
+1. Animate ONLY GPU-composited properties (`transform`, `opacity`). Never animate `width`, `height`, `top`, `left`, `margin`, `padding`.
+2. Respect `prefers-reduced-motion: reduce` and low-end hardware cores (`<= 2`) — collapse safely to instant/static state.
+3. Viewport `inView` reveals fire **once only** (`unobserve` immediately after trigger).
+4. Stagger intervals stay within `50ms–80ms` (`stagger(0.06)`).
+
+---
+
+*Generated for Cozu Store redesign. Spec version: alpha + v3 ATM. Format: Google DESIGN.md (Apache-2.0).*

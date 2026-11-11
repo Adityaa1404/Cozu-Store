@@ -91,10 +91,10 @@ export function renderCategoryPills(container, categories, products, onSelect) {
           type="button"
           data-category-id="${escapeHtml(c.id)}"
           aria-pressed="${isActive ? 'true' : 'false'}"
-          class="category-pill h-11 inline-flex items-center gap-2 px-4 rounded-full text-xs sm:text-sm font-medium border transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 ${
+          class="category-pill h-11 inline-flex items-center gap-2 px-4 rounded-full text-xs sm:text-sm font-semibold border transition-all whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 ${
             isActive
-              ? 'active bg-brand-700 text-white border-brand-700'
-              : 'bg-white text-stone-700 border-stone-200 hover:border-brand-300 hover:text-brand-700'
+              ? 'active bg-brand-700 text-white border-brand-700 shadow-md'
+              : 'bg-white text-stone-700 border-stone-200/90 hover:border-brand-300 hover:text-brand-700'
           }"
         >
           <i data-lucide="${escapeHtml(c.icon || 'layers')}" class="w-4 h-4" aria-hidden="true"></i>

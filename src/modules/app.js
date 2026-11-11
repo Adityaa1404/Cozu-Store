@@ -4,6 +4,7 @@ import {
   AlertTriangle,
   ArrowRight,
   ArrowUp,
+  ArrowUpRight,
   Check,
   CheckCircle2,
   ChevronDown,
@@ -54,11 +55,13 @@ import { initCart, addToCart, directBuy } from './cart.js';
 import { initNavigation } from './navigation.js';
 import { initTestimonials } from './testimonials.js';
 import { initFaq } from './faq.js';
+import { initMotionSystem } from './motion.js';
 
 const USED_ICONS = {
   AlertTriangle,
   ArrowRight,
   ArrowUp,
+  ArrowUpRight,
   Check,
   CheckCircle2,
   ChevronDown,
@@ -155,6 +158,7 @@ export function initCozuStore() {
   initFaq();
   initNavigation(productsData, resetAll);
   hydrateIcons(document);
+  initMotionSystem(productsData, { onAddToCart: addToCart });
 }
 
 if (document.readyState === 'loading') {

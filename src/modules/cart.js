@@ -187,6 +187,8 @@ function syncStaticBuyerInputs() {
 }
 
 export function triggerBadgeAnimation() {
+  document.dispatchEvent(new CustomEvent('cozu:cart-pop'));
+  if (typeof window !== 'undefined' && window.__cozuMotionActive) return;
   ['cart-count-badge', 'header-cart-badge', 'mobile-cart-badge'].forEach((id) => {
     const badge = document.getElementById(id);
     if (badge) {
