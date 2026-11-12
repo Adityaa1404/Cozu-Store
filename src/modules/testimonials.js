@@ -19,30 +19,30 @@ export function initTestimonials(testimonials) {
         const starsHtml = Array.from({ length: ratingCount })
           .map(
             () =>
-              `<svg class="w-4 h-4 fill-amber-400 text-amber-400" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
+              `<svg class="h-3.5 w-3.5 fill-accent text-accent" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
           )
           .join('');
 
         return `
-          <article data-motion-hover class="carousel-item w-[85%] sm:w-[350px] md:w-[370px] bg-white rounded-[22px] border border-stone-200/80 shadow-soft-card p-6 flex flex-col justify-between">
+          <article data-motion-hover class="carousel-item flex w-[85%] flex-col justify-between rounded-xl border border-line bg-surface p-6 sm:w-[340px]">
             <div>
-              <div class="flex items-center gap-1 mb-3" aria-label="Rating ${ratingCount} dari 5 bintang">
+              <div class="mb-3 flex items-center gap-1" aria-label="Rating ${ratingCount} dari 5 bintang">
                 ${starsHtml}
               </div>
-              <p class="text-sm text-stone-700 leading-relaxed mb-5">
+              <p class="mb-5 text-sm leading-relaxed text-ink-secondary">
                 "${escapeHtml(item.text)}"
               </p>
             </div>
-            <div class="flex items-center gap-3 pt-4 border-t border-stone-100">
-              <div class="w-10 h-10 rounded-full bg-brand-50 text-brand-700 font-display font-bold text-xs flex items-center justify-center shrink-0">
+            <div class="flex items-center gap-3 border-t border-line pt-4">
+              <div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent-subtle text-xs font-semibold text-ink">
                 ${escapeHtml(item.initials)}
               </div>
               <div class="min-w-0">
-                <p class="text-sm font-semibold text-stone-900 truncate">${escapeHtml(item.name)}</p>
-                <p class="text-xs text-stone-500 flex items-center gap-1 truncate">
+                <p class="truncate text-sm font-semibold text-ink">${escapeHtml(item.name)}</p>
+                <p class="flex items-center gap-1 truncate text-xs text-ink-faint">
                   ${
                     item.verified
-                      ? `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-brand-700 shrink-0" aria-hidden="true"></i>`
+                      ? `<i data-lucide="check-circle-2" class="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden="true"></i>`
                       : ''
                   }
                   <span class="truncate">${escapeHtml(item.role || 'Pembeli Terverifikasi')}</span>

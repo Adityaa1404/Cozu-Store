@@ -33,49 +33,49 @@ export function showToast(title, message, type = 'success') {
 
   const variants = {
     success: {
-      box: 'bg-brand-700 text-white border-brand-800',
+      box: 'bg-surface text-ink border-accent/50',
       icon: 'check-circle-2',
-      subtext: 'text-teal-50',
-      close: 'text-teal-100 hover:text-white'
+      subtext: 'text-ink-secondary',
+      close: 'text-ink-faint hover:text-ink'
     },
     error: {
-      box: 'bg-red-600 text-white border-red-700',
+      box: 'bg-surface text-ink border-error/60',
       icon: 'alert-triangle',
-      subtext: 'text-red-50',
-      close: 'text-red-100 hover:text-white'
+      subtext: 'text-ink-secondary',
+      close: 'text-ink-faint hover:text-ink'
     },
     warning: {
-      box: 'bg-amber-500 text-stone-950 border-amber-600',
+      box: 'bg-surface text-ink border-line-strong',
       icon: 'alert-triangle',
-      subtext: 'text-stone-900',
-      close: 'text-stone-900 hover:text-stone-950'
+      subtext: 'text-ink-secondary',
+      close: 'text-ink-faint hover:text-ink'
     },
     info: {
-      box: 'bg-accent-600 text-white border-accent-700',
+      box: 'bg-surface text-ink border-line',
       icon: 'info',
-      subtext: 'text-indigo-50',
-      close: 'text-indigo-100 hover:text-white'
+      subtext: 'text-ink-secondary',
+      close: 'text-ink-faint hover:text-ink'
     }
   };
 
   const style = variants[type] || variants.success;
 
-  toast.className = `toast-in pointer-events-auto min-w-[280px] sm:min-w-[320px] max-w-sm rounded-xl border p-4 shadow-xl flex items-start gap-3 ${style.box}`;
+  toast.className = `toast-in pointer-events-auto flex max-w-sm min-w-[280px] items-start gap-3 rounded-xl border p-4 shadow-card sm:min-w-[320px] ${style.box}`;
   toast.innerHTML = `
-    <span class="mt-0.5 shrink-0" aria-hidden="true">
-      <i data-lucide="${style.icon}" class="w-5 h-5"></i>
+    <span class="mt-0.5 shrink-0 text-accent" aria-hidden="true">
+      <i data-lucide="${style.icon}" class="h-5 w-5"></i>
     </span>
-    <div class="flex-1 min-w-0">
+    <div class="min-w-0 flex-1">
       <p class="text-sm font-semibold leading-snug">${escapeToastText(title)}</p>
-      <p class="text-xs mt-0.5 leading-relaxed ${style.subtext}">${escapeToastText(message)}</p>
+      <p class="mt-0.5 text-xs leading-relaxed ${style.subtext}">${escapeToastText(message)}</p>
     </div>
     <button
       type="button"
       data-dismiss-toast="${toastId}"
       aria-label="Tutup notifikasi"
-      class="shrink-0 w-7 h-7 rounded-md flex items-center justify-center transition-colors ${style.close}"
+      class="grid h-7 w-7 shrink-0 place-items-center rounded-full transition-colors ${style.close}"
     >
-      <i data-lucide="x" class="w-4 h-4"></i>
+      <i data-lucide="x" class="h-4 w-4"></i>
     </button>
   `;
 

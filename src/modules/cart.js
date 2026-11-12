@@ -334,23 +334,23 @@ function renderDynamicAppFields() {
     const currentDate = getIndonesianDate();
 
     html += `
-      <div class="bg-brand-50/60 border border-brand-200 rounded-xl p-4 space-y-3.5">
-        <div class="flex items-center justify-between border-b border-brand-100 pb-2.5">
+      <div class="space-y-3.5 rounded-xl border border-line bg-canvas-subtle p-4">
+        <div class="flex items-center justify-between gap-2 border-b border-line pb-2.5">
           <div class="flex items-center gap-2">
-            <span class="w-7 h-7 rounded-lg bg-brand-600 text-white flex items-center justify-center shrink-0" aria-hidden="true">
-              <i data-lucide="tv" class="w-4 h-4"></i>
+            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-subtle text-accent" aria-hidden="true">
+              <i data-lucide="tv" class="h-4 w-4"></i>
             </span>
-            <h5 class="font-display text-xs sm:text-sm font-bold text-stone-900">NETFLIX DEVICE MANAGEMENT</h5>
+            <h5 class="text-xs font-semibold uppercase tracking-[0.08em] text-ink">Netflix device management</h5>
           </div>
-          <span class="text-[11px] font-semibold text-brand-700 bg-white border border-brand-200 px-2.5 py-0.5 rounded-full">
-            Wajib Diisi
+          <span class="rounded-full border border-line px-2.5 py-0.5 text-[11px] font-medium text-ink-faint">
+            Wajib diisi
           </span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div>
-            <label for="netflix-phone-input" class="block text-xs font-medium text-stone-700 mb-1">
-              Nomor WhatsApp / Customer <span class="text-red-600">*</span>
+            <label for="netflix-phone-input" class="mb-1 block text-xs font-medium text-ink-secondary">
+              Nomor WhatsApp / customer <span class="text-error">*</span>
             </label>
             <input
               type="tel"
@@ -359,13 +359,13 @@ function renderDynamicAppFields() {
               placeholder="085854577353"
               value="${escapeHtml(CartStore.extraData.netflixPhone || '')}"
               data-extra-field="netflixPhone"
-              class="w-full h-11 px-3 bg-white border border-stone-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none transition"
+              class="h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
             />
           </div>
 
           <div>
-            <label for="netflix-location-input" class="block text-xs font-medium text-stone-700 mb-1">
-              Lokasi / Kota <span class="text-red-600">*</span>
+            <label for="netflix-location-input" class="mb-1 block text-xs font-medium text-ink-secondary">
+              Lokasi / kota <span class="text-error">*</span>
             </label>
             <input
               type="text"
@@ -374,40 +374,40 @@ function renderDynamicAppFields() {
               placeholder="Contoh: Surabaya"
               value="${escapeHtml(CartStore.extraData.netflixLocation || '')}"
               data-extra-field="netflixLocation"
-              class="w-full h-11 px-3 bg-white border border-stone-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none transition"
+              class="h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
             />
           </div>
 
           <div>
-            <label for="netflix-date-input" class="block text-xs font-medium text-stone-600 mb-1">
-              Tanggal Order (Otomatis)
+            <label for="netflix-date-input" class="mb-1 block text-xs font-medium text-ink-faint">
+              Tanggal order (otomatis)
             </label>
             <input
               type="text"
               id="netflix-date-input"
               value="${escapeHtml(currentDate)}"
               readonly
-              class="w-full h-11 px-3 bg-stone-100 border border-stone-200 rounded-lg text-sm font-medium text-stone-700 cursor-not-allowed"
+              class="h-11 w-full cursor-not-allowed rounded-xl border border-line bg-canvas px-3 text-sm text-ink-faint"
             />
           </div>
 
           <div>
-            <label for="netflix-duration-input" class="block text-xs font-medium text-stone-600 mb-1">
-              Durasi (Otomatis)
+            <label for="netflix-duration-input" class="mb-1 block text-xs font-medium text-ink-faint">
+              Durasi (otomatis)
             </label>
             <input
               type="text"
               id="netflix-duration-input"
               value="${escapeHtml(defaultDuration)}"
               readonly
-              class="w-full h-11 px-3 bg-stone-100 border border-stone-200 rounded-lg text-sm font-medium text-stone-700 cursor-not-allowed"
+              class="h-11 w-full cursor-not-allowed rounded-xl border border-line bg-canvas px-3 text-sm text-ink-faint"
             />
           </div>
         </div>
 
         <div>
-          <label for="netflix-device-input" class="block text-xs font-medium text-stone-700 mb-1">
-            Device & Merk Lengkap <span class="text-red-600">*</span>
+          <label for="netflix-device-input" class="mb-1 block text-xs font-medium text-ink-secondary">
+            Device &amp; merk lengkap <span class="text-error">*</span>
           </label>
           <input
             type="text"
@@ -416,18 +416,18 @@ function renderDynamicAppFields() {
             placeholder="Contoh: Laptop Asus Vivobook / iPhone XR / TV Samsung"
             value="${escapeHtml(CartStore.extraData.netflixDevice || '')}"
             data-extra-field="netflixDevice"
-            class="w-full h-11 px-3 bg-white border border-stone-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none transition"
+            class="h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
           />
         </div>
 
-        <div class="bg-white border border-brand-200/80 rounded-lg p-3 text-xs text-stone-700 space-y-1.5 leading-relaxed">
+        <div class="space-y-1.5 rounded-xl border border-line bg-canvas p-3 text-xs leading-relaxed text-ink-secondary">
           <p class="flex items-start gap-2">
-            <i data-lucide="info" class="w-4 h-4 text-brand-700 shrink-0 mt-0.5" aria-hidden="true"></i>
-            <span>Tulis device lengkap beserta merk (contoh: <strong>iPhone XR, TV Samsung, Redmi Pad SE</strong>).</span>
+            <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true"></i>
+            <span>Tulis device lengkap beserta merk (contoh: <strong class="font-medium text-ink">iPhone XR, TV Samsung, Redmi Pad SE</strong>).</span>
           </p>
           <p class="flex items-start gap-2">
-            <i data-lucide="shield-check" class="w-4 h-4 text-brand-700 shrink-0 mt-0.5" aria-hidden="true"></i>
-            <span>Selain paket Semi Private (2 device), wajib <strong>login 1 device saja</strong> agar garansi tetap berlaku.</span>
+            <i data-lucide="shield-check" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true"></i>
+            <span>Selain paket Semi Private (2 device), wajib <strong class="font-medium text-ink">login 1 device saja</strong> agar garansi tetap berlaku.</span>
           </p>
         </div>
       </div>
@@ -471,15 +471,15 @@ function renderDynamicAppFields() {
     .filter((app) => app.active)
     .forEach((app) => {
       html += `
-        <div class="bg-stone-50 border border-stone-200 rounded-xl p-4 space-y-2">
+        <div class="space-y-2 rounded-xl border border-line bg-canvas-subtle p-4">
           <div class="flex items-center gap-2">
-            <span class="w-7 h-7 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center shrink-0" aria-hidden="true">
-              <i data-lucide="${app.icon}" class="w-4 h-4"></i>
+            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-subtle text-accent" aria-hidden="true">
+              <i data-lucide="${app.icon}" class="h-4 w-4"></i>
             </span>
-            <h5 class="font-display text-xs sm:text-sm font-semibold text-stone-900">${app.title}</h5>
+            <h5 class="text-xs font-semibold text-ink">${app.title}</h5>
           </div>
-          <label for="${app.id}" class="block text-xs font-medium text-stone-700">
-            ${app.label} <span class="text-red-600">*</span>
+          <label for="${app.id}" class="block text-xs font-medium text-ink-secondary">
+            ${app.label} <span class="text-error">*</span>
           </label>
           <input
             type="email"
@@ -488,9 +488,9 @@ function renderDynamicAppFields() {
             placeholder="${app.placeholder}"
             value="${escapeHtml(CartStore.extraData[app.key] || '')}"
             data-extra-field="${app.key}"
-            class="w-full h-11 px-3 bg-white border border-stone-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none transition"
+            class="h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
           />
-          <p class="text-xs text-stone-500">${app.hint}</p>
+          <p class="text-xs text-ink-faint">${app.hint}</p>
         </div>
       `;
     });
@@ -555,43 +555,43 @@ function renderCartDrawer() {
     .map((item) => {
       const itemSubtotal = item.unitPrice * item.quantity;
       return `
-        <div class="bg-stone-50 border border-stone-200 rounded-xl p-3.5 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3 min-w-0">
-            <div class="w-10 h-10 rounded-lg bg-brand-600 text-white flex items-center justify-center shrink-0" aria-hidden="true">
-              <i data-lucide="${escapeHtml(item.appIcon || 'layers')}" class="w-5 h-5"></i>
+        <div class="flex items-center justify-between gap-3 rounded-xl border border-line bg-canvas-subtle p-3.5">
+          <div class="flex min-w-0 items-center gap-3">
+            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-subtle text-accent" aria-hidden="true">
+              <i data-lucide="${escapeHtml(item.appIcon || 'layers')}" class="h-5 w-5"></i>
             </div>
             <div class="min-w-0">
-              <div class="flex items-center gap-1.5 mb-0.5">
-                <span class="font-display text-sm font-semibold text-stone-900 truncate">${escapeHtml(item.appName)}</span>
-                <span class="px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-medium shrink-0">
+              <div class="mb-0.5 flex items-center gap-1.5">
+                <span class="truncate text-sm font-semibold text-ink">${escapeHtml(item.appName)}</span>
+                <span class="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] font-medium text-ink-faint">
                   ${escapeHtml(item.durationLabel)}
                 </span>
               </div>
-              <p class="text-xs text-stone-500 truncate">${escapeHtml(item.planName)}</p>
-              <p class="font-display text-sm font-bold text-stone-900 mt-1">${escapeHtml(formatRupiah(itemSubtotal))}</p>
+              <p class="truncate text-xs text-ink-secondary">${escapeHtml(item.planName)}</p>
+              <p class="mt-1 text-sm font-semibold text-ink">${escapeHtml(formatRupiah(itemSubtotal))}</p>
             </div>
           </div>
 
-          <div class="flex items-center gap-1.5 shrink-0">
-            <div class="flex items-center bg-white border border-stone-200 rounded-lg p-0.5">
+          <div class="flex shrink-0 items-center gap-1.5">
+            <div class="flex items-center rounded-full border border-line p-0.5">
               <button
                 type="button"
                 data-cart-qty="${escapeHtml(item.id)}"
                 data-delta="-1"
                 aria-label="Kurangi kuantitas ${escapeHtml(item.appName)}"
-                class="w-9 h-9 rounded-md text-stone-600 hover:bg-stone-100 flex items-center justify-center transition-colors"
+                class="grid h-9 w-9 place-items-center rounded-full text-ink-secondary transition-colors hover:bg-surface-hover hover:text-ink"
               >
-                <i data-lucide="minus" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                <i data-lucide="minus" class="h-3.5 w-3.5" aria-hidden="true"></i>
               </button>
-              <span class="w-7 text-center text-xs font-bold text-stone-900 select-none">${item.quantity}</span>
+              <span class="w-7 text-center text-xs font-semibold text-ink select-none">${item.quantity}</span>
               <button
                 type="button"
                 data-cart-qty="${escapeHtml(item.id)}"
                 data-delta="1"
                 aria-label="Tambah kuantitas ${escapeHtml(item.appName)}"
-                class="w-9 h-9 rounded-md text-stone-600 hover:bg-stone-100 flex items-center justify-center transition-colors"
+                class="grid h-9 w-9 place-items-center rounded-full text-ink-secondary transition-colors hover:bg-surface-hover hover:text-ink"
               >
-                <i data-lucide="plus" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                <i data-lucide="plus" class="h-3.5 w-3.5" aria-hidden="true"></i>
               </button>
             </div>
 
@@ -599,9 +599,9 @@ function renderCartDrawer() {
               type="button"
               data-cart-remove="${escapeHtml(item.id)}"
               aria-label="Hapus ${escapeHtml(item.appName)} dari keranjang"
-              class="w-9 h-9 rounded-lg text-stone-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center transition-colors"
+              class="grid h-9 w-9 place-items-center rounded-full text-ink-faint transition-colors hover:text-error"
             >
-              <i data-lucide="trash-2" class="w-4 h-4" aria-hidden="true"></i>
+              <i data-lucide="trash-2" class="h-4 w-4" aria-hidden="true"></i>
             </button>
           </div>
         </div>

@@ -91,16 +91,16 @@ export function renderCategoryPills(container, categories, products, onSelect) {
           type="button"
           data-category-id="${escapeHtml(c.id)}"
           aria-pressed="${isActive ? 'true' : 'false'}"
-          class="category-pill h-11 inline-flex items-center gap-2 px-4 rounded-full text-xs sm:text-sm font-semibold border transition-all whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 ${
+          class="category-pill inline-flex h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 text-xs font-semibold transition-colors sm:text-sm focus-visible:outline-none ${
             isActive
-              ? 'active bg-brand-700 text-white border-brand-700 shadow-md'
-              : 'bg-white text-stone-700 border-stone-200/90 hover:border-brand-300 hover:text-brand-700'
+              ? 'active border-accent bg-accent text-canvas'
+              : 'border-line bg-canvas text-ink-secondary hover:border-accent/40 hover:text-ink'
           }"
         >
-          <i data-lucide="${escapeHtml(c.icon || 'layers')}" class="w-4 h-4" aria-hidden="true"></i>
+          <i data-lucide="${escapeHtml(c.icon || 'layers')}" class="h-4 w-4" aria-hidden="true"></i>
           <span>${escapeHtml(c.name)}</span>
-          <span class="pill-count px-2 py-0.5 rounded-full text-xs font-semibold ${
-            isActive ? 'bg-white/20 text-white' : 'bg-stone-100 text-stone-600'
+          <span class="pill-count rounded-full px-2 py-0.5 text-xs font-semibold ${
+            isActive ? 'bg-canvas/20 text-canvas' : 'bg-canvas-subtle text-ink-faint'
           }">
             ${count}
           </span>

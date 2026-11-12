@@ -14,20 +14,19 @@ export const motionTokens = {
   duration: { instant: 0.08, fast: 0.18, normal: 0.35, slow: 0.6, crawl: 0.9 },
   easing: {
     smooth: [0.22, 1, 0.36, 1],
-    sharp: [0.4, 0, 0.2, 1],
-    bounce: [0.34, 1.56, 0.64, 1]
+    sharp: [0.4, 0, 0.2, 1]
   },
-  distance: { xs: 4, sm: 8, md: 16, lg: 24, xl: 48 },
-  scale: { subtle: 0.98, press: 0.95, pop: 1.04 }
+  distance: { xs: 4, sm: 8, md: 16, lg: 24 },
+  scale: { press: 0.97, pop: 1.02 }
 };
 
 export const springs = {
   snappy: { type: 'spring', stiffness: 300, damping: 28 },
   gentle: { type: 'spring', stiffness: 120, damping: 14 },
-  bouncy: { type: 'spring', stiffness: 400, damping: 12 },
-  instant: { type: 'spring', stiffness: 600, damping: 35 },
   release: { type: 'spring', stiffness: 200, damping: 20 }
 };
+
+const clamp01 = (value) => Math.max(0, Math.min(1, value));
 
 export function shouldAnimate() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return false;
@@ -36,12 +35,17 @@ export function shouldAnimate() {
   }
   if (prefersReducedMotion.current === true) return false;
   if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
-  if (typeof navigator !== 'undefined' && navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 2) {
+  if (
+    typeof navigator !== 'undefined' &&
+    navigator.hardwareConcurrency > 0 &&
+    navigator.hardwareConcurrency <= 2
+  ) {
     return false;
   }
   return true;
 }
 
+/* 1. Top scroll progress bar — scaleX only */
 export function initScrollProgressBar() {
   const bar = document.getElementById('top-scroll-progress');
   if (!bar) return;
@@ -53,22 +57,68 @@ export function initScrollProgressBar() {
   const updateFromScroll = () => {
     const doc = document.documentElement;
     const max = Math.max(1, doc.scrollHeight - window.innerHeight);
-    const ratio = Math.max(0, Math.min(1, window.scrollY / max));
+    const ratio = clamp01(window.scrollY / max);
     bar.style.transform = `scaleX(${ratio})`;
   };
 
-  scroll(
-    (progress) => {
-      if (typeof progress === 'number' && !Number.isNaN(progress)) {
-        bar.style.transform = `scaleX(${Math.max(0, Math.min(1, progress))})`;
-      }
-    },
-    { trackContentSize: true }
-  );
-  window.addEventListener('scroll', updateFromScroll, { passive: true });
+  let tracked = false;
+  try {
+    scroll(
+      (progress) => {
+        if (typeof progress === 'number' && !Number.isNaN(progress)) {
+          bar.style.transform = `scaleX(${clamp01(progress)})`;
+        }
+      },
+      { trackContentSize: true }
+    );
+    tracked = true;
+  } catch {
+    tracked = false;
+  }
+
+  if (!tracked) {
+    window.addEventListener('scroll', updateFromScroll, { passive: true });
+  }
   updateFromScroll();
 }
 
+/* 2a. Hero headline mask reveal — line by line, opacity + transform only */
+export function initHeroMaskReveal() {
+  const lines = Array.from(document.querySelectorAll('.hero-line-inner'));
+  if (!lines.length) return;
+
+  if (!shouldAnimate()) {
+    lines.forEach((line) => {
+      line.style.opacity = '1';
+      line.style.transform = 'none';
+    });
+    return;
+  }
+
+  document.documentElement.classList.add('js-motion');
+
+  animate(
+    lines,
+    { opacity: [0, 1], y: ['110%', '0%'] },
+    {
+      delay: stagger(0.09),
+      duration: 0.7,
+      ease: motionTokens.easing.smooth
+    }
+  );
+
+  // Safety net: never leave the headline stranded invisible.
+  window.setTimeout(() => {
+    lines.forEach((line) => {
+      if (line.style.opacity === '0' || getComputedStyle(line).opacity === '0') {
+        line.style.opacity = '1';
+        line.style.transform = 'none';
+      }
+    });
+  }, 2200);
+}
+
+/* 2b. Hero supporting content entrance */
 export function initHeroEntrance() {
   const targets = Array.from(document.querySelectorAll('[data-hero-stagger]'));
   if (!targets.length) return;
@@ -83,9 +133,9 @@ export function initHeroEntrance() {
 
   animate(
     targets,
-    { opacity: [0, 1], y: [18, 0] },
+    { opacity: [0, 1], y: [16, 0] },
     {
-      delay: stagger(0.06),
+      delay: stagger(0.06, { startDelay: 0.12 }),
       duration: motionTokens.duration.slow,
       ease: motionTokens.easing.smooth
     }
@@ -120,14 +170,11 @@ export function initHeroShowcaseDeck(products, { onAddToCart } = {}) {
   if (!wrapper || apps.length === 0) return;
 
   const centerCard = document.getElementById('hero-deck-center');
-  const leftCard = document.getElementById('hero-deck-left');
-  const rightCard = document.getElementById('hero-deck-right');
   const cliWidget = document.getElementById('hero-cli-widget');
 
   const urlEl = document.getElementById('hero-deck-url');
   const counterEl = document.getElementById('hero-deck-counter');
   const statusCounterEl = document.getElementById('hero-status-counter');
-  const stageBgEl = document.getElementById('hero-deck-stage-bg');
   const orbEl = document.getElementById('hero-deck-orb');
   const titleEl = document.getElementById('hero-deck-title');
   const taglineEl = document.getElementById('hero-deck-tagline');
@@ -136,13 +183,6 @@ export function initHeroShowcaseDeck(products, { onAddToCart } = {}) {
   const chipsEl = document.getElementById('hero-deck-chips');
   const jumpBtn = document.getElementById('hero-deck-jump');
   const addBtn = document.getElementById('hero-deck-add');
-
-  const leftTitleEl = document.getElementById('hero-deck-left-title');
-  const leftPriceEl = document.getElementById('hero-deck-left-price');
-  const leftOrbEl = document.getElementById('hero-deck-left-orb');
-  const rightTitleEl = document.getElementById('hero-deck-right-title');
-  const rightPriceEl = document.getElementById('hero-deck-right-price');
-  const rightOrbEl = document.getElementById('hero-deck-right-orb');
 
   const cliCmdEl = document.getElementById('hero-cli-cmd');
   const prevBtn = document.getElementById('hero-deck-prev');
@@ -190,42 +230,29 @@ export function initHeroShowcaseDeck(products, { onAddToCart } = {}) {
   const renderSlide = (nextIndex, animateTransition = true, animateProgress = true) => {
     activeIndex = ((nextIndex % apps.length) + apps.length) % apps.length;
     const app = apps[activeIndex];
-    const theme = getAppTheme(app.id);
+    const meta = getAppTheme(app.id);
     const featured = getFeaturedPlanData(app);
     const startPrice = formatRupiah(getStartingPrice(app));
 
-    const prevIndex = (activeIndex - 1 + apps.length) % apps.length;
-    const nextIdx = (activeIndex + 1) % apps.length;
-    const prevApp = apps[prevIndex];
-    const nextApp = apps[nextIdx];
-    const prevTheme = getAppTheme(prevApp.id);
-    const nextTheme = getAppTheme(nextApp.id);
-
     const counterNum = `${String(activeIndex + 1).padStart(2, '0')} / ${String(apps.length).padStart(2, '0')}`;
-    if (urlEl) urlEl.textContent = theme.urlSlug;
+    if (urlEl) urlEl.textContent = meta.urlSlug;
     if (counterEl) counterEl.textContent = counterNum;
-    if (statusCounterEl) statusCounterEl.textContent = `${counterNum} APLIKASI READY`;
-
-    if (stageBgEl) {
-      stageBgEl.className = `bg-gradient-to-br ${theme.heroGradient} p-5 sm:p-6 transition-colors duration-300`;
-    }
+    if (statusCounterEl) statusCounterEl.textContent = `${counterNum} APLIKASI`;
 
     if (orbEl) {
-      orbEl.className = `w-16 h-16 rounded-2xl ${theme.pastelOrb} ring-2 ring-white/90 flex items-center justify-center mx-auto mb-3.5`;
-      orbEl.style.filter = theme.orbShadow;
-      orbEl.innerHTML = `<i data-lucide="${escapeHtml(app.icon || 'layers')}" class="w-8 h-8"></i>`;
+      orbEl.innerHTML = `<i data-lucide="${escapeHtml(app.icon || 'layers')}" class="h-8 w-8"></i>`;
     }
 
     if (titleEl) titleEl.textContent = app.name;
     if (taglineEl) taglineEl.textContent = app.tagline || '';
     if (priceEl) priceEl.textContent = `MULAI ${startPrice.toUpperCase()}`;
-    if (badgeTextEl) badgeTextEl.textContent = featured.bestSeller ? 'Paling Laris' : 'Full Garansi';
+    if (badgeTextEl) badgeTextEl.textContent = featured.bestSeller ? 'Paling laris' : 'Garansi penuh';
 
     if (chipsEl) {
-      chipsEl.innerHTML = (theme.chips || [])
+      chipsEl.innerHTML = (meta.chips || [])
         .map(
           (chip) =>
-            `<span class="px-2.5 py-1 rounded-full bg-white/85 border border-black/5 text-[11px] font-semibold text-stone-800">${escapeHtml(chip)}</span>`
+            `<span class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">${escapeHtml(chip)}</span>`
         )
         .join('');
     }
@@ -243,32 +270,8 @@ export function initHeroShowcaseDeck(products, { onAddToCart } = {}) {
       addBtn.setAttribute('data-duration-label', featured.durationLabel);
     }
 
-    if (leftCard) {
-      leftCard.style.backgroundColor = prevTheme.surfaceHex;
-      leftCard.setAttribute('aria-label', `Tampilkan ${prevApp.name}`);
-      if (leftTitleEl) leftTitleEl.textContent = prevApp.name;
-      if (leftPriceEl) leftPriceEl.textContent = `Mulai ${formatRupiah(getStartingPrice(prevApp))}`;
-      if (leftOrbEl) {
-        leftOrbEl.className = `w-11 h-11 rounded-2xl bg-white/95 flex items-center justify-center shadow-xs`;
-        leftOrbEl.style.color = prevTheme.accentHex;
-        leftOrbEl.innerHTML = `<i data-lucide="${escapeHtml(prevApp.icon || 'layers')}" class="w-5 h-5"></i>`;
-      }
-    }
-
-    if (rightCard) {
-      rightCard.style.backgroundColor = nextTheme.surfaceHex;
-      rightCard.setAttribute('aria-label', `Tampilkan ${nextApp.name}`);
-      if (rightTitleEl) rightTitleEl.textContent = nextApp.name;
-      if (rightPriceEl) rightPriceEl.textContent = `Mulai ${formatRupiah(getStartingPrice(nextApp))}`;
-      if (rightOrbEl) {
-        rightOrbEl.className = `w-11 h-11 rounded-2xl bg-white/95 flex items-center justify-center shadow-xs`;
-        rightOrbEl.style.color = nextTheme.accentHex;
-        rightOrbEl.innerHTML = `<i data-lucide="${escapeHtml(nextApp.icon || 'layers')}" class="w-5 h-5"></i>`;
-      }
-    }
-
     if (cliCmdEl) {
-      cliCmdEl.textContent = `${theme.shortLabel || app.name} · ${featured.price}/${featured.unitShort} — Garansi Aktif ✓`;
+      cliCmdEl.textContent = `${meta.shortLabel} · ${featured.price}/${featured.unitShort} · garansi penuh`;
     }
 
     document.dispatchEvent(new CustomEvent('cozu:icons', { detail: { root: wrapper } }));
@@ -276,32 +279,10 @@ export function initHeroShowcaseDeck(products, { onAddToCart } = {}) {
 
     if (animateTransition && shouldAnimate()) {
       if (centerCard) {
-        animate(
-          centerCard,
-          { scale: [0.96, 1], y: [10, 0], opacity: [0.85, 1] },
-          { ...springs.snappy }
-        );
-      }
-      if (leftCard) {
-        animate(
-          leftCard,
-          { x: [-12, 0], scale: [0.96, 1], rotate: [-2, 0], opacity: [0.7, 0.9] },
-          { ...springs.snappy }
-        );
-      }
-      if (rightCard) {
-        animate(
-          rightCard,
-          { x: [12, 0], scale: [0.96, 1], rotate: [2, 0], opacity: [0.7, 0.9] },
-          { ...springs.snappy }
-        );
+        animate(centerCard, { scale: [0.97, 1], y: [8, 0], opacity: [0.9, 1] }, { ...springs.snappy });
       }
       if (cliWidget) {
-        animate(
-          cliWidget,
-          { y: [5, 0], opacity: [0.85, 1] },
-          { ...springs.gentle }
-        );
+        animate(cliWidget, { y: [4, 0], opacity: [0.9, 1] }, { ...springs.gentle });
       }
     }
   };
@@ -322,8 +303,6 @@ export function initHeroShowcaseDeck(products, { onAddToCart } = {}) {
 
   prevBtn?.addEventListener('click', () => goTo(activeIndex - 1));
   nextBtn?.addEventListener('click', () => goTo(activeIndex + 1));
-  leftCard?.addEventListener('click', () => goTo(activeIndex - 1));
-  rightCard?.addEventListener('click', () => goTo(activeIndex + 1));
 
   segmentBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -388,6 +367,7 @@ export function initHeroShowcaseDeck(products, { onAddToCart } = {}) {
   startAutoRotate();
 }
 
+/* 3. Scroll reveals — fade-up once, plus rAF sweep for stranded elements */
 export function initScrollReveals() {
   const animateEnabled = shouldAnimate();
   const singleEls = Array.from(document.querySelectorAll('[data-reveal]'));
@@ -417,7 +397,7 @@ export function initScrollReveals() {
     }
     animate(
       el,
-      { opacity: [0, 1], y: [18, 0] },
+      { opacity: [0, 1], y: [16, 0] },
       { duration: motionTokens.duration.normal, ease: motionTokens.easing.smooth }
     );
   };
@@ -434,7 +414,7 @@ export function initScrollReveals() {
     }
     animate(
       items,
-      { opacity: [0, 1], y: [18, 0] },
+      { opacity: [0, 1], y: [16, 0] },
       {
         delay: stagger(0.06),
         duration: motionTokens.duration.normal,
@@ -454,13 +434,9 @@ export function initScrollReveals() {
     }
 
     el.style.opacity = '0';
-    el.style.transform = 'translateY(18px)';
+    el.style.transform = 'translateY(16px)';
 
-    inView(
-      el,
-      () => revealSingle(el),
-      { amount: 'some' }
-    );
+    inView(el, () => revealSingle(el), { amount: 'some' });
   });
 
   groups.forEach((group) => {
@@ -477,14 +453,10 @@ export function initScrollReveals() {
 
     items.forEach((item) => {
       item.style.opacity = '0';
-      item.style.transform = 'translateY(18px)';
+      item.style.transform = 'translateY(16px)';
     });
 
-    inView(
-      group,
-      () => revealGroup(group, items),
-      { amount: 'some' }
-    );
+    inView(group, () => revealGroup(group, items), { amount: 'some' });
   });
 
   // Fallback sweep so fast jumps / hash navigation never leave elements above fold stuck invisible
@@ -526,7 +498,7 @@ export function initScrollReveals() {
     if (!cards.length) return;
     animate(
       cards,
-      { opacity: [0.85, 1], y: [10, 0] },
+      { opacity: [0.85, 1], y: [8, 0] },
       {
         delay: stagger(0.04, { startDelay: 0 }),
         duration: motionTokens.duration.fast,
@@ -536,6 +508,101 @@ export function initScrollReveals() {
   });
 }
 
+/* 4. Scroll-path spine for "3 Langkah" — stroke-dashoffset follows scroll */
+export function initStepsSpine() {
+  const section = document.getElementById('cara-pesan');
+  const list = document.getElementById('steps-list');
+  const path = document.getElementById('steps-spine-path');
+  if (!section || !path) return;
+
+  const target = list || section;
+  const dashLength = typeof path.getTotalLength === 'function' ? path.getTotalLength() || 100 : 100;
+
+  const setProgress = (progress) => {
+    path.style.strokeDasharray = String(dashLength);
+    path.style.strokeDashoffset = String(dashLength * (1 - clamp01(progress)));
+  };
+
+  if (!shouldAnimate()) {
+    setProgress(1);
+    return;
+  }
+
+  setProgress(0);
+
+  // 0 when the step list enters the lower third of the viewport,
+  // 1 when its last step reaches that same anchor.
+  const measure = () => {
+    const rect = target.getBoundingClientRect();
+    const viewport = window.innerHeight || 1;
+    const anchor = viewport * 0.58;
+    const travel = Math.max(1, rect.height);
+    setProgress((anchor - rect.top) / travel);
+  };
+
+  let frame = 0;
+  const schedule = () => {
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      measure();
+    });
+  };
+
+  try {
+    scroll(() => schedule(), { trackContentSize: true });
+  } catch {
+    /* rAF + scroll listener below still drives the spine */
+  }
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  schedule();
+}
+
+/* 5. Count-up stats — once per element, on first view */
+export function initCounters() {
+  const els = Array.from(document.querySelectorAll('[data-counter]'));
+  if (!els.length) return;
+
+  const render = (el, value) => {
+    el.textContent = String(Math.round(value));
+  };
+
+  const run = (el) => {
+    if (el.dataset.counted === 'true') return;
+    el.dataset.counted = 'true';
+    const to = Number(el.dataset.counterTo || 0);
+    const duration = Number(el.dataset.counterDuration || 1100);
+
+    if (!shouldAnimate() || to <= 0) {
+      render(el, to);
+      return;
+    }
+
+    const started = performance.now();
+    const tick = (now) => {
+      const t = Math.min(1, Math.max(0, (now - started) / duration));
+      const eased = 1 - Math.pow(1 - t, 3);
+      render(el, to * eased);
+      if (t < 1) requestAnimationFrame(tick);
+      else render(el, to);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  els.forEach((el) => {
+    // Static markup keeps the final numbers, so the page is honest without JS.
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      requestAnimationFrame(() => run(el));
+    } else {
+      inView(el, () => run(el), { amount: 'some' });
+    }
+  });
+}
+
+/* 6. Micro interactions */
 function bindGestureSet(cleanups, selector, binder) {
   const els = document.querySelectorAll(selector);
   if (!els.length) return;
@@ -566,7 +633,7 @@ export function initMicroInteractions() {
 
     bindGestureSet(dynamicCleanups, '[data-motion-hover]', (els) =>
       hover(els, (el) => {
-        animate(el, { y: -3 }, { ...springs.snappy });
+        animate(el, { y: -2 }, { ...springs.snappy });
         return () => {
           animate(el, { y: 0 }, { ...springs.release });
         };
@@ -582,7 +649,7 @@ export function initMicroInteractions() {
     ['cart-count-badge', 'header-cart-badge', 'mobile-cart-badge'].forEach((id) => {
       const badge = document.getElementById(id);
       if (badge && !badge.classList.contains('hidden')) {
-        animate(badge, { scale: [1, 1.28, 1] }, { ...springs.bouncy });
+        animate(badge, { scale: [1, 1.2, 1] }, { ...springs.release });
       }
     });
   });
@@ -607,8 +674,15 @@ export function initMicroInteractions() {
 
 export function initMotionSystem(products, { onAddToCart } = {}) {
   initScrollProgressBar();
+  initHeroMaskReveal();
   initHeroEntrance();
   initHeroShowcaseDeck(products, { onAddToCart });
   initScrollReveals();
+  initStepsSpine();
+  initCounters();
   initMicroInteractions();
+
+  // Dynamic copyright year
+  const yearEl = document.getElementById('footer-year');
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 }
