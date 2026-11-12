@@ -162,21 +162,21 @@ function buildHeroSlide(app, index) {
             <!-- Reflective highlight top edge -->
             <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
 
-            <!-- Brand logo -->
-            <div class="relative grid h-24 w-24 place-items-center sm:h-28 sm:w-28" style="transform: translateZ(24px);">
+            <!-- Brand logo (fixed square container + object-contain) -->
+            <div class="relative flex h-24 w-24 items-center justify-center sm:h-28 sm:w-28" style="transform: translateZ(24px);">
               <img
                 src="${escapeHtml(meta.logo)}"
                 alt="${escapeHtml(app.name)} logo"
-                class="h-16 w-16 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)] sm:h-20 sm:w-20"
+                class="max-h-16 max-w-16 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)] sm:max-h-20 sm:max-w-20"
                 loading="eager"
                 decoding="async"
               />
             </div>
 
-            <!-- Card footer chip -->
-            <div class="mt-4 flex flex-col items-center gap-1 text-center" style="transform: translateZ(16px);">
-              <span class="text-xs font-bold tracking-tight text-ink sm:text-sm">${escapeHtml(app.name)}</span>
-              <span class="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-semibold text-ink-secondary">
+            <!-- Card footer chip (fixed height container) -->
+            <div class="mt-4 flex h-11 flex-col items-center justify-center gap-1 text-center" style="transform: translateZ(16px);">
+              <span class="text-xs font-bold tracking-tight text-ink sm:text-sm leading-tight">${escapeHtml(app.name)}</span>
+              <span class="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-semibold text-ink-secondary leading-tight">
                 Mulai ${escapeHtml(start.price)}
               </span>
             </div>
@@ -257,8 +257,8 @@ function buildHeroSlide(app, index) {
               data-duration-label="${escapeHtml(featured.durationLabel)}"
               class="inline-flex h-12 items-center gap-2 rounded-full bg-white px-7 text-sm font-semibold text-canvas transition-colors hover:bg-ink-secondary focus-visible:outline-none"
             >
-              <i data-lucide="play" class="h-4 w-4 fill-current" aria-hidden="true"></i>
-              <span>Beli</span>
+              <i data-lucide="shopping-bag" class="h-4 w-4" aria-hidden="true"></i>
+              <span>Beli Sekarang</span>
             </button>
             <a
               href="#layanan"
@@ -384,8 +384,10 @@ export function initHeroCarousel(products, { onAddToCart, onDirectBuy } = {}) {
     document.dispatchEvent(new CustomEvent('cozu:hero-slide', { detail: { appId: apps[index]?.id } }));
 
     if (!doAnimate || reduceMotion) {
-      animate(incoming, { opacity: 1 }, { duration: 0.15, ease: 'linear' });
-      animate(outgoing, { opacity: 0 }, { duration: 0.15, ease: 'linear' });
+      incoming.style.opacity = '1';
+      incoming.style.transform = 'none';
+      outgoing.style.opacity = '0';
+      outgoing.style.transform = 'none';
     } else {
       animate(
         outgoing,
@@ -396,7 +398,10 @@ export function initHeroCarousel(products, { onAddToCart, onDirectBuy } = {}) {
         incoming,
         { opacity: [0, 1], x: [direction * 48, 0] },
         { duration: CAROUSEL_DURATION_S, ease: motionTokens.easing.smooth }
-      );
+      ).then(() => {
+        outgoing.style.transform = 'none';
+        incoming.style.transform = 'none';
+      });
     }
 
     startProgress();
@@ -932,7 +937,7 @@ export function initHeroParallax() {
     const rect = hero.getBoundingClientRect();
     if (rect.bottom <= 0) return;
     const progress = Math.max(0, -rect.top / (rect.height || 1));
-    const stages = hero.querySelectorAll('.group\\/stage');
+    const stages = hero.querySelectorAll('.hero-slide.is-active .group\\/stage');
     stages.forEach((stage) => {
       stage.style.transform = `perspective(1000px) rotateY(-8deg) rotateX(4deg) translateY(${progress * 42}px)`;
     });
