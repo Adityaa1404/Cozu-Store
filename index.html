@@ -270,7 +270,7 @@
               <i data-lucide="shield-check" class="h-4 w-4 text-ink-secondary" aria-hidden="true"></i>
               <span>Pembayaran resmi Indonesia, terverifikasi otomatis</span>
             </p>
-            <ul class="flex flex-wrap items-center justify-center gap-3 sm:gap-4" aria-label="Logo metode pembayaran">
+            <ul class="flex w-full flex-wrap items-center justify-center gap-3 sm:w-auto sm:gap-4" aria-label="Logo metode pembayaran">
               <li>
                 <img src="/logos/qris.png" alt="QRIS" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" />
               </li>
@@ -900,7 +900,7 @@
                 <span>0878-6248-1038</span>
               </a>
               <p class="mt-3 text-xs text-ink-muted">Pembayaran</p>
-              <ul class="mt-2 flex flex-wrap items-center gap-3" aria-label="Logo metode pembayaran">
+              <ul class="mt-2 flex flex-wrap items-center justify-center gap-3" aria-label="Logo metode pembayaran">
                 <li><img src="/logos/qris.png" alt="QRIS" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
                 <li><img src="/logos/dana.png" alt="DANA" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
                 <li><img src="/logos/gopay.png" alt="GoPay" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
@@ -920,28 +920,6 @@
         </div>
       </footer>
     </div>
-
-    <!-- Desktop floating cart -->
-    <button
-      type="button"
-      id="cart-floating-btn"
-      data-open-cart
-      data-motion-press
-      aria-label="Buka keranjang belanja"
-      class="fixed bottom-6 right-6 z-40 hidden h-12 items-center gap-2.5 rounded-full border border-line bg-surface px-4 text-ink shadow-card transition-colors hover:bg-surface-2 hover:border-line-strong focus-visible:outline-none lg:inline-flex"
-    >
-      <span class="relative">
-        <i data-lucide="shopping-cart" class="h-5 w-5" aria-hidden="true"></i>
-        <span
-          id="cart-count-badge"
-          class="absolute -right-2.5 -top-2 hidden min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-canvas"
-        >
-          0
-        </span>
-      </span>
-      <span class="text-sm font-semibold">Keranjang</span>
-      <span id="cart-total-badge" class="border-l border-line pl-2.5 text-xs font-medium text-ink-secondary">Rp 0</span>
-    </button>
 
     <!-- Scroll to top -->
     <button

@@ -130,8 +130,8 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
           const meta = getAppTheme(app.id);
           const logoMarkup = meta.logo
             ? `
-                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2" aria-hidden="true">
-                  <div class="relative grid h-16 w-16 place-items-center sm:h-20 sm:w-20">
+                <div class="pointer-events-none flex h-full w-full items-center justify-center p-8" aria-hidden="true">
+                  <div class="relative grid h-20 w-20 place-items-center">
                     <span
                       class="absolute inset-0 rounded-full opacity-35 blur-xl"
                       style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 68%)"
@@ -139,7 +139,7 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
                     <img
                       src="${escapeHtml(meta.logo)}"
                       alt=""
-                      class="relative h-10 w-10 object-contain sm:h-12 sm:w-12"
+                      class="relative h-12 w-12 object-contain"
                       loading="lazy"
                       decoding="async"
                     />
@@ -149,7 +149,7 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
             : `
                 <i
                   data-lucide="${escapeHtml(app.icon || 'layers')}"
-                  class="absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-white/[0.08] transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
+                  class="pointer-events-none absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-white/[0.08] transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
                   aria-hidden="true"
                 ></i>
               `;
@@ -165,17 +165,17 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
               <div class="relative m-2 mb-0 aspect-[16/9] overflow-hidden rounded-lg bg-[radial-gradient(circle_at_28%_18%,rgba(255,255,255,0.10),transparent_62%),linear-gradient(150deg,#141824_0%,#0F171E_72%)]">
                 ${logoMarkup}
 
-                <div class="absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-3">
+                <div class="absolute inset-x-0 top-0 flex flex-nowrap items-center justify-between gap-2 p-3">
                   ${
                     isBest
-                      ? `<span class="inline-flex items-center rounded-full bg-ink px-2.5 py-1 text-[11px] font-bold text-canvas">
+                      ? `<span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-ink px-2.5 text-[11px] font-bold leading-none text-canvas">
                            Paling laris
                          </span>`
-                      : `<span class="inline-flex items-center rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
+                      : `<span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-badge px-2.5 text-[11px] font-medium leading-none text-badge-text">
                            ${escapeHtml(categoryLabel)}
                          </span>`
                   }
-                  <span class="inline-flex items-center rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
+                  <span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-badge px-2.5 text-[11px] font-medium leading-none text-badge-text">
                     ${escapeHtml(durMeta.label)}
                   </span>
                 </div>
@@ -207,8 +207,8 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
                   ${features
                     .map(
                       (feat) => `
-                        <li class="flex items-start gap-2 text-[12px] leading-snug text-ink-secondary">
-                          <i data-lucide="check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-ink-secondary" aria-hidden="true"></i>
+                        <li class="flex items-start gap-2 text-[12px] leading-snug text-ink-tertiary">
+                          <i data-lucide="check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-ink-tertiary" aria-hidden="true"></i>
                           <span>${escapeHtml(feat)}</span>
                         </li>
                       `

@@ -171,6 +171,26 @@ function buildHeroSlide(app, index) {
     : `
         <i data-lucide="${escapeHtml(app.icon || 'layers')}" class="h-[13rem] w-[13rem] text-white/[0.06] sm:h-[18rem] sm:w-[18rem]"></i>
       `;
+  const mobileLogoMarkup = meta.logo
+    ? `
+        <span
+          class="relative grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-line bg-surface/80 sm:hidden"
+          aria-hidden="true"
+        >
+          <span
+            class="absolute inset-0 rounded-xl opacity-25 blur-lg"
+            style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 70%)"
+          ></span>
+          <img
+            src="${escapeHtml(meta.logo)}"
+            alt=""
+            class="relative h-8 w-8 object-contain"
+            loading="eager"
+            decoding="async"
+          />
+        </span>
+      `
+    : '';
 
   return `
     <article
@@ -182,7 +202,7 @@ function buildHeroSlide(app, index) {
     >
       <div class="hero-art absolute inset-y-0 right-0 w-full sm:w-[72%] lg:w-[60%]" aria-hidden="true">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_68%_38%,rgba(255,255,255,0.08),transparent_58%),linear-gradient(150deg,#141824_0%,#0F171E_55%,#05070A_100%)]"></div>
-        <div class="absolute inset-0 grid place-items-center">
+        <div class="absolute inset-0 hidden place-items-center sm:grid">
           ${logoMarkup}
         </div>
       </div>
@@ -198,9 +218,12 @@ function buildHeroSlide(app, index) {
             ${escapeHtml(eyebrow)}
           </p>
 
-          <${titleTag} class="mt-2 text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-[-0.02em] text-ink">
-            ${escapeHtml(app.name)}
-          </${titleTag}>
+          <div class="mt-2 flex items-center gap-3">
+            ${mobileLogoMarkup}
+            <${titleTag} class="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.08] tracking-[-0.02em] text-ink">
+              ${escapeHtml(app.name)}
+            </${titleTag}>
+          </div>
 
           <p class="mt-3 max-w-md text-sm leading-relaxed text-ink-secondary sm:text-base">
             ${escapeHtml(app.tagline || 'Akun premium bergaransi, proses 5–15 menit.')}
@@ -656,6 +679,22 @@ export function initStepsSpine() {
   const path = document.getElementById('steps-spine-path');
   if (!section || !path) return;
 
+  // Stop the connector at the centre of the last numbered marker so it never
+  // reads as an extra, unfinished step below 03.
+  const spine = path.closest('svg');
+  const lastStep = list?.lastElementChild;
+  const fitSpine = () => {
+    if (!spine || !lastStep) return;
+    const marker = lastStep.querySelector('span');
+    const end = lastStep.offsetTop + (marker?.offsetHeight || 0) / 2;
+    spine.style.height = `${Math.max(1, Math.round(end))}px`;
+  };
+  fitSpine();
+  window.addEventListener('resize', fitSpine, { passive: true });
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(fitSpine).catch(() => {});
+  }
+
   const target = list || section;
   const dashLength = typeof path.getTotalLength === 'function' ? path.getTotalLength() || 100 : 100;
 
@@ -829,7 +868,7 @@ export function initMicroInteractions() {
 
   document.addEventListener('cozu:cart-pop', () => {
     if (!shouldAnimate()) return;
-    ['cart-count-badge', 'header-cart-badge', 'mobile-cart-badge'].forEach((id) => {
+    ['header-cart-badge', 'mobile-cart-badge'].forEach((id) => {
       const badge = document.getElementById(id);
       if (badge && !badge.classList.contains('hidden')) {
         animate(badge, { scale: [1, 1.2, 1] }, { ...springs.release });

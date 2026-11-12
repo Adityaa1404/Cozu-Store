@@ -189,7 +189,7 @@ function syncStaticBuyerInputs() {
 export function triggerBadgeAnimation() {
   document.dispatchEvent(new CustomEvent('cozu:cart-pop'));
   if (typeof window !== 'undefined' && window.__cozuMotionActive) return;
-  ['cart-count-badge', 'header-cart-badge', 'mobile-cart-badge'].forEach((id) => {
+  ['header-cart-badge', 'mobile-cart-badge'].forEach((id) => {
     const badge = document.getElementById(id);
     if (badge) {
       badge.classList.remove('badge-pop');
@@ -201,9 +201,8 @@ export function triggerBadgeAnimation() {
 
 export function updateCartBadge() {
   const totalCount = CartStore.getTotalCount();
-  const totalPrice = CartStore.getTotalPrice();
 
-  ['cart-count-badge', 'header-cart-badge', 'mobile-cart-badge'].forEach((id) => {
+  ['header-cart-badge', 'mobile-cart-badge'].forEach((id) => {
     const badge = document.getElementById(id);
     if (!badge) return;
     const isEmpty = totalCount <= 0;
@@ -211,19 +210,6 @@ export function updateCartBadge() {
     badge.classList.toggle('hidden', isEmpty);
     badge.classList.toggle('inline-flex', !isEmpty);
   });
-
-  // Keep the desktop floating cart out of the way while there is nothing in it.
-  const floatingBtn = document.getElementById('cart-floating-btn');
-  if (floatingBtn) {
-    const isEmpty = totalCount <= 0;
-    floatingBtn.classList.toggle('lg:hidden', isEmpty);
-    floatingBtn.classList.toggle('lg:inline-flex', !isEmpty);
-  }
-
-  const totalBadge = document.getElementById('cart-total-badge');
-  if (totalBadge) {
-    totalBadge.textContent = formatRupiah(totalPrice);
-  }
 
   const drawerCount = document.getElementById('cart-drawer-count');
   if (drawerCount) {
