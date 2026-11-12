@@ -162,6 +162,9 @@ export function initCozuStore() {
   initNavigation(productsData, resetAll);
   hydrateIcons(document);
   initMotionSystem(productsData, { onAddToCart: addToCart, onDirectBuy: directBuy });
+  import('./threeHero.js')
+    .then(({ initThreeHero }) => initThreeHero())
+    .catch(() => {});
 }
 
 if (document.readyState === 'loading') {

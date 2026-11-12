@@ -189,8 +189,8 @@ function buildHeroSlide(app, index) {
       aria-hidden="true"
     >
       <div class="hero-art absolute inset-y-0 right-0 w-full sm:w-[72%] lg:w-[60%]" aria-hidden="true">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_68%_38%,rgba(255,255,255,0.08),transparent_58%),linear-gradient(150deg,#141824_0%,#0F171E_55%,#05070A_100%)]"></div>
-        <div class="absolute inset-0 hidden place-items-center sm:grid">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_68%_38%,rgba(0,168,225,0.12),transparent_60%),linear-gradient(90deg,#05070A_0%,rgba(5,7,10,0.35)_38%,transparent_100%)]"></div>
+        <div class="absolute inset-0 hidden place-items-center sm:grid" style="perspective: 1000px;">
           ${logoMarkup}
         </div>
       </div>
@@ -366,6 +366,7 @@ export function initHeroCarousel(products, { onAddToCart, onDirectBuy } = {}) {
       slide.style.zIndex = i === index ? '2' : i === previous ? '3' : '1';
     });
     setSlideState(index);
+    document.dispatchEvent(new CustomEvent('cozu:hero-slide', { detail: { appId: orderedApps[index]?.id } }));
 
     if (!doAnimate || reduceMotion) {
       animate(incoming, { opacity: 1 }, { duration: 0.15, ease: 'linear' });
@@ -841,14 +842,40 @@ export function initMicroInteractions() {
       })
     );
 
-    bindGestureSet(dynamicCleanups, '[data-motion-hover]', (els) =>
-      hover(els, (el) => {
-        animate(el, { y: -2 }, { ...springs.snappy });
+    bindGestureSet(dynamicCleanups, '[data-motion-hover]', (els) => {
+      const stopHover = hover(els, (el) => {
+        animate(el, { y: -4 }, { ...springs.snappy });
         return () => {
+          el.style.transform = '';
           animate(el, { y: 0 }, { ...springs.release });
         };
-      })
-    );
+      });
+
+      const tiltHandlers = [];
+      els.forEach((el) => {
+        const onMove = (e) => {
+          const r = el.getBoundingClientRect();
+          if (!r.width || !r.height) return;
+          const dx = (e.clientX - r.left) / r.width - 0.5;
+          const dy = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transform = `perspective(900px) rotateX(${(-dy * 6).toFixed(2)}deg) rotateY(${(dx * 6).toFixed(2)}deg) translateY(-4px)`;
+        };
+        const onLeave = () => {
+          el.style.transform = '';
+        };
+        el.addEventListener('pointermove', onMove, { passive: true });
+        el.addEventListener('pointerleave', onLeave, { passive: true });
+        tiltHandlers.push(() => {
+          el.removeEventListener('pointermove', onMove);
+          el.removeEventListener('pointerleave', onLeave);
+        });
+      });
+
+      return () => {
+        stopHover?.();
+        tiltHandlers.forEach((fn) => fn());
+      };
+    });
   };
 
   bindDynamic();
