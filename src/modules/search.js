@@ -1,6 +1,6 @@
 import { escapeHtml, parsePrice } from './products.js';
 
-let activeCategory = 'all';
+let activeApp = 'all';
 let activeSort = 'popular';
 let searchQuery = '';
 
@@ -32,12 +32,8 @@ export function getMaxPrice(app) {
   return max;
 }
 
-export function filterAndSortApps(apps, category = 'all', query = '', sort = 'popular') {
+function applyQueryAndSort(apps, query, sort) {
   let results = Array.isArray(apps) ? [...apps] : [];
-
-  if (category !== 'all') {
-    results = results.filter((app) => app.category === category);
-  }
 
   if (query.trim()) {
     const q = query.toLowerCase().trim();
@@ -71,89 +67,75 @@ export function filterAndSortApps(apps, category = 'all', query = '', sort = 'po
   return results;
 }
 
-export function renderCategoryPills(container, categories, products, onSelect) {
-  if (!container) return;
-
-  const counts = { all: products.length };
-  categories.forEach((c) => {
-    if (c.id !== 'all') {
-      counts[c.id] = products.filter((a) => a.category === c.id).length;
-    }
-  });
-
-  container.innerHTML = categories
-    .filter((c) => c.id === 'all' || (counts[c.id] || 0) > 0)
-    .map((c) => {
-      const isActive = activeCategory === c.id;
-      const count = counts[c.id] || 0;
-      return `
-        <button
-          type="button"
-          data-category-id="${escapeHtml(c.id)}"
-          aria-pressed="${isActive ? 'true' : 'false'}"
-          class="category-pill inline-flex h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 text-xs font-semibold transition-colors sm:text-sm focus-visible:outline-none ${
-            isActive
-              ? 'active border-line-strong bg-action-active text-ink'
-              : 'border-line bg-canvas text-ink-secondary hover:border-line-strong hover:text-ink'
-          }"
-        >
-          <i data-lucide="${escapeHtml(c.icon || 'layers')}" class="h-4 w-4" aria-hidden="true"></i>
-          <span>${escapeHtml(c.name)}</span>
-          <span class="pill-count rounded-full px-2 py-0.5 text-xs font-semibold ${
-            isActive ? 'bg-white/10 text-ink' : 'bg-surface-2 text-ink-secondary'
-          }">
-            ${count}
-          </span>
-        </button>
-      `;
-    })
-    .join('');
-
-  if (!container.dataset.delegated) {
-    container.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-category-id]');
-      if (!btn) return;
-      onSelect?.(btn.getAttribute('data-category-id'));
-    });
-    container.dataset.delegated = 'true';
+/**
+ * Legacy category filter kept for the cartridge/unit tests and any old callers.
+ * The storefront itself now filters by app id via filterAppsByApp().
+ */
+export function filterAndSortApps(apps, category = 'all', query = '', sort = 'popular') {
+  let results = Array.isArray(apps) ? [...apps] : [];
+  if (category !== 'all') {
+    results = results.filter((app) => app.category === category);
   }
-
-  document.dispatchEvent(new CustomEvent('cozu:icons', { detail: { root: container } }));
+  return applyQueryAndSort(results, query, sort);
 }
 
-export function initSearch({ products, categories, onUpdate }) {
+/** Storefront filter: one app at a time, selected from the per-app dropdown. */
+export function filterAppsByApp(apps, appId = 'all', query = '', sort = 'popular') {
+  let results = Array.isArray(apps) ? [...apps] : [];
+  if (appId !== 'all') {
+    results = results.filter((app) => app.id === appId);
+  }
+  return applyQueryAndSort(results, query, sort);
+}
+
+export function initSearch({ products, onUpdate }) {
   const pillsContainer = document.getElementById('category-filter-pills');
+  const appSelect = document.getElementById('app-filter-select');
   const searchInput = document.getElementById('app-search');
   const clearBtn = document.getElementById('clear-search');
   const sortSelect = document.getElementById('sort-select');
   const resetBtn = document.getElementById('reset-filters-btn');
 
+  // The old category pill bar stays in the DOM for the protected contract, but
+  // is intentionally hidden and empty. The per-app select is the live filter.
+  if (pillsContainer) pillsContainer.innerHTML = '';
+
+  if (appSelect && Array.isArray(products) && products.length) {
+    const current = appSelect.value || activeApp;
+    appSelect.innerHTML = [
+      '<option value="all">Semua Aplikasi</option>',
+      ...products.map(
+        (app) => `<option value="${escapeHtml(app.id)}">${escapeHtml(app.name)}</option>`
+      )
+    ].join('');
+    appSelect.value = current;
+  }
+
   const notify = () => {
-    const filtered = filterAndSortApps(products, activeCategory, searchQuery, activeSort);
+    const filtered = filterAppsByApp(products, activeApp, searchQuery, activeSort);
     onUpdate?.(filtered);
   };
 
-  const refreshPills = () => {
-    renderCategoryPills(pillsContainer, categories, products, (catId) => {
-      activeCategory = catId;
-      refreshPills();
-      notify();
-    });
-  };
-
   const resetAll = () => {
-    activeCategory = 'all';
+    activeApp = 'all';
     activeSort = 'popular';
     searchQuery = '';
+    if (appSelect) appSelect.value = 'all';
     if (searchInput) searchInput.value = '';
     if (clearBtn) {
       clearBtn.classList.add('hidden');
       clearBtn.classList.remove('flex');
     }
     if (sortSelect) sortSelect.value = 'popular';
-    refreshPills();
     notify();
   };
+
+  if (appSelect) {
+    appSelect.addEventListener('change', (e) => {
+      activeApp = e.target.value || 'all';
+      notify();
+    });
+  }
 
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
@@ -191,7 +173,6 @@ export function initSearch({ products, categories, onUpdate }) {
     resetBtn.addEventListener('click', resetAll);
   }
 
-  refreshPills();
   notify();
 
   return { resetAll };

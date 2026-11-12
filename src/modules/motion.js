@@ -152,6 +152,25 @@ function buildHeroSlide(app, index) {
   const category = CATEGORY_LABELS[app.category] || 'Akun Premium';
   const eyebrow = `${category} · ${meta.chips?.[0] || 'Full Garansi'}`;
   const titleTag = 'h2';
+  const logoMarkup = meta.logo
+    ? `
+        <div class="relative grid h-32 w-32 place-items-center sm:h-40 sm:w-40">
+          <span
+            class="absolute inset-0 rounded-full opacity-35 blur-2xl"
+            style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 68%)"
+          ></span>
+          <img
+            src="${escapeHtml(meta.logo)}"
+            alt=""
+            class="relative h-20 w-20 object-contain sm:h-24 sm:w-24"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      `
+    : `
+        <i data-lucide="${escapeHtml(app.icon || 'layers')}" class="h-[13rem] w-[13rem] text-white/[0.06] sm:h-[18rem] sm:w-[18rem]"></i>
+      `;
 
   return `
     <article
@@ -164,7 +183,7 @@ function buildHeroSlide(app, index) {
       <div class="hero-art absolute inset-y-0 right-0 w-full sm:w-[72%] lg:w-[60%]" aria-hidden="true">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_68%_38%,rgba(255,255,255,0.08),transparent_58%),linear-gradient(150deg,#141824_0%,#0F171E_55%,#05070A_100%)]"></div>
         <div class="absolute inset-0 grid place-items-center">
-          <i data-lucide="${escapeHtml(app.icon || 'layers')}" class="h-[13rem] w-[13rem] text-white/[0.06] sm:h-[18rem] sm:w-[18rem]"></i>
+          ${logoMarkup}
         </div>
       </div>
 
@@ -450,10 +469,15 @@ export function initHeroCarousel(products, { onAddToCart, onDirectBuy } = {}) {
 /* 4. Scroll reveals — fade-up once, plus rAF sweep for stranded elements */
 export function initScrollReveals() {
   const animateEnabled = shouldAnimate();
+  const sectionEls = Array.from(document.querySelectorAll('[data-section-reveal]'));
   const singleEls = Array.from(document.querySelectorAll('[data-reveal]'));
   const groups = Array.from(document.querySelectorAll('[data-reveal-group]'));
 
   if (!animateEnabled) {
+    sectionEls.forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
     singleEls.forEach((el) => {
       el.style.opacity = '1';
       el.style.transform = 'none';
@@ -467,6 +491,21 @@ export function initScrollReveals() {
     return;
   }
 
+  const revealSection = (el, immediate = false) => {
+    if (!el || el.dataset.sectionRevealed === 'true') return;
+    el.dataset.sectionRevealed = 'true';
+    if (immediate) {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      return;
+    }
+    animate(
+      el,
+      { opacity: [0, 1], y: [motionTokens.distance.lg, 0] },
+      { duration: motionTokens.duration.slow, ease: motionTokens.easing.smooth }
+    );
+  };
+
   const revealSingle = (el, immediate = false) => {
     if (!el || el.dataset.revealed === 'true') return;
     el.dataset.revealed = 'true';
@@ -477,7 +516,7 @@ export function initScrollReveals() {
     }
     animate(
       el,
-      { opacity: [0, 1], y: [16, 0] },
+      { opacity: [0, 1], y: [motionTokens.distance.lg, 0] },
       { duration: motionTokens.duration.normal, ease: motionTokens.easing.smooth }
     );
   };
@@ -505,6 +544,20 @@ export function initScrollReveals() {
 
   const groupItemsMap = new Map();
 
+  sectionEls.forEach((el) => {
+    if (el.dataset.sectionRevealed === 'true') return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight * 0.96) {
+      el.dataset.sectionRevealed = 'true';
+      return;
+    }
+
+    el.style.opacity = '0';
+    el.style.transform = `translateY(${motionTokens.distance.lg}px)`;
+
+    inView(el, () => revealSection(el), { amount: 'some' });
+  });
+
   singleEls.forEach((el) => {
     if (el.dataset.revealed === 'true') return;
     const rect = el.getBoundingClientRect();
@@ -514,7 +567,7 @@ export function initScrollReveals() {
     }
 
     el.style.opacity = '0';
-    el.style.transform = 'translateY(16px)';
+    el.style.transform = `translateY(${motionTokens.distance.lg}px)`;
 
     inView(el, () => revealSingle(el), { amount: 'some' });
   });
@@ -533,7 +586,7 @@ export function initScrollReveals() {
 
     items.forEach((item) => {
       item.style.opacity = '0';
-      item.style.transform = 'translateY(16px)';
+      item.style.transform = `translateY(${motionTokens.distance.lg}px)`;
     });
 
     inView(group, () => revealGroup(group, items), { amount: 'some' });
@@ -544,6 +597,13 @@ export function initScrollReveals() {
   const sweepVisibleOrPassed = () => {
     sweepScheduled = false;
     const threshold = window.innerHeight * 0.98;
+    sectionEls.forEach((el) => {
+      if (el.dataset.sectionRevealed === 'true') return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= threshold) {
+        revealSection(el, rect.bottom < 0);
+      }
+    });
     singleEls.forEach((el) => {
       if (el.dataset.revealed === 'true') return;
       const rect = el.getBoundingClientRect();
@@ -569,6 +629,7 @@ export function initScrollReveals() {
 
   window.addEventListener('scroll', scheduleSweep, { passive: true });
   window.addEventListener('hashchange', () => setTimeout(scheduleSweep, 60));
+  scheduleSweep();
 
   document.addEventListener('cozu:catalog-rendered', (e) => {
     if (!shouldAnimate()) return;
@@ -638,6 +699,48 @@ export function initStepsSpine() {
   window.addEventListener('scroll', scheduleMeasure, { passive: true });
   window.addEventListener('resize', scheduleMeasure, { passive: true });
   scheduleMeasure();
+}
+
+/* 5b. Numbered steps — scroll-linked fade/rise with 0.12s stagger */
+export function initStepsScroll() {
+  const list = document.getElementById('steps-list');
+  if (!list) return;
+  const steps = Array.from(list.children).filter((el) => el.tagName === 'LI');
+  if (!steps.length) return;
+
+  const reduceMotion = !shouldAnimate();
+
+  steps.forEach((step, index) => {
+    step.style.setProperty('--step-delay', `${(index * 0.12).toFixed(2)}s`);
+    if (reduceMotion) {
+      step.classList.add('is-visible');
+    } else {
+      step.classList.add('step-scroll');
+    }
+  });
+
+  if (reduceMotion) return;
+
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    const viewport = window.innerHeight || 1;
+    steps.forEach((step) => {
+      const rect = step.getBoundingClientRect();
+      const inViewport = rect.top < viewport * 0.92 && rect.bottom > viewport * 0.08;
+      step.classList.toggle('is-visible', inViewport);
+    });
+  };
+
+  const schedule = () => {
+    if (frame) return;
+    frame = requestAnimationFrame(update);
+  };
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  window.addEventListener('hashchange', () => setTimeout(schedule, 60));
+  schedule();
 }
 
 /* 6. Count-up stats — once per element, on first view */
@@ -757,6 +860,7 @@ export function initMotionSystem(products, { onAddToCart, onDirectBuy } = {}) {
   initHeroCarousel(products, { onAddToCart, onDirectBuy });
   initScrollReveals();
   initStepsSpine();
+  initStepsScroll();
   initCounters();
   initMicroInteractions();
 

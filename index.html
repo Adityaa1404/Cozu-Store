@@ -142,20 +142,20 @@
           <span class="sidebar-label">Beranda</span>
         </a>
         <a
-          href="#layanan"
-          data-nav="layanan"
-          class="sidebar-link nav-link"
-        >
-          <i data-lucide="layout-grid" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
-          <span class="sidebar-label">Katalog</span>
-        </a>
-        <a
           href="#testimoni"
           data-nav="testimoni"
           class="sidebar-link nav-link"
         >
           <i data-lucide="message-square-quote" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
           <span class="sidebar-label">Testimoni</span>
+        </a>
+        <a
+          href="#layanan"
+          data-nav="layanan"
+          class="sidebar-link nav-link"
+        >
+          <i data-lucide="layout-grid" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
+          <span class="sidebar-label">Katalog</span>
         </a>
         <a
           href="#faq"
@@ -262,7 +262,7 @@
         </section>
 
         <!-- Payment trust strip -->
-        <section aria-label="Metode Pembayaran Resmi" class="border-b border-line bg-surface">
+        <section aria-label="Metode Pembayaran Resmi" data-section-reveal class="border-b border-line bg-surface">
           <div
             class="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-3 px-4 py-4 sm:flex-row sm:px-6 lg:px-10"
           >
@@ -270,21 +270,33 @@
               <i data-lucide="shield-check" class="h-4 w-4 text-ink-secondary" aria-hidden="true"></i>
               <span>Pembayaran resmi Indonesia, terverifikasi otomatis</span>
             </p>
-            <ul class="flex flex-wrap items-center justify-center gap-1.5">
-              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">QRIS</li>
-              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">DANA</li>
-              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">GoPay</li>
-              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">OVO</li>
-              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">ShopeePay</li>
-              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">BCA</li>
+            <ul class="flex flex-wrap items-center justify-center gap-3 sm:gap-4" aria-label="Logo metode pembayaran">
+              <li>
+                <img src="/logos/qris.png" alt="QRIS" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" />
+              </li>
+              <li>
+                <img src="/logos/dana.png" alt="DANA" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" />
+              </li>
+              <li>
+                <img src="/logos/gopay.png" alt="GoPay" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" />
+              </li>
+              <li>
+                <img src="/logos/ovo.svg" alt="OVO" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" />
+              </li>
+              <li>
+                <img src="/logos/shopeepay.png" alt="ShopeePay" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" />
+              </li>
+              <li>
+                <img src="/logos/bca.png" alt="BCA" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" />
+              </li>
             </ul>
           </div>
         </section>
 
         <!-- Testimonials -->
-        <section id="testimoni" class="scroll-mt-20 border-b border-line py-12 md:py-16">
+        <section id="testimoni" data-section-reveal class="scroll-mt-20 border-b border-line py-12 md:py-16">
           <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
-            <div data-reveal class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <div class="max-w-2xl">
                 <p class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
                   Testimoni
@@ -336,9 +348,9 @@
         </section>
 
         <!-- Catalog -->
-        <section id="layanan" class="scroll-mt-20 border-b border-line py-12 md:py-16">
+        <section id="layanan" data-section-reveal class="scroll-mt-20 border-b border-line py-12 md:py-16">
           <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
-            <div data-reveal class="max-w-2xl">
+            <div class="max-w-2xl">
               <p class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
                 Katalog
               </p>
@@ -354,8 +366,8 @@
 
             <!-- Toolbar -->
             <div class="mt-8 rounded-xl border border-line bg-surface p-3 sm:p-4">
-              <div class="grid grid-cols-1 gap-2 md:grid-cols-12">
-                <div class="relative md:col-span-8" role="search" aria-label="Cari aplikasi atau paket">
+              <div class="flex flex-col gap-2 md:flex-row md:items-center">
+                <div class="relative min-w-0 flex-1" role="search" aria-label="Cari aplikasi atau paket">
                   <span
                     class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted"
                     aria-hidden="true"
@@ -379,7 +391,27 @@
                   </button>
                 </div>
 
-                <div class="relative md:col-span-4">
+                <div class="relative w-full md:w-44 lg:w-48">
+                  <label for="app-filter-select" class="sr-only">Filter aplikasi</label>
+                  <select
+                    id="app-filter-select"
+                    class="h-11 w-full appearance-none rounded-full border border-line bg-canvas px-4 pr-10 text-sm font-medium text-ink-secondary focus:border-line-strong focus:outline-none focus:ring-2 focus:ring-white/15"
+                  >
+                    <option value="all">Semua Aplikasi</option>
+                    <option value="netflix">Netflix</option>
+                    <option value="canva">Canva</option>
+                    <option value="capcut">CapCut</option>
+                    <option value="bstation">Bstation</option>
+                  </select>
+                  <span
+                    class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink-muted"
+                    aria-hidden="true"
+                  >
+                    <i data-lucide="chevron-down" class="h-4 w-4"></i>
+                  </span>
+                </div>
+
+                <div class="relative w-full md:w-52 lg:w-56">
                   <label for="sort-select" class="sr-only">Urutkan katalog</label>
                   <select
                     id="sort-select"
@@ -399,13 +431,8 @@
                 </div>
               </div>
 
-              <div
-                id="category-filter-pills"
-                class="mt-3 flex flex-wrap items-center gap-2"
-                aria-label="Filter kategori aplikasi"
-              >
-                <!-- Populated by search.js -->
-              </div>
+              <!-- Protected contract: category pills stay in the DOM but are no longer shown. -->
+              <div id="category-filter-pills" class="sr-only" aria-hidden="true"></div>
             </div>
 
             <!-- Catalog grid -->
@@ -423,7 +450,7 @@
               </div>
               <h3 class="text-base font-semibold text-ink">Tidak ada aplikasi yang sesuai</h3>
               <p class="mx-auto mt-1.5 max-w-sm text-sm leading-relaxed text-ink-secondary">
-                Coba ganti kategori filter atau gunakan kata kunci pencarian lain.
+                Coba ganti filter aplikasi atau gunakan kata kunci pencarian lain.
               </p>
               <button
                 type="button"
@@ -437,7 +464,7 @@
             </div>
 
             <!-- Plan explainer -->
-            <div data-reveal class="mt-10 rounded-xl border border-line bg-surface p-6 sm:p-8">
+            <div class="mt-10 rounded-xl border border-line bg-surface p-6 sm:p-8">
               <div class="max-w-2xl">
                 <h3 class="text-lg font-semibold tracking-tight text-ink">
                   Sharing, Semi Private, atau Private?
@@ -494,7 +521,6 @@
 
             <!-- Warranty -->
             <div
-              data-reveal
               class="mt-4 flex flex-col justify-between gap-5 rounded-xl border border-line bg-surface p-6 sm:p-8 lg:flex-row lg:items-center"
             >
               <div class="flex items-start gap-4">
@@ -525,9 +551,9 @@
         </section>
 
         <!-- FAQ -->
-        <section id="faq" class="scroll-mt-20 border-b border-line py-12 md:py-16">
+        <section id="faq" data-section-reveal class="scroll-mt-20 border-b border-line py-12 md:py-16">
           <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
-            <div data-reveal class="max-w-2xl">
+            <div class="max-w-2xl">
               <p class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
                 Bantuan
               </p>
@@ -541,7 +567,7 @@
               </p>
             </div>
 
-            <div id="faq-list" data-reveal-group class="mt-8 grid grid-cols-1 items-start gap-3 lg:grid-cols-2">
+            <div id="faq-list" class="mt-8 grid grid-cols-1 items-start gap-3 lg:grid-cols-2">
               <div data-reveal-item class="rounded-xl bg-surface">
                 <button
                   type="button"
@@ -728,7 +754,7 @@
             <div class="relative mt-10 max-w-2xl">
               <!-- Scroll-path spine -->
               <svg
-                class="pointer-events-none absolute left-[15px] top-0 h-full w-[2px] overflow-visible"
+                class="pointer-events-none absolute left-[23px] top-0 h-full w-[2px] overflow-visible"
                 viewBox="0 0 2 100"
                 preserveAspectRatio="none"
                 aria-hidden="true"
@@ -746,10 +772,10 @@
                 />
               </svg>
 
-              <ol id="steps-list" data-reveal-group class="space-y-8">
-                <li data-reveal-item class="relative pl-12">
+              <ol id="steps-list" class="space-y-8">
+                <li class="step-item relative pl-16">
                   <span
-                    class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
+                    class="absolute left-0 top-0 grid h-12 w-12 place-items-center rounded-full border border-line-strong bg-surface text-lg font-bold tracking-tight text-ink shadow-card"
                     aria-hidden="true"
                     >01</span
                   >
@@ -760,9 +786,9 @@
                     beberapa aplikasi ke keranjang.
                   </p>
                 </li>
-                <li data-reveal-item class="relative pl-12">
+                <li class="step-item relative pl-16">
                   <span
-                    class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
+                    class="absolute left-0 top-0 grid h-12 w-12 place-items-center rounded-full border border-line-strong bg-surface text-lg font-bold tracking-tight text-ink shadow-card"
                     aria-hidden="true"
                     >02</span
                   >
@@ -772,9 +798,9 @@
                     WhatsApp admin.
                   </p>
                 </li>
-                <li data-reveal-item class="relative pl-12">
+                <li class="step-item relative pl-16">
                   <span
-                    class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
+                    class="absolute left-0 top-0 grid h-12 w-12 place-items-center rounded-full border border-line-strong bg-surface text-lg font-bold tracking-tight text-ink shadow-card"
                     aria-hidden="true"
                     >03</span
                   >
@@ -790,10 +816,9 @@
         </section>
 
         <!-- CTA -->
-        <section class="py-12 md:py-16">
+        <section data-section-reveal class="py-12 md:py-16">
           <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
             <div
-              data-reveal
               class="relative overflow-hidden rounded-xl bg-surface px-6 py-10 text-center ring-1 ring-line sm:px-12 sm:py-14"
             >
               <div
@@ -825,7 +850,7 @@
       </main>
 
       <!-- Footer -->
-      <footer class="border-t border-line bg-rail pt-12">
+      <footer data-section-reveal class="border-t border-line bg-rail pt-12">
         <div class="mx-auto max-w-[1280px] px-4 pb-24 sm:px-6 lg:px-10 lg:pb-10">
           <div class="grid grid-cols-1 gap-8 pb-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
@@ -846,10 +871,10 @@
               <h3 class="text-sm font-semibold text-ink">Navigasi</h3>
               <ul class="mt-3 space-y-2 text-sm text-ink-secondary">
                 <li><a href="#home" class="transition-colors hover:text-ink">Beranda</a></li>
-                <li><a href="#cara-pesan" class="transition-colors hover:text-ink">Cara Pesan</a></li>
-                <li><a href="#layanan" class="transition-colors hover:text-ink">Katalog</a></li>
                 <li><a href="#testimoni" class="transition-colors hover:text-ink">Testimoni</a></li>
+                <li><a href="#layanan" class="transition-colors hover:text-ink">Katalog</a></li>
                 <li><a href="#faq" class="transition-colors hover:text-ink">FAQ &amp; Garansi</a></li>
+                <li><a href="#cara-pesan" class="transition-colors hover:text-ink">Cara Pesan</a></li>
               </ul>
             </div>
 
@@ -875,13 +900,13 @@
                 <span>0878-6248-1038</span>
               </a>
               <p class="mt-3 text-xs text-ink-muted">Pembayaran</p>
-              <ul class="mt-1.5 flex flex-wrap gap-1.5">
-                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">QRIS</li>
-                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">DANA</li>
-                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">GoPay</li>
-                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">OVO</li>
-                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">ShopeePay</li>
-                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">BCA</li>
+              <ul class="mt-2 flex flex-wrap items-center gap-3" aria-label="Logo metode pembayaran">
+                <li><img src="/logos/qris.png" alt="QRIS" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
+                <li><img src="/logos/dana.png" alt="DANA" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
+                <li><img src="/logos/gopay.png" alt="GoPay" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
+                <li><img src="/logos/ovo.svg" alt="OVO" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
+                <li><img src="/logos/shopeepay.png" alt="ShopeePay" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
+                <li><img src="/logos/bca.png" alt="BCA" class="h-6 w-auto object-contain opacity-90" loading="lazy" decoding="async" /></li>
               </ul>
             </div>
           </div>
@@ -948,17 +973,6 @@
       </a>
 
       <a
-        href="#layanan"
-        data-nav="layanan"
-        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-muted transition-colors hover:text-ink"
-      >
-        <span class="mobile-nav-icon grid h-8 w-8 place-items-center rounded-full transition-colors" aria-hidden="true">
-          <i data-lucide="layout-grid" class="h-4 w-4"></i>
-        </span>
-        <span class="text-[10px] font-medium">Katalog</span>
-      </a>
-
-      <a
         href="#testimoni"
         data-nav="testimoni"
         class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-muted transition-colors hover:text-ink"
@@ -967,6 +981,17 @@
           <i data-lucide="message-square-quote" class="h-4 w-4"></i>
         </span>
         <span class="text-[10px] font-medium">Testimoni</span>
+      </a>
+
+      <a
+        href="#layanan"
+        data-nav="layanan"
+        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-muted transition-colors hover:text-ink"
+      >
+        <span class="mobile-nav-icon grid h-8 w-8 place-items-center rounded-full transition-colors" aria-hidden="true">
+          <i data-lucide="layout-grid" class="h-4 w-4"></i>
+        </span>
+        <span class="text-[10px] font-medium">Katalog</span>
       </a>
 
       <button

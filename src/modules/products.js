@@ -5,36 +5,46 @@ export const durationLabels = {
 };
 
 /**
- * Non-visual app metadata only. The storefront uses a single accent, so apps are
- * differentiated by name + icon, never by their own colour theme.
+ * App metadata. Brand colour is used only for the soft logo aura — the interface
+ * itself still runs on a single cyan accent.
  */
 export const APP_META = {
   netflix: {
     urlSlug: 'cozu.store/netflix',
     shortLabel: 'Netflix 4K',
-    chips: ['Ultra HD 4K', 'Less Limit', 'Full Garansi']
+    chips: ['Ultra HD 4K', 'Less Limit', 'Full Garansi'],
+    logo: '/logos/netflix.png',
+    brand: '#E50914'
   },
   canva: {
     urlSlug: 'cozu.store/canva',
     shortLabel: 'Canva Pro',
-    chips: ['100M+ Aset Pro', 'Brand Kit', 'Magic Studio']
+    chips: ['100M+ Aset Pro', 'Brand Kit', 'Magic Studio'],
+    logo: '/logos/canva.png',
+    brand: '#00C4CC'
   },
   capcut: {
     urlSlug: 'cozu.store/capcut',
     shortLabel: 'CapCut Pro',
-    chips: ['Bebas Watermark', 'Fitur AI Pro', 'Full Garansi']
+    chips: ['Bebas Watermark', 'Fitur AI Pro', 'Full Garansi'],
+    logo: '/logos/capcut.png',
+    brand: '#FFFFFF'
   },
   bstation: {
     urlSlug: 'cozu.store/bstation',
     shortLabel: 'Bstation VIP',
-    chips: ['Bebas Iklan', 'Full HD 1080p', 'Full Garansi']
+    chips: ['Bebas Iklan', 'Full HD 1080p', 'Full Garansi'],
+    logo: '/logos/bstation.png',
+    brand: '#00A1D6'
   }
 };
 
 const DEFAULT_META = {
   urlSlug: 'cozu.store',
   shortLabel: 'Akun Premium',
-  chips: ['Full Garansi', 'Proses Kilat', 'QRIS Ready']
+  chips: ['Full Garansi', 'Proses Kilat', 'QRIS Ready'],
+  logo: '',
+  brand: '#FFFFFF'
 };
 
 export function getAppTheme(appId) {
@@ -117,6 +127,32 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
           const isBest = Boolean(plan.bestSeller);
           const durMeta = durationLabels[durationKey] || { label: durationKey, unit: durationKey };
           const features = (durationData.features || []).slice(0, 3);
+          const meta = getAppTheme(app.id);
+          const logoMarkup = meta.logo
+            ? `
+                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2" aria-hidden="true">
+                  <div class="relative grid h-16 w-16 place-items-center sm:h-20 sm:w-20">
+                    <span
+                      class="absolute inset-0 rounded-full opacity-35 blur-xl"
+                      style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 68%)"
+                    ></span>
+                    <img
+                      src="${escapeHtml(meta.logo)}"
+                      alt=""
+                      class="relative h-10 w-10 object-contain sm:h-12 sm:w-12"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              `
+            : `
+                <i
+                  data-lucide="${escapeHtml(app.icon || 'layers')}"
+                  class="absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-white/[0.08] transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
+                  aria-hidden="true"
+                ></i>
+              `;
 
           return `
             <article
@@ -127,11 +163,7 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
               class="group flex h-full scroll-mt-24 flex-col overflow-hidden rounded-xl border border-line bg-surface transition-colors hover:border-line-strong"
             >
               <div class="relative m-2 mb-0 aspect-[16/9] overflow-hidden rounded-lg bg-[radial-gradient(circle_at_28%_18%,rgba(255,255,255,0.10),transparent_62%),linear-gradient(150deg,#141824_0%,#0F171E_72%)]">
-                <i
-                  data-lucide="${escapeHtml(app.icon || 'layers')}"
-                  class="absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-white/[0.08] transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
-                  aria-hidden="true"
-                ></i>
+                ${logoMarkup}
 
                 <div class="absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-3">
                   ${

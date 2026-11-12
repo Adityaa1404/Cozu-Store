@@ -264,6 +264,21 @@
   color: var(--ink);
 }
 
+/* Numbered "Cara pesan" steps — scroll-linked fade/rise with stagger */
+.step-item.step-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 420ms var(--shell-ease),
+    transform 420ms var(--shell-ease);
+  transition-delay: var(--step-delay, 0s);
+  will-change: opacity, transform;
+}
+.step-item.step-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Card hover: neutral border lift (motion handled in JS) */
 [data-motion-hover]:hover {
   border-color: var(--line-strong);
@@ -387,6 +402,11 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .step-item.step-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
   *,
   *::before,
