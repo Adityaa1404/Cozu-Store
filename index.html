@@ -14,7 +14,7 @@
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Cozu Store" />
-    <meta name="theme-color" content="#1E2134" />
+    <meta name="theme-color" content="#05070A" />
     <link rel="canonical" href="https://cozu-store.vercel.app/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -83,7 +83,7 @@
   </head>
 
   <body class="min-h-screen bg-canvas font-sans text-ink antialiased">
-    <!-- Top Reading Scroll Progress Bar -->
+    <!-- Top reading scroll progress bar -->
     <div
       id="top-scroll-progress"
       aria-hidden="true"
@@ -93,1015 +93,920 @@
     <!-- Skip to main content -->
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:bg-accent focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-canvas"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-canvas"
     >
       Langsung ke konten utama
     </a>
 
-    <!-- Minimal Sticky Header -->
-    <header class="header-top-mask sticky top-0 z-40 border-b border-line">
-      <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+    <!-- Desktop sidebar rail -->
+    <aside
+      id="desktop-sidebar"
+      aria-label="Navigasi utama"
+      class="sidebar-rail fixed inset-y-0 left-0 z-50 hidden flex-col border-r border-line bg-rail lg:flex"
+    >
+      <a
+        href="#home"
+        class="flex h-16 shrink-0 items-center gap-2.5 overflow-hidden px-4 text-ink focus-visible:outline-none"
+        aria-label="Cozu Store — Beranda"
+      >
+        <span
+          class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-accent text-xs font-extrabold tracking-tight text-canvas"
+          aria-hidden="true"
+        >
+          CZ
+        </span>
+        <span class="sidebar-label text-[15px] font-semibold tracking-tight">Cozu Store</span>
+      </a>
+
+      <div class="px-2">
+        <button
+          type="button"
+          id="sidebar-toggle"
+          aria-controls="desktop-sidebar"
+          aria-expanded="false"
+          aria-label="Perluas sidebar"
+          class="sidebar-toggle flex h-11 w-full items-center gap-3 rounded-lg px-3 text-ink-tertiary transition-colors hover:bg-surface hover:text-ink"
+        >
+          <i data-lucide="chevrons-right" class="sidebar-toggle-icon h-5 w-5 shrink-0" aria-hidden="true"></i>
+          <span class="sidebar-label text-xs font-semibold uppercase tracking-[0.08em]">Perluas</span>
+        </button>
+      </div>
+
+      <nav class="mt-2 flex flex-1 flex-col gap-1 overflow-y-auto px-2 pb-4" aria-label="Menu samping">
         <a
           href="#home"
-          class="flex shrink-0 items-center gap-2.5 text-ink focus-visible:outline-none"
+          data-nav="home"
+          class="sidebar-link nav-link"
         >
-          <span
-            class="grid h-8 w-8 place-items-center rounded-xl bg-accent text-xs font-extrabold tracking-tight text-canvas"
-            aria-hidden="true"
-          >
-            CZ
-          </span>
-          <span class="text-[15px] font-semibold tracking-tight">Cozu Store</span>
+          <i data-lucide="home" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
+          <span class="sidebar-label">Beranda</span>
+        </a>
+        <a
+          href="#layanan"
+          data-nav="layanan"
+          class="sidebar-link nav-link"
+        >
+          <i data-lucide="layout-grid" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
+          <span class="sidebar-label">Katalog</span>
+        </a>
+        <a
+          href="#testimoni"
+          data-nav="testimoni"
+          class="sidebar-link nav-link"
+        >
+          <i data-lucide="message-square-quote" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
+          <span class="sidebar-label">Testimoni</span>
+        </a>
+        <a
+          href="#faq"
+          data-nav="faq"
+          class="sidebar-link nav-link"
+        >
+          <i data-lucide="help-circle" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
+          <span class="sidebar-label">FAQ</span>
         </a>
 
-        <!-- Desktop Navigation -->
-        <nav aria-label="Navigasi Utama" class="hidden items-center gap-1 lg:flex">
-          <a
-            href="#home"
-            data-nav="home"
-            class="nav-link inline-flex h-11 items-center rounded-full px-3.5 text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
-          >
-            Beranda
-          </a>
-          <a
-            href="#cara-pesan"
-            data-nav="cara-pesan"
-            class="nav-link inline-flex h-11 items-center rounded-full px-3.5 text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
-          >
-            Cara Pesan
-          </a>
-          <a
-            href="#layanan"
-            data-nav="layanan"
-            class="nav-link inline-flex h-11 items-center rounded-full px-3.5 text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
-          >
-            Katalog
-          </a>
-          <a
-            href="#testimoni"
-            data-nav="testimoni"
-            class="nav-link inline-flex h-11 items-center rounded-full px-3.5 text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
-          >
-            Testimoni
-          </a>
-          <a
-            href="#faq"
-            data-nav="faq"
-            class="nav-link inline-flex h-11 items-center rounded-full px-3.5 text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
-          >
-            FAQ
-          </a>
-        </nav>
+        <div class="my-2 h-px bg-line" aria-hidden="true"></div>
 
-        <!-- Header Actions -->
-        <div class="flex items-center gap-2">
+        <button
+          type="button"
+          data-open-cart
+          class="sidebar-link nav-link w-full text-left"
+        >
+          <i data-lucide="shopping-cart" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
+          <span class="sidebar-label flex-1">Keranjang</span>
+        </button>
+        <a
+          href="https://wa.me/6287862481038?text=Halo%20Admin%20Cozu%20Store%2C%20saya%20ingin%20tanya%20layanan%20akun%20premium."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="sidebar-link nav-link"
+        >
+          <i data-lucide="message-circle" class="h-5 w-5 shrink-0" aria-hidden="true"></i>
+          <span class="sidebar-label">Chat Admin</span>
+        </a>
+      </nav>
+
+      <div class="shrink-0 border-t border-line px-4 py-4">
+        <p class="sidebar-label flex items-center gap-2 text-[11px] font-medium text-ink-muted">
+          <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+          Aktif 08.00–22.00 WIB
+        </p>
+      </div>
+    </aside>
+
+    <!-- Mobile top bar -->
+    <header class="sticky top-0 z-40 border-b border-line bg-canvas/95 backdrop-blur-md lg:hidden">
+      <div class="flex h-16 items-center justify-between gap-2 px-3 sm:px-5">
+        <div class="flex min-w-0 items-center gap-1">
           <button
             type="button"
-            data-open-cart
-            data-motion-press
-            aria-label="Buka keranjang belanja"
-            class="hidden h-11 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-surface-hover sm:inline-flex"
+            id="mobile-menu-btn"
+            aria-label="Buka menu navigasi"
+            aria-controls="mobile-drawer-root"
+            aria-expanded="false"
+            class="grid h-11 w-11 shrink-0 place-items-center rounded-full text-ink-secondary transition-colors hover:bg-surface hover:text-ink"
           >
-            <i data-lucide="shopping-cart" class="h-4 w-4" aria-hidden="true"></i>
-            <span class="hidden sm:inline">Keranjang</span>
-            <span
-              id="header-cart-badge"
-              class="hidden min-w-5 items-center justify-center rounded-full bg-accent px-1.5 text-xs font-bold text-canvas"
-            >
-              0
-            </span>
+            <i data-lucide="menu" class="h-5 w-5" aria-hidden="true"></i>
           </button>
-
-          <a
-            href="https://wa.me/6287862481038?text=Halo%20Admin%20Cozu%20Store%2C%20saya%20ingin%20tanya%20layanan%20akun%20premium."
-            target="_blank"
-            rel="noopener noreferrer"
-            data-motion-press
-            class="inline-flex h-11 items-center gap-2 rounded-full bg-accent px-4 text-sm font-semibold text-canvas transition-colors hover:bg-accent-hover"
-          >
-            <i data-lucide="message-circle" class="h-4 w-4" aria-hidden="true"></i>
-            <span class="hidden sm:inline">Chat Admin</span>
-            <span class="sm:hidden">Admin</span>
+          <a href="#home" class="flex min-w-0 items-center gap-2 text-ink">
+            <span
+              class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-accent text-[11px] font-extrabold tracking-tight text-canvas"
+              aria-hidden="true"
+            >
+              CZ
+            </span>
+            <span class="truncate text-[15px] font-semibold tracking-tight">Cozu Store</span>
           </a>
         </div>
+
+        <button
+          type="button"
+          data-open-cart
+          data-motion-press
+          aria-label="Buka keranjang belanja"
+          class="relative grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line bg-surface text-ink transition-colors hover:border-line-strong"
+        >
+          <i data-lucide="shopping-cart" class="h-5 w-5" aria-hidden="true"></i>
+          <span
+            id="header-cart-badge"
+            class="absolute -right-0.5 -top-0.5 hidden min-w-5 items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-canvas"
+          >
+            0
+          </span>
+        </button>
       </div>
     </header>
 
-    <main id="main-content" class="flex-grow">
-      <!-- Hero -->
-      <section id="home" class="scroll-mt-24 border-b border-line py-12 md:py-20">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-          <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
-            <!-- Copy Column -->
-            <div class="lg:col-span-7">
-              <p
-                data-hero-stagger
-                class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent"
-              >
-                <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-                <span>Layanan aktif 08.00–22.00 WIB</span>
-              </p>
-
-              <h1
-                class="mt-4 text-[clamp(2rem,5vw,3.25rem)] font-extrabold leading-[1.08] tracking-[-0.02em] text-ink"
-              >
-                <span class="hero-line"><span class="hero-line-inner">Akun premium,</span></span>
-                <span class="hero-line"
-                  ><span class="hero-line-inner">harga <span class="text-accent">jujur</span>.</span></span
-                >
-              </h1>
-
-              <p
-                data-hero-stagger
-                class="mt-5 max-w-xl text-[15px] leading-relaxed text-ink-secondary sm:text-base"
-              >
-                Netflix, Canva Pro, CapCut Pro, dan Bstation VIP mulai
-                <strong class="font-semibold text-ink">Rp 4.000</strong>. Proses 5–15 menit,
-                garansi penuh selama masa aktif, checkout langsung via WhatsApp.
-              </p>
-
-              <div
-                data-hero-stagger
-                class="mt-7 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3"
-              >
-                <a
-                  href="#layanan"
-                  data-motion-press
-                  class="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-semibold text-canvas transition-colors hover:bg-accent-hover"
-                >
-                  <span>Lihat katalog</span>
-                  <i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i>
-                </a>
-                <a
-                  href="#cara-pesan"
-                  data-motion-press
-                  class="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line px-6 text-sm font-semibold text-ink transition-colors hover:border-accent/50 hover:bg-accent-subtle"
-                >
-                  <span>Cara pesan</span>
-                </a>
-              </div>
-
-              <!-- Proof row -->
-              <dl
-                data-hero-stagger
-                class="mt-9 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-line pt-6 sm:grid-cols-4"
-              >
-                <div>
-                  <dt class="text-xs font-medium text-ink-faint">Proses</dt>
-                  <dd class="mt-1 text-lg font-semibold tracking-tight text-ink">
-                    <span data-counter data-counter-to="5" data-counter-duration="900">5</span>–<span
-                      data-counter
-                      data-counter-to="15"
-                      data-counter-duration="900"
-                      >15</span
-                    >
-                    <span class="text-sm font-medium text-ink-secondary">menit</span>
-                  </dd>
-                </div>
-                <div>
-                  <dt class="text-xs font-medium text-ink-faint">Transaksi</dt>
-                  <dd class="mt-1 text-lg font-semibold tracking-tight text-ink">
-                    <span data-counter data-counter-to="500" data-counter-duration="1200">500</span
-                    ><span class="text-accent">+</span>
-                  </dd>
-                </div>
-                <div>
-                  <dt class="text-xs font-medium text-ink-faint">Garansi</dt>
-                  <dd class="mt-1 text-lg font-semibold tracking-tight text-ink">Penuh</dd>
-                </div>
-                <div>
-                  <dt class="text-xs font-medium text-ink-faint">Jam buka</dt>
-                  <dd class="mt-1 text-lg font-semibold tracking-tight text-ink">08–22</dd>
-                </div>
-              </dl>
-            </div>
-
-            <!-- Showcase Deck -->
-            <div class="lg:col-span-5">
-              <div
-                id="hero-deck-wrapper"
-                tabindex="0"
-                aria-label="Showcase interaktif aplikasi premium"
-                class="relative mx-auto w-full max-w-[420px] outline-none"
-              >
-                <div id="hero-deck-stage" class="relative">
-                  <!-- Center showcase card -->
-                  <div
-                    id="hero-deck-center"
-                    class="relative z-10 mx-auto w-full max-w-[340px] overflow-hidden rounded-xl border border-line bg-surface shadow-card"
-                  >
-                    <div class="flex items-center justify-between gap-2 border-b border-line px-4 py-3">
-                      <span id="hero-deck-url" class="truncate text-xs font-medium text-ink-secondary">
-                        cozu.store/netflix
-                      </span>
-                      <span id="hero-deck-counter" class="shrink-0 text-xs font-semibold text-ink-faint">
-                        01 / 04
-                      </span>
-                    </div>
-
-                    <div id="hero-deck-stage-bg" class="p-5">
-                      <div class="flex items-center justify-between gap-2">
-                        <span
-                          id="hero-deck-price"
-                          class="rounded-full border border-line bg-canvas px-3 py-1 text-xs font-semibold tracking-tight text-ink"
-                        >
-                          MULAI RP 6.000
-                        </span>
-                        <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-secondary">
-                          <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-                          <span id="hero-deck-badge-text">Paling laris</span>
-                        </span>
-                      </div>
-
-                      <div class="py-6 text-center">
-                        <div
-                          id="hero-deck-orb"
-                          class="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-xl bg-accent-subtle text-accent"
-                          aria-hidden="true"
-                        >
-                          <i data-lucide="tv" class="h-8 w-8"></i>
-                        </div>
-                        <h2 id="hero-deck-title" class="text-2xl font-bold tracking-tight text-ink">
-                          Netflix
-                        </h2>
-                        <p
-                          id="hero-deck-tagline"
-                          class="mx-auto mt-1.5 max-w-[16rem] text-sm leading-relaxed text-ink-secondary"
-                        >
-                          Streaming film &amp; series Ultra HD 4K tanpa ribet
-                        </p>
-
-                        <div
-                          id="hero-deck-chips"
-                          class="mt-4 flex flex-wrap items-center justify-center gap-1.5"
-                        >
-                          <span class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">Ultra HD 4K</span>
-                          <span class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">Less Limit</span>
-                          <span class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">Full Garansi</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="flex items-center gap-2 border-t border-line p-3">
-                      <a
-                        id="hero-deck-jump"
-                        href="#netflix"
-                        data-jump-app="netflix"
-                        data-motion-press
-                        class="inline-flex h-11 flex-1 items-center justify-center gap-1.5 rounded-full border border-line bg-canvas-subtle text-sm font-semibold text-ink transition-colors hover:border-accent/50"
-                      >
-                        <span>Pilih paket</span>
-                        <i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i>
-                      </a>
-                      <button
-                        type="button"
-                        id="hero-deck-add"
-                        data-motion-press
-                        data-app-id="netflix"
-                        data-plan-name="Sharing 1 Profile"
-                        data-price="Rp 40.000"
-                        data-duration-key="monthly"
-                        data-duration-label="Bulanan"
-                        aria-label="Tambah paket ke keranjang"
-                        class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-accent/50 text-accent transition-colors hover:bg-accent-subtle"
-                      >
-                        <i data-lucide="plus" class="h-4 w-4" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- WhatsApp order hint -->
-                  <div
-                    id="hero-cli-widget"
-                    class="relative z-20 mx-auto mt-3 w-full max-w-[340px] rounded-xl border border-line bg-canvas-subtle px-4 py-3"
-                  >
-                    <p class="flex items-center gap-2 text-xs font-semibold text-ink">
-                      <i data-lucide="message-circle" class="h-3.5 w-3.5 text-accent" aria-hidden="true"></i>
-                      Format WhatsApp otomatis
-                    </p>
-                    <p id="hero-cli-cmd" class="mt-1 truncate text-xs text-ink-secondary">
-                      Netflix 4K · Rp 40.000/bln
-                    </p>
-                  </div>
-                </div>
-
-                <!-- Deck controls -->
-                <div class="mx-auto mt-4 flex max-w-[340px] items-center justify-between gap-3">
-                  <div
-                    id="hero-deck-segments"
-                    class="grid flex-1 grid-cols-4 gap-1.5"
-                    role="group"
-                    aria-label="Pilih aplikasi showcase"
-                  >
-                    <button
-                      type="button"
-                      data-deck-index="0"
-                      aria-label="Showcase 1: Netflix"
-                      aria-current="true"
-                      class="py-2"
-                    >
-                      <span class="block h-1 w-full overflow-hidden rounded-full bg-line">
-                        <span class="deck-segment-fill block h-full w-full rounded-full bg-accent"></span>
-                      </span>
-                    </button>
-                    <button
-                      type="button"
-                      data-deck-index="1"
-                      aria-label="Showcase 2: Canva"
-                      aria-current="false"
-                      class="py-2"
-                    >
-                      <span class="block h-1 w-full overflow-hidden rounded-full bg-line">
-                        <span class="deck-segment-fill block h-full w-full rounded-full bg-accent"></span>
-                      </span>
-                    </button>
-                    <button
-                      type="button"
-                      data-deck-index="2"
-                      aria-label="Showcase 3: CapCut"
-                      aria-current="false"
-                      class="py-2"
-                    >
-                      <span class="block h-1 w-full overflow-hidden rounded-full bg-line">
-                        <span class="deck-segment-fill block h-full w-full rounded-full bg-accent"></span>
-                      </span>
-                    </button>
-                    <button
-                      type="button"
-                      data-deck-index="3"
-                      aria-label="Showcase 4: Bstation"
-                      aria-current="false"
-                      class="py-2"
-                    >
-                      <span class="block h-1 w-full overflow-hidden rounded-full bg-line">
-                        <span class="deck-segment-fill block h-full w-full rounded-full bg-accent"></span>
-                      </span>
-                    </button>
-                  </div>
-
-                  <div class="flex shrink-0 items-center gap-1.5">
-                    <button
-                      type="button"
-                      id="hero-deck-prev"
-                      data-motion-press
-                      aria-label="Aplikasi sebelumnya"
-                      class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-secondary transition-colors hover:border-accent/50 hover:text-ink"
-                    >
-                      <i data-lucide="chevron-left" class="h-4 w-4" aria-hidden="true"></i>
-                    </button>
-                    <button
-                      type="button"
-                      id="hero-deck-next"
-                      data-motion-press
-                      aria-label="Aplikasi berikutnya"
-                      class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-secondary transition-colors hover:border-accent/50 hover:text-ink"
-                    >
-                      <i data-lucide="chevron-right" class="h-4 w-4" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Payment methods -->
-      <section aria-label="Metode Pembayaran Resmi" class="border-b border-line bg-canvas-subtle">
-        <div
-          class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-4 sm:flex-row sm:px-6"
+    <div id="app-shell" class="app-shell">
+      <main id="main-content" class="flex-grow">
+        <!-- Hero carousel -->
+        <section
+          id="home"
+          tabindex="0"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Rekomendasi aplikasi premium Cozu Store"
+          class="hero-carousel relative isolate flex h-[75vh] min-h-[580px] max-h-[880px] flex-col justify-end overflow-hidden border-b border-line outline-none scroll-mt-20"
         >
-          <p class="flex items-center gap-2 text-xs font-medium text-ink-secondary">
-            <i data-lucide="shield-check" class="h-4 w-4 text-accent" aria-hidden="true"></i>
-            <span>Pembayaran resmi Indonesia, terverifikasi otomatis</span>
-          </p>
-          <ul class="flex flex-wrap items-center justify-center gap-1.5">
-            <li class="rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-secondary">QRIS</li>
-            <li class="rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-secondary">DANA</li>
-            <li class="rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-secondary">GoPay</li>
-            <li class="rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-secondary">OVO</li>
-            <li class="rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-secondary">ShopeePay</li>
-            <li class="rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-secondary">BCA</li>
-          </ul>
-        </div>
-      </section>
+          <h1 class="sr-only">Cozu Store — akun premium Netflix, Canva, CapCut &amp; Bstation bergaransi</h1>
+          <div id="hero-carousel-slides" class="absolute inset-0" aria-live="off"></div>
 
-      <!-- How it works -->
-      <section id="cara-pesan" class="scroll-mt-24 border-b border-line py-12 md:py-24">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-          <div data-reveal class="max-w-2xl">
-            <p class="text-xs font-semibold uppercase tracking-[0.08em] text-accent">Cara pesan</p>
-            <h2
-              class="mt-2 text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-[1.15] tracking-[-0.01em] text-ink"
-            >
-              Tiga langkah, tanpa registrasi
-            </h2>
-            <p class="mt-3 text-[15px] leading-relaxed text-ink-secondary">
-              Pesan langsung dari katalog. Format order terisi otomatis saat checkout via
-              WhatsApp.
-            </p>
-          </div>
-
-          <div class="relative mt-10 max-w-2xl">
-            <!-- Scroll-path spine -->
-            <svg
-              class="pointer-events-none absolute left-[15px] top-0 h-full w-[2px] overflow-visible"
-              viewBox="0 0 2 100"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M1 0V100" stroke="rgba(206,221,244,0.10)" stroke-width="1.5" vector-effect="non-scaling-stroke" />
-              <path
-                id="steps-spine-path"
-                d="M1 0V100"
-                stroke="#5793AA"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                vector-effect="non-scaling-stroke"
-                fill="none"
-              />
-            </svg>
-
-            <ol id="steps-list" data-reveal-group class="space-y-8">
-              <li data-reveal-item class="relative pl-12">
-                <span
-                  class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
-                  aria-hidden="true"
-                  >01</span
-                >
-                <h3 class="text-base font-semibold text-ink">Pilih aplikasi &amp; paket</h3>
-                <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
-                  Bandingkan fitur dan harga di katalog, lalu klik
-                  <strong class="font-medium text-ink">Beli Langsung</strong> atau tambahkan
-                  beberapa aplikasi ke keranjang.
-                </p>
-              </li>
-              <li data-reveal-item class="relative pl-12">
-                <span
-                  class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
-                  aria-hidden="true"
-                  >02</span
-                >
-                <h3 class="text-base font-semibold text-ink">Kirim data aktivasi</h3>
-                <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
-                  Isi email atau data device di keranjang. Format order otomatis siap dikirim ke
-                  WhatsApp admin.
-                </p>
-              </li>
-              <li data-reveal-item class="relative pl-12">
-                <span
-                  class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
-                  aria-hidden="true"
-                  >03</span
-                >
-                <h3 class="text-base font-semibold text-ink">Bayar &amp; akun aktif</h3>
-                <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
-                  Selesaikan pembayaran via QRIS atau e-wallet. Akun aktif dalam 5–15 menit dengan
-                  garansi penuh.
-                </p>
-              </li>
-            </ol>
-          </div>
-        </div>
-      </section>
-
-      <!-- Catalog -->
-      <section id="layanan" class="scroll-mt-24 border-b border-line py-12 md:py-24">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-          <div data-reveal class="max-w-2xl">
-            <p class="text-xs font-semibold uppercase tracking-[0.08em] text-accent">Katalog</p>
-            <h2
-              class="mt-2 text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-[1.15] tracking-[-0.01em] text-ink"
-            >
-              Semua aplikasi &amp; paket
-            </h2>
-            <p class="mt-3 text-[15px] leading-relaxed text-ink-secondary">
-              Satu halaman, tanpa tab tersembunyi — supaya mudah dibandingkan sebelum membeli.
-            </p>
-          </div>
-
-          <!-- Toolbar -->
-          <div class="mt-8 rounded-xl border border-line bg-surface p-3 sm:p-4">
-            <div class="grid grid-cols-1 gap-2 md:grid-cols-12">
-              <div class="relative md:col-span-8" role="search" aria-label="Cari aplikasi atau paket">
-                <span
-                  class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-faint"
-                  aria-hidden="true"
-                >
-                  <i data-lucide="search" class="h-4 w-4"></i>
-                </span>
-                <input
-                  type="text"
-                  id="app-search"
-                  placeholder="Cari aplikasi, fitur, atau paket"
-                  aria-label="Cari aplikasi atau paket"
-                  class="h-11 w-full rounded-full border border-line bg-canvas pl-11 pr-11 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
-                />
-                <button
-                  type="button"
-                  id="clear-search"
-                  aria-label="Hapus kata kunci pencarian"
-                  class="absolute right-1 top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink-faint transition-colors hover:text-ink"
-                >
-                  <i data-lucide="x" class="h-4 w-4" aria-hidden="true"></i>
-                </button>
-              </div>
-
-              <div class="relative md:col-span-4">
-                <label for="sort-select" class="sr-only">Urutkan katalog</label>
-                <select
-                  id="sort-select"
-                  class="h-11 w-full appearance-none rounded-full border border-line bg-canvas px-4 pr-10 text-sm font-medium text-ink-secondary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
-                >
-                  <option value="popular">Urutkan: Terpopuler</option>
-                  <option value="price-low">Urutkan: Harga Termurah</option>
-                  <option value="price-high">Urutkan: Harga Tertinggi</option>
-                  <option value="name-asc">Urutkan: Nama A–Z</option>
-                </select>
-                <span
-                  class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink-faint"
-                  aria-hidden="true"
-                >
-                  <i data-lucide="chevron-down" class="h-4 w-4"></i>
-                </span>
-              </div>
-            </div>
-
-            <div
-              id="category-filter-pills"
-              class="no-scrollbar mt-3 flex items-center gap-2 overflow-x-auto"
-              aria-label="Filter kategori aplikasi"
-            >
-              <!-- Populated by search.js -->
-            </div>
-          </div>
-
-          <!-- Catalog grid -->
-          <div id="catalog-container" class="mt-6 space-y-6">
-            <!-- Populated by products.js -->
-          </div>
-
-          <!-- Empty state -->
+          <!-- Carousel controls -->
           <div
-            id="empty-state"
-            class="mt-6 hidden rounded-xl border border-line bg-surface px-6 py-14 text-center"
+            class="relative z-20 mx-auto flex w-full max-w-[1280px] items-center justify-between gap-4 px-4 pb-6 sm:px-6 lg:px-10"
           >
-            <div class="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-xl bg-canvas-subtle text-ink-faint" aria-hidden="true">
-              <i data-lucide="search" class="h-5 w-5"></i>
-            </div>
-            <h3 class="text-base font-semibold text-ink">Tidak ada aplikasi yang sesuai</h3>
-            <p class="mx-auto mt-1.5 max-w-sm text-sm leading-relaxed text-ink-secondary">
-              Coba ganti kategori filter atau gunakan kata kunci pencarian lain.
-            </p>
-            <button
-              type="button"
-              id="reset-filters-btn"
-              data-motion-press
-              class="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-canvas transition-colors hover:bg-accent-hover"
-            >
-              <i data-lucide="rotate-ccw" class="h-4 w-4" aria-hidden="true"></i>
-              <span>Reset filter</span>
-            </button>
-          </div>
+            <div id="hero-dots" class="flex items-center gap-2" role="group" aria-label="Pilih slide rekomendasi"></div>
 
-          <!-- Plan explainer -->
-          <div data-reveal class="mt-10 rounded-xl border border-line bg-surface p-6 sm:p-8">
-            <div class="max-w-2xl">
-              <h3 class="text-lg font-semibold tracking-tight text-ink">
-                Sharing, Semi Private, atau Private?
-              </h3>
-              <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
-                Istilah <em>Less Limit</em> dan <em>Anti On-Hold</em> dijelaskan singkat di sini.
-              </p>
-            </div>
-
-            <div class="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
-              <div data-motion-hover class="rounded-xl border border-line p-5">
-                <div class="flex items-center gap-2.5">
-                  <span class="grid h-8 w-8 place-items-center rounded-xl bg-accent-subtle text-accent" aria-hidden="true">
-                    <i data-lucide="smartphone" class="h-4 w-4"></i>
-                  </span>
-                  <h4 class="text-sm font-semibold text-ink">Sharing Profile</h4>
-                </div>
-                <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink-secondary">
-                  <li>1 profile di 1 device tetap</li>
-                  <li>Harga paling hemat untuk harian/bulanan</li>
-                  <li>Less Limit: antrean nonton minimal</li>
-                </ul>
-              </div>
-
-              <div data-motion-hover class="rounded-xl border border-accent/40 bg-accent-subtle p-5">
-                <div class="flex items-center gap-2.5">
-                  <span class="grid h-8 w-8 place-items-center rounded-xl bg-accent text-canvas" aria-hidden="true">
-                    <i data-lucide="lock" class="h-4 w-4"></i>
-                  </span>
-                  <h4 class="text-sm font-semibold text-ink">Semi Private</h4>
-                </div>
-                <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink">
-                  <li>1 profile untuk 2 device (HP + laptop)</li>
-                  <li>Anti On-Hold: akun lebih stabil</li>
-                  <li>Cocok untuk pemakaian aktif</li>
-                </ul>
-              </div>
-
-              <div data-motion-hover class="rounded-xl border border-line p-5">
-                <div class="flex items-center gap-2.5">
-                  <span class="grid h-8 w-8 place-items-center rounded-xl bg-accent-subtle text-accent" aria-hidden="true">
-                    <i data-lucide="crown" class="h-4 w-4"></i>
-                  </span>
-                  <h4 class="text-sm font-semibold text-ink">Private</h4>
-                </div>
-                <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink-secondary">
-                  <li>Akun pribadi penuh, tanpa berbagi</li>
-                  <li>Fleksibel untuk kerja &amp; editing</li>
-                  <li>Bebas limit perangkat orang lain</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Warranty -->
-          <div
-            data-reveal
-            class="mt-6 flex flex-col justify-between gap-5 rounded-xl border border-line bg-surface p-6 sm:p-8 lg:flex-row lg:items-center"
-          >
-            <div class="flex items-start gap-4">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-subtle text-accent" aria-hidden="true">
-                <i data-lucide="shield-check" class="h-5 w-5"></i>
-              </span>
-              <div class="max-w-2xl">
-                <h3 class="text-base font-semibold text-ink">Garansi penuh selama durasi paket</h3>
-                <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
-                  Kendala login atau akun terputus? Kirim screenshot ke WhatsApp admin. Kami
-                  perbaiki atau ganti akun baru dalam 5–15 menit di jam operasional (08.00–22.00
-                  WIB).
-                </p>
-              </div>
-            </div>
-            <a
-              href="https://wa.me/6287862481038?text=Halo%20Admin%20Cozu%20Store%2C%20saya%20mau%20tanya%20soal%20garansi%20akun."
-              target="_blank"
-              rel="noopener noreferrer"
-              data-motion-press
-              class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-accent/50 px-5 text-sm font-semibold text-accent-hover transition-colors hover:bg-accent-subtle"
-            >
-              <i data-lucide="message-circle" class="h-4 w-4" aria-hidden="true"></i>
-              <span>Tanya admin</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Testimonials -->
-      <section id="testimoni" class="scroll-mt-24 border-b border-line py-12 md:py-24">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-          <div data-reveal class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-            <div class="max-w-2xl">
-              <p class="text-xs font-semibold uppercase tracking-[0.08em] text-accent">Testimoni</p>
-              <h2
-                class="mt-2 text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-[1.15] tracking-[-0.01em] text-ink"
-              >
-                Kata pelanggan Cozu Store
-              </h2>
-              <p class="mt-3 text-[15px] leading-relaxed text-ink-secondary">
-                Rating rata-rata <strong class="font-semibold text-ink">4,9/5</strong> dari
-                ratusan transaksi dan pembeli repeat order.
-              </p>
-            </div>
-
-            <div class="flex items-center gap-2">
+            <div class="flex shrink-0 items-center gap-2">
               <button
                 type="button"
-                id="testimonial-prev-btn"
+                id="hero-prev"
                 data-motion-press
-                aria-label="Testimoni sebelumnya"
-                class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-secondary transition-colors hover:border-accent/50 hover:text-ink"
+                aria-label="Slide sebelumnya"
+                class="grid h-11 w-11 place-items-center rounded-full bg-action text-ink backdrop-blur-sm transition-colors hover:bg-action-active"
               >
                 <i data-lucide="chevron-left" class="h-5 w-5" aria-hidden="true"></i>
               </button>
               <button
                 type="button"
-                id="testimonial-next-btn"
+                id="hero-next"
                 data-motion-press
-                aria-label="Testimoni berikutnya"
-                class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-secondary transition-colors hover:border-accent/50 hover:text-ink"
+                aria-label="Slide berikutnya"
+                class="grid h-11 w-11 place-items-center rounded-full bg-action text-ink backdrop-blur-sm transition-colors hover:bg-action-active"
               >
                 <i data-lucide="chevron-right" class="h-5 w-5" aria-hidden="true"></i>
               </button>
             </div>
           </div>
+        </section>
 
+        <!-- Payment trust strip -->
+        <section aria-label="Metode Pembayaran Resmi" class="border-b border-line bg-surface">
           <div
-            id="testimonial-carousel"
-            class="carousel-container no-scrollbar mt-8 flex gap-4 overflow-x-auto pb-2"
+            class="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-3 px-4 py-4 sm:flex-row sm:px-6 lg:px-10"
           >
-            <!-- Populated from testimonials.json by testimonials.js -->
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ -->
-      <section id="faq" class="scroll-mt-24 border-b border-line py-12 md:py-24">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-          <div data-reveal class="max-w-2xl">
-            <p class="text-xs font-semibold uppercase tracking-[0.08em] text-accent">Bantuan</p>
-            <h2
-              class="mt-2 text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-[1.15] tracking-[-0.01em] text-ink"
-            >
-              Pertanyaan yang sering diajukan
-            </h2>
-            <p class="mt-3 text-[15px] leading-relaxed text-ink-secondary">
-              Pemesanan, garansi, perbedaan paket, dan pembayaran.
+            <p class="flex items-center gap-2 text-xs font-medium text-ink-secondary">
+              <i data-lucide="shield-check" class="h-4 w-4 text-accent" aria-hidden="true"></i>
+              <span>Pembayaran resmi Indonesia, terverifikasi otomatis</span>
             </p>
+            <ul class="flex flex-wrap items-center justify-center gap-1.5">
+              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">QRIS</li>
+              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">DANA</li>
+              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">GoPay</li>
+              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">OVO</li>
+              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">ShopeePay</li>
+              <li class="rounded-full bg-badge px-3 py-1 text-xs font-medium text-badge-text">BCA</li>
+            </ul>
           </div>
+        </section>
 
-          <div id="faq-list" data-reveal-group class="mt-8 grid grid-cols-1 items-start gap-3 lg:grid-cols-2">
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-1"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Bagaimana cara memesan &amp; proses transaksinya?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-1" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Pilih aplikasi dan paket pada katalog, lalu klik <strong class="font-medium text-ink">Beli Langsung</strong>. Isi data aktivasi di keranjang (seperti email atau detail device Netflix), lalu klik kirim agar format pesanan otomatis terbuka di WhatsApp Admin. Setelah pembayaran selesai, akun diproses dalam 5–15 menit.
+        <!-- Testimonials -->
+        <section id="testimoni" class="scroll-mt-20 border-b border-line py-12 md:py-16">
+          <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+            <div data-reveal class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+              <div class="max-w-2xl">
+                <p class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
+                  Testimoni
+                </p>
+                <h2
+                  class="mt-2 text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-[1.15] tracking-[-0.01em] text-ink"
+                >
+                  Kata pelanggan Cozu Store
+                </h2>
+                <p class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-[15px] leading-relaxed text-ink-secondary">
+                  <span class="inline-flex items-center gap-1 text-accent" aria-label="Rating 4,9 dari 5">
+                    <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                    <span class="text-sm font-semibold text-ink">4,9/5</span>
+                  </span>
+                  <span>dari ratusan transaksi dan pembeli repeat order.</span>
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  id="testimonial-prev-btn"
+                  data-motion-press
+                  aria-label="Testimoni sebelumnya"
+                  class="grid h-11 w-11 place-items-center rounded-full bg-action text-ink transition-colors hover:bg-action-active"
+                >
+                  <i data-lucide="chevron-left" class="h-5 w-5" aria-hidden="true"></i>
+                </button>
+                <button
+                  type="button"
+                  id="testimonial-next-btn"
+                  data-motion-press
+                  aria-label="Testimoni berikutnya"
+                  class="grid h-11 w-11 place-items-center rounded-full bg-action text-ink transition-colors hover:bg-action-active"
+                >
+                  <i data-lucide="chevron-right" class="h-5 w-5" aria-hidden="true"></i>
+                </button>
               </div>
             </div>
 
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-2"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Bagaimana kebijakan garansi jika akun bermasalah?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-2" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Kami memberikan <strong class="font-medium text-ink">Full Garansi</strong> sesuai durasi paket selama mengikuti ketentuan penggunaan (misal tidak melanggar batas device). Jika ada kendala login atau akun terputus, kirim screenshot kendala ke WhatsApp Admin untuk perbaikan atau penggantian akun baru.
-              </div>
-            </div>
-
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-3"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Apa perbedaan Sharing Profile, Semi Private, dan Private?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-3" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                <strong class="font-medium text-ink">Sharing Profile:</strong> 1 profile untuk 1 device tetap (paling ekonomis).<br />
-                <strong class="font-medium text-ink">Semi Private:</strong> 1 profile bisa login di 2 device dan minim risiko limit.<br />
-                <strong class="font-medium text-ink">Private:</strong> Akun pribadi penuh tanpa berbagi akses dengan pengguna lain.
-              </div>
-            </div>
-
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-4"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Metode pembayaran apa saja yang diterima?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-4" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Kami menerima pembayaran melalui <strong class="font-medium text-ink">QRIS</strong> (semua e-wallet dan mobile banking), DANA, GoPay, OVO, ShopeePay, serta transfer Bank BCA, Mandiri, BRI, dan BNI.
-              </div>
-            </div>
-
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-5"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Berapa lama proses aktivasi setelah transfer?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-5" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Rata-rata pemrosesan memakan waktu <strong class="font-medium text-ink">5–15 menit</strong> pada jam operasional setelah bukti pembayaran diterima oleh admin.
-              </div>
-            </div>
-
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-6"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Apakah bisa request aplikasi lain yang belum ada di katalog?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-6" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Bisa. Kamu bisa menanyakan ketersediaan aplikasi lain seperti Spotify, YouTube Premium, Disney+ Hotstar, atau aplikasi produktivitas lainnya langsung ke WhatsApp Admin.
-              </div>
-            </div>
-
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-7"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Apakah aman untuk email pribadi (Canva / Bstation / CapCut)?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-7" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Aman. Untuk Canva Pro, admin hanya mengirim link undangan tim ke email kamu tanpa pernah meminta password email pribadimu.
-              </div>
-            </div>
-
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-8"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Bagaimana jika ingin perpanjang atau beli dalam jumlah banyak?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-8" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Tidak ada perpanjangan otomatis yang memotong saldo. Kamu bisa order ulang atau chat admin untuk perpanjangan maupun harga khusus pembelian banyak/reseller.
-              </div>
-            </div>
-
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-9"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Kenapa data Device Management Netflix wajib diisi?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-9" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Data device dan lokasi digunakan admin untuk mencatat perangkat resmi milikmu agar terhindar dari bentrok device lain dan memastikan klaim garansi tetap valid.
-              </div>
-            </div>
-
-            <div data-reveal-item class="rounded-xl border border-line bg-surface">
-              <button
-                type="button"
-                data-faq-trigger
-                aria-expanded="false"
-                aria-controls="faq-panel-10"
-                class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
-              >
-                <span>Kapan jam operasional admin Cozu Store?</span>
-                <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-faint transition-transform duration-200" aria-hidden="true"></i>
-              </button>
-              <div id="faq-panel-10" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
-                Admin melayani setiap hari pukul <strong class="font-medium text-ink">08.00 – 22.00 WIB</strong>. Pesanan di luar jam operasional tetap dapat dikirim dan akan diproses paling awal saat toko buka.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA -->
-      <section class="py-12 md:py-20">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6">
-          <div
-            data-reveal
-            class="relative overflow-hidden rounded-xl border border-line bg-surface px-6 py-10 text-center sm:px-12 sm:py-14"
-          >
             <div
-              aria-hidden="true"
-              class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(87,147,170,0.20),transparent_65%)]"
-            ></div>
-            <div class="relative z-10 mx-auto max-w-xl">
-              <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-                Butuh aplikasi yang belum terdaftar?
-              </h2>
-              <p class="mt-3 text-sm leading-relaxed text-ink-secondary sm:text-base">
-                Tanyakan stok Spotify, YouTube Premium, Disney+ Hotstar, atau paket custom lainnya
-                langsung ke WhatsApp admin.
+              id="testimonial-carousel"
+              class="carousel-container no-scrollbar mt-8 flex gap-3 overflow-x-auto pb-2"
+              aria-label="Daftar testimoni pelanggan"
+            >
+              <!-- Populated from testimonials.json by testimonials.js -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Catalog -->
+        <section id="layanan" class="scroll-mt-20 border-b border-line py-12 md:py-16">
+          <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+            <div data-reveal class="max-w-2xl">
+              <p class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
+                Katalog
               </p>
+              <h2
+                class="mt-2 text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-[1.15] tracking-[-0.01em] text-ink"
+              >
+                Semua aplikasi &amp; paket
+              </h2>
+              <p class="mt-3 text-[15px] leading-relaxed text-ink-secondary">
+                Satu halaman, tanpa tab tersembunyi — supaya mudah dibandingkan sebelum membeli.
+              </p>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="mt-8 rounded-xl border border-line bg-surface p-3 sm:p-4">
+              <div class="grid grid-cols-1 gap-2 md:grid-cols-12">
+                <div class="relative md:col-span-8" role="search" aria-label="Cari aplikasi atau paket">
+                  <span
+                    class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted"
+                    aria-hidden="true"
+                  >
+                    <i data-lucide="search" class="h-4 w-4"></i>
+                  </span>
+                  <input
+                    type="text"
+                    id="app-search"
+                    placeholder="Cari aplikasi, fitur, atau paket"
+                    aria-label="Cari aplikasi atau paket"
+                    class="h-11 w-full rounded-full border border-line bg-canvas pl-11 pr-11 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+                  />
+                  <button
+                    type="button"
+                    id="clear-search"
+                    aria-label="Hapus kata kunci pencarian"
+                    class="absolute right-1 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-ink-muted transition-colors hover:text-ink"
+                  >
+                    <i data-lucide="x" class="h-4 w-4" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <div class="relative md:col-span-4">
+                  <label for="sort-select" class="sr-only">Urutkan katalog</label>
+                  <select
+                    id="sort-select"
+                    class="h-11 w-full appearance-none rounded-full border border-line bg-canvas px-4 pr-10 text-sm font-medium text-ink-secondary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+                  >
+                    <option value="popular">Urutkan: Terpopuler</option>
+                    <option value="price-low">Urutkan: Harga Termurah</option>
+                    <option value="price-high">Urutkan: Harga Tertinggi</option>
+                    <option value="name-asc">Urutkan: Nama A–Z</option>
+                  </select>
+                  <span
+                    class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink-muted"
+                    aria-hidden="true"
+                  >
+                    <i data-lucide="chevron-down" class="h-4 w-4"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div
+                id="category-filter-pills"
+                class="no-scrollbar mt-3 flex items-center gap-2 overflow-x-auto"
+                aria-label="Filter kategori aplikasi"
+              >
+                <!-- Populated by search.js -->
+              </div>
+            </div>
+
+            <!-- Catalog grid -->
+            <div id="catalog-container" class="mt-6">
+              <!-- Populated by products.js -->
+            </div>
+
+            <!-- Empty state -->
+            <div
+              id="empty-state"
+              class="mt-6 hidden rounded-xl border border-line bg-surface px-6 py-14 text-center"
+            >
+              <div class="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-lg bg-surface-2 text-ink-muted" aria-hidden="true">
+                <i data-lucide="search" class="h-5 w-5"></i>
+              </div>
+              <h3 class="text-base font-semibold text-ink">Tidak ada aplikasi yang sesuai</h3>
+              <p class="mx-auto mt-1.5 max-w-sm text-sm leading-relaxed text-ink-secondary">
+                Coba ganti kategori filter atau gunakan kata kunci pencarian lain.
+              </p>
+              <button
+                type="button"
+                id="reset-filters-btn"
+                data-motion-press
+                class="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-canvas transition-colors hover:bg-accent-hover"
+              >
+                <i data-lucide="rotate-ccw" class="h-4 w-4" aria-hidden="true"></i>
+                <span>Reset filter</span>
+              </button>
+            </div>
+
+            <!-- Plan explainer -->
+            <div data-reveal class="mt-10 rounded-xl border border-line bg-surface p-6 sm:p-8">
+              <div class="max-w-2xl">
+                <h3 class="text-lg font-semibold tracking-tight text-ink">
+                  Sharing, Semi Private, atau Private?
+                </h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
+                  Istilah <em>Less Limit</em> dan <em>Anti On-Hold</em> dijelaskan singkat di sini.
+                </p>
+              </div>
+
+              <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div data-motion-hover class="rounded-xl bg-surface-2 p-5">
+                  <div class="flex items-center gap-2.5">
+                    <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent-subtle text-accent" aria-hidden="true">
+                      <i data-lucide="smartphone" class="h-4 w-4"></i>
+                    </span>
+                    <h4 class="text-sm font-semibold text-ink">Sharing Profile</h4>
+                  </div>
+                  <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink-secondary">
+                    <li>1 profile di 1 device tetap</li>
+                    <li>Harga paling hemat untuk harian/bulanan</li>
+                    <li>Less Limit: antrean nonton minimal</li>
+                  </ul>
+                </div>
+
+                <div data-motion-hover class="rounded-xl bg-accent-subtle p-5 ring-1 ring-accent/40">
+                  <div class="flex items-center gap-2.5">
+                    <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent text-canvas" aria-hidden="true">
+                      <i data-lucide="lock" class="h-4 w-4"></i>
+                    </span>
+                    <h4 class="text-sm font-semibold text-ink">Semi Private</h4>
+                  </div>
+                  <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink">
+                    <li>1 profile untuk 2 device (HP + laptop)</li>
+                    <li>Anti On-Hold: akun lebih stabil</li>
+                    <li>Cocok untuk pemakaian aktif</li>
+                  </ul>
+                </div>
+
+                <div data-motion-hover class="rounded-xl bg-surface-2 p-5">
+                  <div class="flex items-center gap-2.5">
+                    <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent-subtle text-accent" aria-hidden="true">
+                      <i data-lucide="crown" class="h-4 w-4"></i>
+                    </span>
+                    <h4 class="text-sm font-semibold text-ink">Private</h4>
+                  </div>
+                  <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink-secondary">
+                    <li>Akun pribadi penuh, tanpa berbagi</li>
+                    <li>Fleksibel untuk kerja &amp; editing</li>
+                    <li>Bebas limit perangkat orang lain</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Warranty -->
+            <div
+              data-reveal
+              class="mt-4 flex flex-col justify-between gap-5 rounded-xl border border-line bg-surface p-6 sm:p-8 lg:flex-row lg:items-center"
+            >
+              <div class="flex items-start gap-4">
+                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-accent-subtle text-accent" aria-hidden="true">
+                  <i data-lucide="shield-check" class="h-5 w-5"></i>
+                </span>
+                <div class="max-w-2xl">
+                  <h3 class="text-base font-semibold text-ink">Garansi penuh selama durasi paket</h3>
+                  <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
+                    Kendala login atau akun terputus? Kirim screenshot ke WhatsApp admin. Kami
+                    perbaiki atau ganti akun baru dalam 5–15 menit di jam operasional (08.00–22.00
+                    WIB).
+                  </p>
+                </div>
+              </div>
               <a
-                href="https://wa.me/6287862481038?text=Halo%20Admin%20Cozu%20Store%2C%20saya%20mau%20tanya%2Frequest%20aplikasi%20premium..."
+                href="https://wa.me/6287862481038?text=Halo%20Admin%20Cozu%20Store%2C%20saya%20mau%20tanya%20soal%20garansi%20akun."
                 target="_blank"
                 rel="noopener noreferrer"
                 data-motion-press
-                class="mt-7 inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-sm font-semibold text-canvas transition-colors hover:bg-accent-hover"
+                class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-action px-5 text-sm font-semibold text-ink transition-colors hover:bg-action-active"
               >
-                <i data-lucide="message-circle" class="h-4 w-4" aria-hidden="true"></i>
-                <span>Chat admin via WhatsApp</span>
+                <i data-lucide="message-circle" class="h-4 w-4 text-accent" aria-hidden="true"></i>
+                <span>Tanya admin</span>
               </a>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-line pt-12">
-      <div class="mx-auto max-w-6xl px-4 pb-24 sm:px-6 md:pb-10">
-        <div class="grid grid-cols-1 gap-8 pb-10 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <a href="#home" class="inline-flex items-center gap-2.5 text-ink">
-              <span class="grid h-8 w-8 place-items-center rounded-xl bg-accent text-xs font-extrabold text-canvas" aria-hidden="true">CZ</span>
-              <span class="text-[15px] font-semibold tracking-tight">Cozu Store</span>
-            </a>
-            <p class="mt-3 max-w-xs text-sm leading-relaxed text-ink-secondary">
-              Reseller akun premium digital di Indonesia — harga masuk akal, garansi penuh.
-            </p>
-            <p class="mt-3 flex items-center gap-1.5 text-xs font-medium text-ink-faint">
-              <i data-lucide="clock" class="h-3.5 w-3.5 text-accent" aria-hidden="true"></i>
-              <span>08.00 – 22.00 WIB, setiap hari</span>
-            </p>
+        <!-- FAQ -->
+        <section id="faq" class="scroll-mt-20 border-b border-line py-12 md:py-16">
+          <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+            <div data-reveal class="max-w-2xl">
+              <p class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
+                Bantuan
+              </p>
+              <h2
+                class="mt-2 text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-[1.15] tracking-[-0.01em] text-ink"
+              >
+                Pertanyaan yang sering diajukan
+              </h2>
+              <p class="mt-3 text-[15px] leading-relaxed text-ink-secondary">
+                Pemesanan, garansi, perbedaan paket, dan pembayaran.
+              </p>
+            </div>
+
+            <div id="faq-list" data-reveal-group class="mt-8 grid grid-cols-1 items-start gap-3 lg:grid-cols-2">
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-1"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Bagaimana cara memesan &amp; proses transaksinya?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-1" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Pilih aplikasi dan paket pada katalog, lalu klik <strong class="font-medium text-ink">Beli Langsung</strong>. Isi data aktivasi di keranjang (seperti email atau detail device Netflix), lalu klik kirim agar format pesanan otomatis terbuka di WhatsApp Admin. Setelah pembayaran selesai, akun diproses dalam 5–15 menit.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-2"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Bagaimana kebijakan garansi jika akun bermasalah?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-2" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Kami memberikan <strong class="font-medium text-ink">Full Garansi</strong> sesuai durasi paket selama mengikuti ketentuan penggunaan (misal tidak melanggar batas device). Jika ada kendala login atau akun terputus, kirim screenshot kendala ke WhatsApp Admin untuk perbaikan atau penggantian akun baru.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-3"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Apa perbedaan Sharing Profile, Semi Private, dan Private?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-3" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  <strong class="font-medium text-ink">Sharing Profile:</strong> 1 profile untuk 1 device tetap (paling ekonomis).<br />
+                  <strong class="font-medium text-ink">Semi Private:</strong> 1 profile bisa login di 2 device dan minim risiko limit.<br />
+                  <strong class="font-medium text-ink">Private:</strong> Akun pribadi penuh tanpa berbagi akses dengan pengguna lain.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-4"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Metode pembayaran apa saja yang diterima?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-4" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Kami menerima pembayaran melalui <strong class="font-medium text-ink">QRIS</strong> (semua e-wallet dan mobile banking), DANA, GoPay, OVO, ShopeePay, serta transfer Bank BCA, Mandiri, BRI, dan BNI.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-5"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Berapa lama proses aktivasi setelah transfer?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-5" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Rata-rata pemrosesan memakan waktu <strong class="font-medium text-ink">5–15 menit</strong> pada jam operasional setelah bukti pembayaran diterima oleh admin.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-6"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Apakah bisa request aplikasi lain yang belum ada di katalog?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-6" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Bisa. Kamu bisa menanyakan ketersediaan aplikasi lain seperti Spotify, YouTube Premium, Disney+ Hotstar, atau aplikasi produktivitas lainnya langsung ke WhatsApp Admin.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-7"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Apakah aman untuk email pribadi (Canva / Bstation / CapCut)?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-7" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Aman. Untuk Canva Pro, admin hanya mengirim link undangan tim ke email kamu tanpa pernah meminta password email pribadimu.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-8"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Bagaimana jika ingin perpanjang atau beli dalam jumlah banyak?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-8" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Tidak ada perpanjangan otomatis yang memotong saldo. Kamu bisa order ulang atau chat admin untuk perpanjangan maupun harga khusus pembelian banyak/reseller.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-9"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Kenapa data Device Management Netflix wajib diisi?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-9" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Data device dan lokasi digunakan admin untuk mencatat perangkat resmi milikmu agar terhindar dari bentrok device lain dan memastikan klaim garansi tetap valid.
+                </div>
+              </div>
+
+              <div data-reveal-item class="rounded-xl bg-surface">
+                <button
+                  type="button"
+                  data-faq-trigger
+                  aria-expanded="false"
+                  aria-controls="faq-panel-10"
+                  class="flex min-h-[56px] w-full items-center justify-between gap-4 p-5 text-left text-sm font-medium text-ink"
+                >
+                  <span>Kapan jam operasional admin Cozu Store?</span>
+                  <i data-lucide="chevron-down" data-faq-icon class="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200" aria-hidden="true"></i>
+                </button>
+                <div id="faq-panel-10" class="hidden border-t border-line px-5 pb-5 pt-4 text-sm leading-relaxed text-ink-secondary">
+                  Admin melayani setiap hari pukul <strong class="font-medium text-ink">08.00 – 22.00 WIB</strong>. Pesanan di luar jam operasional tetap dapat dikirim dan akan diproses paling awal saat toko buka.
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div>
-            <h3 class="text-sm font-semibold text-ink">Navigasi</h3>
-            <ul class="mt-3 space-y-2 text-sm text-ink-secondary">
-              <li><a href="#home" class="transition-colors hover:text-ink">Beranda</a></li>
-              <li><a href="#cara-pesan" class="transition-colors hover:text-ink">Cara Pesan</a></li>
-              <li><a href="#layanan" class="transition-colors hover:text-ink">Katalog</a></li>
-              <li><a href="#testimoni" class="transition-colors hover:text-ink">Testimoni</a></li>
-              <li><a href="#faq" class="transition-colors hover:text-ink">FAQ &amp; Garansi</a></li>
-            </ul>
+        <!-- How it works -->
+        <section id="cara-pesan" class="scroll-mt-20 border-b border-line py-12 md:py-16">
+          <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+            <div data-reveal class="max-w-2xl">
+              <p class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
+                Cara pesan
+              </p>
+              <h2
+                class="mt-2 text-[clamp(1.5rem,3.5vw,2.25rem)] font-bold leading-[1.15] tracking-[-0.01em] text-ink"
+              >
+                Tiga langkah, tanpa registrasi
+              </h2>
+              <p class="mt-3 text-[15px] leading-relaxed text-ink-secondary">
+                Pesan langsung dari katalog. Format order terisi otomatis saat checkout via
+                WhatsApp.
+              </p>
+            </div>
+
+            <div class="relative mt-10 max-w-2xl">
+              <!-- Scroll-path spine -->
+              <svg
+                class="pointer-events-none absolute left-[15px] top-0 h-full w-[2px] overflow-visible"
+                viewBox="0 0 2 100"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M1 0V100" stroke="rgba(255,255,255,0.08)" stroke-width="2" vector-effect="non-scaling-stroke" />
+                <path
+                  id="steps-spine-path"
+                  d="M1 0V100"
+                  stroke="#00A8E1"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  vector-effect="non-scaling-stroke"
+                  fill="none"
+                />
+              </svg>
+
+              <ol id="steps-list" data-reveal-group class="space-y-8">
+                <li data-reveal-item class="relative pl-12">
+                  <span
+                    class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
+                    aria-hidden="true"
+                    >01</span
+                  >
+                  <h3 class="text-base font-semibold text-ink">Pilih aplikasi &amp; paket</h3>
+                  <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
+                    Bandingkan fitur dan harga di katalog, lalu klik
+                    <strong class="font-medium text-ink">Beli Langsung</strong> atau tambahkan
+                    beberapa aplikasi ke keranjang.
+                  </p>
+                </li>
+                <li data-reveal-item class="relative pl-12">
+                  <span
+                    class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
+                    aria-hidden="true"
+                    >02</span
+                  >
+                  <h3 class="text-base font-semibold text-ink">Kirim data aktivasi</h3>
+                  <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
+                    Isi email atau data device di keranjang. Format order otomatis siap dikirim ke
+                    WhatsApp admin.
+                  </p>
+                </li>
+                <li data-reveal-item class="relative pl-12">
+                  <span
+                    class="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-xs font-semibold text-ink-secondary"
+                    aria-hidden="true"
+                    >03</span
+                  >
+                  <h3 class="text-base font-semibold text-ink">Bayar &amp; akun aktif</h3>
+                  <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
+                    Selesaikan pembayaran via QRIS atau e-wallet. Akun aktif dalam 5–15 menit dengan
+                    garansi penuh.
+                  </p>
+                </li>
+              </ol>
+            </div>
           </div>
+        </section>
 
-          <div>
-            <h3 class="text-sm font-semibold text-ink">Layanan</h3>
-            <ul class="mt-3 space-y-2 text-sm text-ink-secondary">
-              <li><a href="#netflix" data-jump-app="netflix" class="transition-colors hover:text-ink">Netflix Ultra HD 4K</a></li>
-              <li><a href="#canva" data-jump-app="canva" class="transition-colors hover:text-ink">Canva Pro</a></li>
-              <li><a href="#capcut" data-jump-app="capcut" class="transition-colors hover:text-ink">CapCut Pro</a></li>
-              <li><a href="#bstation" data-jump-app="bstation" class="transition-colors hover:text-ink">Bstation VIP</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="text-sm font-semibold text-ink">Kontak</h3>
-            <a
-              href="https://wa.me/6287862481038"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+        <!-- CTA -->
+        <section class="py-12 md:py-16">
+          <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-10">
+            <div
+              data-reveal
+              class="relative overflow-hidden rounded-xl bg-surface px-6 py-10 text-center ring-1 ring-line sm:px-12 sm:py-14"
             >
-              <i data-lucide="message-circle" class="h-4 w-4" aria-hidden="true"></i>
-              <span>0878-6248-1038</span>
-            </a>
-            <p class="mt-3 text-xs text-ink-faint">Pembayaran</p>
-            <ul class="mt-1.5 flex flex-wrap gap-1.5">
-              <li class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">QRIS</li>
-              <li class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">DANA</li>
-              <li class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">GoPay</li>
-              <li class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">OVO</li>
-              <li class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">ShopeePay</li>
-              <li class="rounded-full border border-line px-2.5 py-1 text-[11px] font-medium text-ink-secondary">BCA</li>
-            </ul>
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,168,225,0.16),transparent_65%)]"
+              ></div>
+              <div class="relative z-10 mx-auto max-w-xl">
+                <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                  Butuh aplikasi yang belum terdaftar?
+                </h2>
+                <p class="mt-3 text-sm leading-relaxed text-ink-secondary sm:text-base">
+                  Tanyakan stok Spotify, YouTube Premium, Disney+ Hotstar, atau paket custom lainnya
+                  langsung ke WhatsApp admin.
+                </p>
+                <a
+                  href="https://wa.me/6287862481038?text=Halo%20Admin%20Cozu%20Store%2C%20saya%20mau%20tanya%2Frequest%20aplikasi%20premium..."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-motion-press
+                  class="mt-7 inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-sm font-semibold text-canvas transition-colors hover:bg-accent-hover"
+                >
+                  <i data-lucide="message-circle" class="h-4 w-4" aria-hidden="true"></i>
+                  <span>Chat admin via WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="border-t border-line bg-rail pt-12">
+        <div class="mx-auto max-w-[1280px] px-4 pb-24 sm:px-6 lg:px-10 lg:pb-10">
+          <div class="grid grid-cols-1 gap-8 pb-10 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <a href="#home" class="inline-flex items-center gap-2.5 text-ink">
+                <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent text-xs font-extrabold text-canvas" aria-hidden="true">CZ</span>
+                <span class="text-[15px] font-semibold tracking-tight">Cozu Store</span>
+              </a>
+              <p class="mt-3 max-w-xs text-sm leading-relaxed text-ink-secondary">
+                Reseller akun premium digital di Indonesia — harga masuk akal, garansi penuh.
+              </p>
+              <p class="mt-3 flex items-center gap-1.5 text-xs font-medium text-ink-muted">
+                <i data-lucide="clock" class="h-3.5 w-3.5 text-accent" aria-hidden="true"></i>
+                <span>08.00 – 22.00 WIB, setiap hari</span>
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-sm font-semibold text-ink">Navigasi</h3>
+              <ul class="mt-3 space-y-2 text-sm text-ink-secondary">
+                <li><a href="#home" class="transition-colors hover:text-ink">Beranda</a></li>
+                <li><a href="#cara-pesan" class="transition-colors hover:text-ink">Cara Pesan</a></li>
+                <li><a href="#layanan" class="transition-colors hover:text-ink">Katalog</a></li>
+                <li><a href="#testimoni" class="transition-colors hover:text-ink">Testimoni</a></li>
+                <li><a href="#faq" class="transition-colors hover:text-ink">FAQ &amp; Garansi</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-sm font-semibold text-ink">Layanan</h3>
+              <ul class="mt-3 space-y-2 text-sm text-ink-secondary">
+                <li><a href="#netflix" data-jump-app="netflix" class="transition-colors hover:text-ink">Netflix Ultra HD 4K</a></li>
+                <li><a href="#canva" data-jump-app="canva" class="transition-colors hover:text-ink">Canva Pro</a></li>
+                <li><a href="#capcut" data-jump-app="capcut" class="transition-colors hover:text-ink">CapCut Pro</a></li>
+                <li><a href="#bstation" data-jump-app="bstation" class="transition-colors hover:text-ink">Bstation VIP</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-sm font-semibold text-ink">Kontak</h3>
+              <a
+                href="https://wa.me/6287862481038"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+              >
+                <i data-lucide="message-circle" class="h-4 w-4" aria-hidden="true"></i>
+                <span>0878-6248-1038</span>
+              </a>
+              <p class="mt-3 text-xs text-ink-muted">Pembayaran</p>
+              <ul class="mt-1.5 flex flex-wrap gap-1.5">
+                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">QRIS</li>
+                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">DANA</li>
+                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">GoPay</li>
+                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">OVO</li>
+                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">ShopeePay</li>
+                <li class="rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">BCA</li>
+              </ul>
+            </div>
+          </div>
+
+          <div
+            class="flex flex-col items-center justify-between gap-2 border-t border-line pt-6 text-xs text-ink-muted sm:flex-row"
+          >
+            <p>&copy; <span id="footer-year">2026</span> Cozu Store. Semua hak dilindungi.</p>
+            <p>Akun digital premium bergaransi · proses 5–15 menit</p>
           </div>
         </div>
+      </footer>
+    </div>
 
-        <div
-          class="flex flex-col items-center justify-between gap-2 border-t border-line pt-6 text-xs text-ink-faint sm:flex-row"
-        >
-          <p>&copy; <span id="footer-year">2026</span> Cozu Store. Semua hak dilindungi.</p>
-          <p>Akun digital premium bergaransi · proses 5–15 menit</p>
+    <!-- Mobile drawer -->
+    <div
+      id="mobile-drawer-root"
+      class="mobile-menu-closed fixed inset-0 z-50 lg:hidden"
+      aria-hidden="true"
+    >
+      <div id="mobile-drawer-backdrop" class="absolute inset-0 bg-canvas/80 backdrop-blur-sm"></div>
+      <div
+        id="mobile-drawer-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu navigasi"
+        class="absolute inset-y-0 left-0 flex w-[84%] max-w-xs flex-col border-r border-line bg-rail"
+      >
+        <div class="flex h-16 items-center justify-between gap-2 border-b border-line px-4">
+          <a href="#home" class="flex items-center gap-2.5 text-ink">
+            <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent text-[11px] font-extrabold text-canvas" aria-hidden="true">CZ</span>
+            <span class="text-[15px] font-semibold tracking-tight">Cozu Store</span>
+          </a>
+          <button
+            type="button"
+            id="mobile-drawer-close"
+            aria-label="Tutup menu navigasi"
+            class="grid h-11 w-11 place-items-center rounded-full text-ink-secondary transition-colors hover:bg-surface hover:text-ink"
+          >
+            <i data-lucide="x" class="h-5 w-5" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <nav class="flex flex-1 flex-col gap-1 overflow-y-auto px-2 py-3" aria-label="Menu mobile">
+          <a href="#home" data-nav="home" class="drawer-link nav-link">
+            <i data-lucide="home" class="h-5 w-5" aria-hidden="true"></i>
+            <span>Beranda</span>
+          </a>
+          <a href="#layanan" data-nav="layanan" class="drawer-link nav-link">
+            <i data-lucide="layout-grid" class="h-5 w-5" aria-hidden="true"></i>
+            <span>Katalog</span>
+          </a>
+          <a href="#testimoni" data-nav="testimoni" class="drawer-link nav-link">
+            <i data-lucide="message-square-quote" class="h-5 w-5" aria-hidden="true"></i>
+            <span>Testimoni</span>
+          </a>
+          <a href="#faq" data-nav="faq" class="drawer-link nav-link">
+            <i data-lucide="help-circle" class="h-5 w-5" aria-hidden="true"></i>
+            <span>FAQ</span>
+          </a>
+          <a href="#cara-pesan" data-nav="cara-pesan" class="drawer-link nav-link">
+            <i data-lucide="shopping-bag" class="h-5 w-5" aria-hidden="true"></i>
+            <span>Cara Pesan</span>
+          </a>
+
+          <div class="my-2 h-px bg-line" aria-hidden="true"></div>
+
+          <button type="button" data-open-cart class="drawer-link nav-link w-full text-left">
+            <i data-lucide="shopping-cart" class="h-5 w-5" aria-hidden="true"></i>
+            <span>Keranjang</span>
+          </button>
+          <a
+            href="https://wa.me/6287862481038?text=Halo%20Admin%20Cozu%20Store%2C%20saya%20ingin%20tanya%20layanan%20akun%20premium."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="drawer-link nav-link"
+          >
+            <i data-lucide="message-circle" class="h-5 w-5" aria-hidden="true"></i>
+            <span>Chat Admin</span>
+          </a>
+        </nav>
+
+        <div class="border-t border-line px-4 py-4">
+          <p class="flex items-center gap-2 text-[11px] font-medium text-ink-muted">
+            <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+            Aktif 08.00–22.00 WIB
+          </p>
         </div>
       </div>
-    </footer>
+    </div>
 
-    <!-- Floating desktop cart -->
+    <!-- Desktop floating cart -->
     <button
       type="button"
       id="cart-floating-btn"
       data-open-cart
       data-motion-press
       aria-label="Buka keranjang belanja"
-      class="fixed bottom-6 right-6 z-40 hidden h-12 items-center gap-2.5 rounded-full border border-line bg-surface px-4 text-ink shadow-card transition-colors hover:bg-surface-hover focus-visible:outline-none"
+      class="fixed bottom-6 right-6 z-40 hidden h-12 items-center gap-2.5 rounded-full border border-line bg-surface px-4 text-ink shadow-card transition-colors hover:bg-surface-2 hover:border-line-strong focus-visible:outline-none lg:inline-flex"
     >
       <span class="relative">
         <i data-lucide="shopping-cart" class="h-5 w-5" aria-hidden="true"></i>
         <span
           id="cart-count-badge"
-          class="hidden absolute -right-2.5 -top-2 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-canvas"
+          class="absolute -right-2.5 -top-2 hidden min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-canvas"
         >
           0
         </span>
@@ -1116,7 +1021,7 @@
       id="scroll-to-top"
       data-motion-press
       aria-label="Kembali ke atas"
-      class="hidden-btn fixed bottom-22 right-4 z-40 grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-ink shadow-card md:bottom-6 md:right-6 md:h-12 md:w-12"
+      class="hidden-btn fixed bottom-24 right-4 z-40 grid h-12 w-12 place-items-center rounded-full border border-line bg-surface text-ink shadow-card md:bottom-24 md:right-6 lg:bottom-24"
     >
       <i data-lucide="arrow-up" class="h-5 w-5" aria-hidden="true"></i>
     </button>
@@ -1125,35 +1030,24 @@
     <nav
       id="mobile-bottom-nav"
       aria-label="Navigasi Bawah Mobile"
-      class="fixed inset-x-3 bottom-2.5 z-40 grid h-16 grid-cols-5 rounded-full border border-line bg-surface/95 px-1.5 backdrop-blur-md md:hidden"
+      class="fixed inset-x-3 bottom-2.5 z-40 grid h-16 grid-cols-4 rounded-full border border-line bg-surface/95 px-1.5 backdrop-blur-md lg:hidden"
       style="bottom: max(0.625rem, env(safe-area-inset-bottom))"
     >
       <a
         href="#home"
         data-nav="home"
-        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-faint transition-colors hover:text-ink"
+        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-muted transition-colors hover:text-ink"
       >
         <span class="mobile-nav-icon grid h-8 w-8 place-items-center rounded-full transition-colors" aria-hidden="true">
           <i data-lucide="home" class="h-4 w-4"></i>
         </span>
-        <span class="text-[10px] font-medium">Home</span>
-      </a>
-
-      <a
-        href="#cara-pesan"
-        data-nav="cara-pesan"
-        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-faint transition-colors hover:text-ink"
-      >
-        <span class="mobile-nav-icon grid h-8 w-8 place-items-center rounded-full transition-colors" aria-hidden="true">
-          <i data-lucide="shopping-bag" class="h-4 w-4"></i>
-        </span>
-        <span class="text-[10px] font-medium">Cara</span>
+        <span class="text-[10px] font-medium">Beranda</span>
       </a>
 
       <a
         href="#layanan"
         data-nav="layanan"
-        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-faint transition-colors hover:text-ink"
+        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-muted transition-colors hover:text-ink"
       >
         <span class="mobile-nav-icon grid h-8 w-8 place-items-center rounded-full transition-colors" aria-hidden="true">
           <i data-lucide="layout-grid" class="h-4 w-4"></i>
@@ -1162,27 +1056,27 @@
       </a>
 
       <a
-        href="#faq"
-        data-nav="faq"
-        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-faint transition-colors hover:text-ink"
+        href="#testimoni"
+        data-nav="testimoni"
+        class="mobile-nav-link flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-muted transition-colors hover:text-ink"
       >
         <span class="mobile-nav-icon grid h-8 w-8 place-items-center rounded-full transition-colors" aria-hidden="true">
-          <i data-lucide="help-circle" class="h-4 w-4"></i>
+          <i data-lucide="message-square-quote" class="h-4 w-4"></i>
         </span>
-        <span class="text-[10px] font-medium">FAQ</span>
+        <span class="text-[10px] font-medium">Testimoni</span>
       </a>
 
       <button
         type="button"
         data-open-cart
         aria-label="Buka keranjang belanja"
-        class="relative flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-faint transition-colors hover:text-ink"
+        class="relative flex min-h-[48px] flex-col items-center justify-center gap-0.5 text-ink-muted transition-colors hover:text-ink"
       >
         <span class="relative grid h-8 w-8 place-items-center rounded-full">
           <i data-lucide="shopping-cart" class="h-4 w-4" aria-hidden="true"></i>
           <span
             id="mobile-cart-badge"
-            class="hidden absolute -right-1 -top-0.5 min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-canvas"
+            class="absolute -right-1 -top-0.5 hidden min-w-[18px] items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-canvas"
           >
             0
           </span>
@@ -1198,13 +1092,13 @@
       aria-modal="true"
       aria-labelledby="cart-drawer-title"
       aria-hidden="true"
-      class="drawer-closed pointer-events-none fixed inset-0 z-50"
+      class="drawer-closed pointer-events-none fixed inset-0 z-[70]"
     >
       <div id="cart-drawer-backdrop" class="fixed inset-0 bg-canvas/80 backdrop-blur-sm"></div>
 
       <div
         id="cart-drawer-panel"
-        class="pointer-events-auto fixed bottom-0 right-0 z-10 flex max-h-[92vh] w-full flex-col rounded-t-xl border border-line bg-surface sm:top-0 sm:max-h-screen sm:max-w-md sm:rounded-none"
+        class="pointer-events-auto fixed bottom-0 right-0 z-10 flex max-h-[92vh] w-full flex-col rounded-t-xl border border-line bg-surface sm:top-0 sm:max-h-screen sm:max-w-md sm:rounded-none sm:border-l sm:border-t-0"
       >
         <div class="flex justify-center pb-1 pt-3 sm:hidden" aria-hidden="true">
           <span class="h-1 w-10 rounded-full bg-line-strong"></span>
@@ -1212,12 +1106,12 @@
 
         <div class="flex items-center justify-between border-b border-line px-5 py-4">
           <div class="flex items-center gap-3">
-            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-subtle text-accent" aria-hidden="true">
+            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-accent-subtle text-accent" aria-hidden="true">
               <i data-lucide="shopping-cart" class="h-5 w-5"></i>
             </div>
             <div>
               <h3 id="cart-drawer-title" class="text-base font-semibold text-ink">Keranjang</h3>
-              <p id="cart-drawer-count" class="text-xs text-ink-faint">0 item dipilih</p>
+              <p id="cart-drawer-count" class="text-xs text-ink-muted">0 item dipilih</p>
             </div>
           </div>
 
@@ -1235,7 +1129,7 @@
               id="close-cart-drawer-btn"
               data-close-cart
               aria-label="Tutup keranjang belanja"
-              class="grid h-11 w-11 place-items-center rounded-full border border-line text-ink-secondary transition-colors hover:bg-surface-hover hover:text-ink"
+              class="grid h-11 w-11 place-items-center rounded-full bg-surface-2 text-ink-secondary transition-colors hover:bg-action hover:text-ink"
             >
               <i data-lucide="x" class="h-5 w-5" aria-hidden="true"></i>
             </button>
@@ -1246,7 +1140,7 @@
           <div id="cart-items-list" class="space-y-3"></div>
 
           <div id="cart-empty-state" class="py-12 text-center">
-            <div class="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-xl bg-canvas-subtle text-ink-faint" aria-hidden="true">
+            <div class="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-lg bg-surface-2 text-ink-muted" aria-hidden="true">
               <i data-lucide="shopping-bag" class="h-5 w-5"></i>
             </div>
             <h4 class="text-base font-semibold text-ink">Keranjang masih kosong</h4>
@@ -1263,20 +1157,20 @@
           </div>
 
           <div id="cart-buyer-form" class="hidden space-y-4 border-t border-line pt-4">
-            <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-ink-faint">
+            <h4 class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
               Informasi pemesan
             </h4>
 
             <div>
               <label for="buyer-name-input" class="mb-1.5 block text-xs font-medium text-ink-secondary">
-                Nama lengkap <span class="font-normal text-ink-faint">(opsional)</span>
+                Nama lengkap <span class="font-normal text-ink-muted">(opsional)</span>
               </label>
               <input
                 type="text"
                 id="buyer-name-input"
                 maxlength="100"
                 placeholder="Contoh: Budi Santoso"
-                class="h-11 w-full rounded-xl border border-line bg-canvas px-3.5 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+                class="h-11 w-full rounded-lg border border-line bg-canvas px-3.5 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
               />
             </div>
 
@@ -1284,20 +1178,20 @@
 
             <div>
               <label for="buyer-notes-input" class="mb-1.5 block text-xs font-medium text-ink-secondary">
-                Catatan tambahan <span class="font-normal text-ink-faint">(opsional)</span>
+                Catatan tambahan <span class="font-normal text-ink-muted">(opsional)</span>
               </label>
               <input
                 type="text"
                 id="buyer-notes-input"
                 maxlength="500"
                 placeholder="Catatan tambahan untuk admin"
-                class="h-11 w-full rounded-xl border border-line bg-canvas px-3.5 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+                class="h-11 w-full rounded-lg border border-line bg-canvas px-3.5 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
               />
             </div>
           </div>
         </div>
 
-        <div class="space-y-3 border-t border-line p-5">
+        <div class="space-y-3 border-t border-line p-5" style="padding-bottom: max(1.25rem, env(safe-area-inset-bottom))">
           <div class="flex items-center justify-between">
             <span class="text-sm font-medium text-ink-secondary">Total tagihan</span>
             <span id="cart-total-price" class="text-2xl font-bold tracking-tight text-ink">Rp 0</span>
@@ -1312,7 +1206,7 @@
             <span>Kirim pesanan via WhatsApp</span>
           </button>
 
-          <div class="flex items-center justify-between gap-2 text-xs text-ink-faint">
+          <div class="flex items-center justify-between gap-2 text-xs text-ink-muted">
             <span class="inline-flex items-center gap-1.5">
               <i data-lucide="shield-check" class="h-3.5 w-3.5 text-accent" aria-hidden="true"></i>
               Garansi penuh · QRIS &amp; e-wallet
@@ -1320,7 +1214,7 @@
             <button
               type="button"
               id="copy-wa-number-btn"
-              class="inline-flex items-center gap-1 font-medium text-accent-hover transition-colors hover:text-accent-hover"
+              class="inline-flex min-h-[44px] items-center gap-1 font-medium text-accent-hover transition-colors hover:text-accent"
             >
               <i data-lucide="copy" class="h-3.5 w-3.5" aria-hidden="true"></i>
               <span>WA: 0878-6248-1038</span>
@@ -1334,7 +1228,7 @@
     <div
       id="toast-container"
       aria-live="polite"
-      class="pointer-events-none fixed left-1/2 top-5 z-[100] flex -translate-x-1/2 flex-col gap-2 sm:bottom-6 sm:left-auto sm:right-6 sm:top-auto sm:translate-x-0"
+      class="pointer-events-none fixed left-1/2 top-5 z-[100] flex w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 flex-col gap-2 sm:bottom-6 sm:left-auto sm:right-6 sm:top-auto sm:w-auto sm:translate-x-0"
     ></div>
   </body>
 </html>

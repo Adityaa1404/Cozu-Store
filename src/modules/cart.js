@@ -334,7 +334,7 @@ function renderDynamicAppFields() {
     const currentDate = getIndonesianDate();
 
     html += `
-      <div class="space-y-3.5 rounded-xl border border-line bg-canvas-subtle p-4">
+      <div class="space-y-3.5 rounded-xl border border-line bg-surface-2 p-4">
         <div class="flex items-center justify-between gap-2 border-b border-line pb-2.5">
           <div class="flex items-center gap-2">
             <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-subtle text-accent" aria-hidden="true">
@@ -342,7 +342,7 @@ function renderDynamicAppFields() {
             </span>
             <h5 class="text-xs font-semibold uppercase tracking-[0.08em] text-ink">Netflix device management</h5>
           </div>
-          <span class="rounded-full border border-line px-2.5 py-0.5 text-[11px] font-medium text-ink-faint">
+          <span class="whitespace-nowrap rounded-full border border-line px-2.5 py-0.5 text-[11px] font-medium text-ink-muted">
             Wajib diisi
           </span>
         </div>
@@ -359,7 +359,7 @@ function renderDynamicAppFields() {
               placeholder="085854577353"
               value="${escapeHtml(CartStore.extraData.netflixPhone || '')}"
               data-extra-field="netflixPhone"
-              class="h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+              class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
             />
           </div>
 
@@ -374,12 +374,12 @@ function renderDynamicAppFields() {
               placeholder="Contoh: Surabaya"
               value="${escapeHtml(CartStore.extraData.netflixLocation || '')}"
               data-extra-field="netflixLocation"
-              class="h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+              class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
             />
           </div>
 
           <div>
-            <label for="netflix-date-input" class="mb-1 block text-xs font-medium text-ink-faint">
+            <label for="netflix-date-input" class="mb-1 block text-xs font-medium text-ink-muted">
               Tanggal order (otomatis)
             </label>
             <input
@@ -387,12 +387,12 @@ function renderDynamicAppFields() {
               id="netflix-date-input"
               value="${escapeHtml(currentDate)}"
               readonly
-              class="h-11 w-full cursor-not-allowed rounded-xl border border-line bg-canvas px-3 text-sm text-ink-faint"
+              class="h-11 w-full cursor-not-allowed rounded-lg border border-line bg-canvas px-3 text-sm text-ink-muted"
             />
           </div>
 
           <div>
-            <label for="netflix-duration-input" class="mb-1 block text-xs font-medium text-ink-faint">
+            <label for="netflix-duration-input" class="mb-1 block text-xs font-medium text-ink-muted">
               Durasi (otomatis)
             </label>
             <input
@@ -400,7 +400,7 @@ function renderDynamicAppFields() {
               id="netflix-duration-input"
               value="${escapeHtml(defaultDuration)}"
               readonly
-              class="h-11 w-full cursor-not-allowed rounded-xl border border-line bg-canvas px-3 text-sm text-ink-faint"
+              class="h-11 w-full cursor-not-allowed rounded-lg border border-line bg-canvas px-3 text-sm text-ink-muted"
             />
           </div>
         </div>
@@ -416,7 +416,7 @@ function renderDynamicAppFields() {
             placeholder="Contoh: Laptop Asus Vivobook / iPhone XR / TV Samsung"
             value="${escapeHtml(CartStore.extraData.netflixDevice || '')}"
             data-extra-field="netflixDevice"
-            class="h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+            class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
           />
         </div>
 
@@ -471,7 +471,7 @@ function renderDynamicAppFields() {
     .filter((app) => app.active)
     .forEach((app) => {
       html += `
-        <div class="space-y-2 rounded-xl border border-line bg-canvas-subtle p-4">
+        <div class="space-y-2 rounded-xl border border-line bg-surface-2 p-4">
           <div class="flex items-center gap-2">
             <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-subtle text-accent" aria-hidden="true">
               <i data-lucide="${app.icon}" class="h-4 w-4"></i>
@@ -488,9 +488,9 @@ function renderDynamicAppFields() {
             placeholder="${app.placeholder}"
             value="${escapeHtml(CartStore.extraData[app.key] || '')}"
             data-extra-field="${app.key}"
-            class="h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+            class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
           />
-          <p class="text-xs text-ink-faint">${app.hint}</p>
+          <p class="text-xs text-ink-muted">${app.hint}</p>
         </div>
       `;
     });
@@ -555,31 +555,41 @@ function renderCartDrawer() {
     .map((item) => {
       const itemSubtotal = item.unitPrice * item.quantity;
       return `
-        <div class="flex items-center justify-between gap-3 rounded-xl border border-line bg-canvas-subtle p-3.5">
-          <div class="flex min-w-0 items-center gap-3">
-            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-subtle text-accent" aria-hidden="true">
-              <i data-lucide="${escapeHtml(item.appIcon || 'layers')}" class="h-5 w-5"></i>
-            </div>
-            <div class="min-w-0">
-              <div class="mb-0.5 flex items-center gap-1.5">
-                <span class="truncate text-sm font-semibold text-ink">${escapeHtml(item.appName)}</span>
-                <span class="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] font-medium text-ink-faint">
-                  ${escapeHtml(item.durationLabel)}
-                </span>
+        <div class="rounded-xl border border-line bg-surface-2 p-3.5">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex min-w-0 items-center gap-3">
+              <div class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-accent-subtle text-accent" aria-hidden="true">
+                <i data-lucide="${escapeHtml(item.appIcon || 'layers')}" class="h-5 w-5"></i>
               </div>
-              <p class="truncate text-xs text-ink-secondary">${escapeHtml(item.planName)}</p>
-              <p class="mt-1 text-sm font-semibold text-ink">${escapeHtml(formatRupiah(itemSubtotal))}</p>
+              <div class="min-w-0">
+                <div class="mb-0.5 flex items-center gap-1.5">
+                  <span class="truncate text-sm font-semibold text-ink">${escapeHtml(item.appName)}</span>
+                  <span class="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] font-medium text-ink-muted">
+                    ${escapeHtml(item.durationLabel)}
+                  </span>
+                </div>
+                <p class="truncate text-xs text-ink-secondary">${escapeHtml(item.planName)}</p>
+              </div>
             </div>
+
+            <button
+              type="button"
+              data-cart-remove="${escapeHtml(item.id)}"
+              aria-label="Hapus ${escapeHtml(item.appName)} dari keranjang"
+              class="grid h-11 w-11 shrink-0 place-items-center rounded-full text-ink-muted transition-colors hover:text-error"
+            >
+              <i data-lucide="trash-2" class="h-4 w-4" aria-hidden="true"></i>
+            </button>
           </div>
 
-          <div class="flex shrink-0 items-center gap-1.5">
+          <div class="mt-2.5 flex items-center justify-between gap-3 border-t border-line pt-2.5">
             <div class="flex items-center rounded-full border border-line p-0.5">
               <button
                 type="button"
                 data-cart-qty="${escapeHtml(item.id)}"
                 data-delta="-1"
                 aria-label="Kurangi kuantitas ${escapeHtml(item.appName)}"
-                class="grid h-9 w-9 place-items-center rounded-full text-ink-secondary transition-colors hover:bg-surface-hover hover:text-ink"
+                class="grid h-11 w-11 place-items-center rounded-full text-ink-secondary transition-colors hover:bg-action hover:text-ink"
               >
                 <i data-lucide="minus" class="h-3.5 w-3.5" aria-hidden="true"></i>
               </button>
@@ -589,20 +599,13 @@ function renderCartDrawer() {
                 data-cart-qty="${escapeHtml(item.id)}"
                 data-delta="1"
                 aria-label="Tambah kuantitas ${escapeHtml(item.appName)}"
-                class="grid h-9 w-9 place-items-center rounded-full text-ink-secondary transition-colors hover:bg-surface-hover hover:text-ink"
+                class="grid h-11 w-11 place-items-center rounded-full text-ink-secondary transition-colors hover:bg-action hover:text-ink"
               >
                 <i data-lucide="plus" class="h-3.5 w-3.5" aria-hidden="true"></i>
               </button>
             </div>
 
-            <button
-              type="button"
-              data-cart-remove="${escapeHtml(item.id)}"
-              aria-label="Hapus ${escapeHtml(item.appName)} dari keranjang"
-              class="grid h-9 w-9 place-items-center rounded-full text-ink-faint transition-colors hover:text-error"
-            >
-              <i data-lucide="trash-2" class="h-4 w-4" aria-hidden="true"></i>
-            </button>
+            <p class="text-sm font-semibold text-ink">${escapeHtml(formatRupiah(itemSubtotal))}</p>
           </div>
         </div>
       `;

@@ -24,25 +24,31 @@ export function initTestimonials(testimonials) {
           .join('');
 
         return `
-          <article data-motion-hover class="carousel-item flex w-[85%] flex-col justify-between rounded-xl border border-line bg-surface p-6 sm:w-[340px]">
-            <div>
-              <div class="mb-3 flex items-center gap-1" aria-label="Rating ${ratingCount} dari 5 bintang">
-                ${starsHtml}
+          <article
+            data-motion-hover
+            class="carousel-item flex aspect-[16/9] w-[300px] flex-col justify-between overflow-hidden rounded-xl border border-line bg-surface p-4 sm:w-[360px] sm:p-5"
+          >
+            <div class="min-h-0">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-0.5" aria-label="Rating ${ratingCount} dari 5 bintang">
+                  ${starsHtml}
+                </div>
+                <span class="text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">Terverifikasi</span>
               </div>
-              <p class="mb-5 text-sm leading-relaxed text-ink-secondary">
-                "${escapeHtml(item.text)}"
+              <p class="mt-2 line-clamp-3 text-[13px] leading-relaxed text-ink-secondary sm:text-sm">
+                “${escapeHtml(item.text)}”
               </p>
             </div>
-            <div class="flex items-center gap-3 border-t border-line pt-4">
-              <div class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent-subtle text-xs font-semibold text-ink">
+            <div class="mt-3 flex items-center gap-2.5 border-t border-line pt-3">
+              <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent-subtle text-[11px] font-semibold text-ink">
                 ${escapeHtml(item.initials)}
               </div>
               <div class="min-w-0">
                 <p class="truncate text-sm font-semibold text-ink">${escapeHtml(item.name)}</p>
-                <p class="flex items-center gap-1 truncate text-xs text-ink-faint">
+                <p class="flex items-center gap-1 truncate text-[11px] text-ink-muted">
                   ${
                     item.verified
-                      ? `<i data-lucide="check-circle-2" class="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden="true"></i>`
+                      ? `<i data-lucide="check-circle-2" class="h-3 w-3 shrink-0 text-accent" aria-hidden="true"></i>`
                       : ''
                   }
                   <span class="truncate">${escapeHtml(item.role || 'Pembeli Terverifikasi')}</span>

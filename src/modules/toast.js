@@ -36,25 +36,25 @@ export function showToast(title, message, type = 'success') {
       box: 'bg-surface text-ink border-accent/50',
       icon: 'check-circle-2',
       subtext: 'text-ink-secondary',
-      close: 'text-ink-faint hover:text-ink'
+      close: 'text-ink-muted hover:text-ink'
     },
     error: {
       box: 'bg-surface text-ink border-error/60',
       icon: 'alert-triangle',
       subtext: 'text-ink-secondary',
-      close: 'text-ink-faint hover:text-ink'
+      close: 'text-ink-muted hover:text-ink'
     },
     warning: {
       box: 'bg-surface text-ink border-line-strong',
       icon: 'alert-triangle',
       subtext: 'text-ink-secondary',
-      close: 'text-ink-faint hover:text-ink'
+      close: 'text-ink-muted hover:text-ink'
     },
     info: {
       box: 'bg-surface text-ink border-line',
       icon: 'info',
       subtext: 'text-ink-secondary',
-      close: 'text-ink-faint hover:text-ink'
+      close: 'text-ink-muted hover:text-ink'
     }
   };
 
@@ -73,7 +73,7 @@ export function showToast(title, message, type = 'success') {
       type="button"
       data-dismiss-toast="${toastId}"
       aria-label="Tutup notifikasi"
-      class="grid h-7 w-7 shrink-0 place-items-center rounded-full transition-colors ${style.close}"
+      class="grid h-11 w-11 shrink-0 place-items-center rounded-full transition-colors ${style.close}"
     >
       <i data-lucide="x" class="h-4 w-4"></i>
     </button>

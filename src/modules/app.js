@@ -10,6 +10,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronsRight,
   Clapperboard,
   Clock,
   Copy,
@@ -24,6 +25,7 @@ import {
   Mail,
   MessageCircle,
   MessageSquareQuote,
+  Menu,
   Minus,
   Music,
   Palette,
@@ -67,6 +69,7 @@ const USED_ICONS = {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronsRight,
   Clapperboard,
   Clock,
   Copy,
@@ -81,6 +84,7 @@ const USED_ICONS = {
   Mail,
   MessageCircle,
   MessageSquareQuote,
+  Menu,
   Minus,
   Music,
   Palette,
@@ -158,7 +162,7 @@ export function initCozuStore() {
   initFaq();
   initNavigation(productsData, resetAll);
   hydrateIcons(document);
-  initMotionSystem(productsData, { onAddToCart: addToCart });
+  initMotionSystem(productsData, { onAddToCart: addToCart, onDirectBuy: directBuy });
 }
 
 if (document.readyState === 'loading') {

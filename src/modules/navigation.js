@@ -1,7 +1,17 @@
 import { highlightAppSection } from './products.js';
 
+const SIDEBAR_STATE_KEY = 'cozu_sidebar_expanded';
+
+function prefersReducedMotion() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+}
+
+function scrollBehavior() {
+  return prefersReducedMotion() ? 'auto' : 'smooth';
+}
+
 export function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: scrollBehavior() });
 }
 
 export function initScrollToTop() {
@@ -24,9 +34,94 @@ export function initScrollToTop() {
   scrollBtn.addEventListener('click', scrollToTop);
 }
 
+/* Desktop rail: 68px collapsed ↔ 240px expanded, remembered per browser */
+export function initSidebar() {
+  const sidebar = document.getElementById('desktop-sidebar');
+  const toggle = document.getElementById('sidebar-toggle');
+  if (!sidebar || !toggle) return;
+
+  const label = toggle.querySelector('.sidebar-label');
+  let expanded = false;
+  try {
+    expanded = localStorage.getItem(SIDEBAR_STATE_KEY) === 'true';
+  } catch {
+    expanded = false;
+  }
+
+  const applyState = (next) => {
+    expanded = next;
+    sidebar.classList.toggle('is-expanded', expanded);
+    document.body.classList.toggle('sidebar-expanded', expanded);
+    toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    toggle.setAttribute('aria-label', expanded ? 'Perkecil sidebar' : 'Perluas sidebar');
+    if (label) label.textContent = expanded ? 'Perkecil' : 'Perluas';
+  };
+
+  applyState(expanded);
+
+  toggle.addEventListener('click', () => {
+    applyState(!expanded);
+    try {
+      localStorage.setItem(SIDEBAR_STATE_KEY, String(expanded));
+    } catch {
+      /* private mode: state stays in memory */
+    }
+  });
+}
+
+/* Mobile hamburger drawer (left slide) */
+export function initMobileMenu() {
+  const root = document.getElementById('mobile-drawer-root');
+  const openBtn = document.getElementById('mobile-menu-btn');
+  const closeBtn = document.getElementById('mobile-drawer-close');
+  const backdrop = document.getElementById('mobile-drawer-backdrop');
+  if (!root || !openBtn) return;
+
+  const isOpen = () => root.classList.contains('mobile-menu-open');
+
+  const openMenu = () => {
+    root.classList.remove('mobile-menu-closed');
+    root.classList.add('mobile-menu-open');
+    root.setAttribute('aria-hidden', 'false');
+    openBtn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('overflow-hidden');
+    window.setTimeout(() => closeBtn?.focus(), 60);
+  };
+
+  const closeMenu = () => {
+    if (!isOpen()) return;
+    root.classList.remove('mobile-menu-open');
+    root.classList.add('mobile-menu-closed');
+    root.setAttribute('aria-hidden', 'true');
+    openBtn.setAttribute('aria-expanded', 'false');
+    const cartRoot = document.getElementById('cart-drawer-root');
+    if (!cartRoot || !cartRoot.classList.contains('drawer-open')) {
+      document.body.classList.remove('overflow-hidden');
+    }
+    openBtn.focus();
+  };
+
+  openBtn.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+  backdrop?.addEventListener('click', closeMenu);
+
+  root.querySelectorAll('a[href^="#"], [data-open-cart]').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) closeMenu();
+  });
+}
+
 export function initNavbarNavigation() {
-  const sectionIds = ['home', 'cara-pesan', 'layanan', 'testimoni', 'faq'];
-  const navLinks = Array.from(document.querySelectorAll('.nav-link[data-nav], .mobile-nav-link[data-nav]'));
+  // DOM order: hero → testimoni → katalog → faq → cara pesan
+  const sectionIds = ['home', 'testimoni', 'layanan', 'faq', 'cara-pesan'];
+  const navLinks = Array.from(
+    document.querySelectorAll(
+      '.nav-link[data-nav], .mobile-nav-link[data-nav], .drawer-link[data-nav]'
+    )
+  );
 
   function updateActiveNav(activeId) {
     navLinks.forEach((link) => {
@@ -64,7 +159,7 @@ export function initNavbarNavigation() {
       const targetEl = document.getElementById(targetId);
       if (!targetEl) return;
       e.preventDefault();
-      targetEl.scrollIntoView({ behavior: 'smooth' });
+      targetEl.scrollIntoView({ behavior: scrollBehavior() });
       updateActiveNav(targetId);
       if (window.history?.pushState) {
         window.history.pushState(null, '', `#${targetId}`);
@@ -89,11 +184,13 @@ export function handleHashRoute(products, onResetFilters) {
 
   const targetSection = document.getElementById(rawHash);
   if (targetSection) {
-    targetSection.scrollIntoView({ behavior: 'smooth' });
+    targetSection.scrollIntoView({ behavior: scrollBehavior() });
   }
 }
 
 export function initNavigation(products, onResetFilters) {
+  initSidebar();
+  initMobileMenu();
   initNavbarNavigation();
   initScrollToTop();
   handleHashRoute(products, onResetFilters);

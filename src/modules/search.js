@@ -100,7 +100,7 @@ export function renderCategoryPills(container, categories, products, onSelect) {
           <i data-lucide="${escapeHtml(c.icon || 'layers')}" class="h-4 w-4" aria-hidden="true"></i>
           <span>${escapeHtml(c.name)}</span>
           <span class="pill-count rounded-full px-2 py-0.5 text-xs font-semibold ${
-            isActive ? 'bg-canvas/20 text-canvas' : 'bg-canvas-subtle text-ink-faint'
+            isActive ? 'bg-canvas/20 text-canvas' : 'bg-surface-2 text-ink-muted'
           }">
             ${count}
           </span>

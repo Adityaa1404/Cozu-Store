@@ -15,53 +15,57 @@ const SANS_STACK = [
 export default {
   content: ['./index.html', './src/**/*.{js,html}'],
   theme: {
-    // One radius grammar: 12px cards + full pills. Nothing else exists.
+    // One radius grammar: 12px cards, 8px thumbs, full pills. Nothing else exists.
     borderRadius: {
       none: '0px',
+      lg: '8px',
       xl: '12px',
       full: '9999px'
     },
     extend: {
       colors: {
-        canvas: {
-          DEFAULT: '#1E2134',
-          subtle: '#23263B'
-        },
+        canvas: '#05070A',
+        rail: '#070A0E',
         surface: {
-          DEFAULT: '#22254E',
-          hover: '#2A2E5A'
-        },
-        ink: {
-          DEFAULT: '#CEDDF4',
-          secondary: '#BCBAC5',
-          faint: 'rgba(188,186,197,0.68)'
+          DEFAULT: '#0F171E',
+          2: '#141824'
         },
         line: {
-          DEFAULT: 'rgba(206,221,244,0.10)',
-          strong: 'rgba(206,221,244,0.18)'
+          DEFAULT: 'rgba(255,255,255,0.08)',
+          strong: 'rgba(255,255,255,0.16)'
+        },
+        ink: {
+          DEFAULT: '#FFFFFF',
+          secondary: '#9AA9B4',
+          tertiary: '#8A98A3',
+          muted: '#7C8B96'
         },
         accent: {
-          DEFAULT: '#5793AA',
-          hover: '#6BA5BA',
-          subtle: 'rgba(87,147,170,0.14)',
-          glow: 'rgba(87,147,170,0.35)'
+          DEFAULT: '#00A8E1',
+          hover: '#33BBEB',
+          subtle: 'rgba(0,168,225,0.15)'
         },
-        success: '#7FB79C',
-        error: '#C97B84'
+        action: {
+          DEFAULT: 'rgba(51,65,75,0.6)',
+          active: '#414E58'
+        },
+        badge: {
+          DEFAULT: '#1E2830',
+          text: '#8C9DA8'
+        },
+        progress: {
+          track: '#4A5863',
+          fill: '#FFFFFF'
+        },
+        error: '#F87171'
       },
       fontFamily: {
-        sans: SANS_STACK,
-        display: SANS_STACK,
-        body: SANS_STACK
+        sans: SANS_STACK
       },
       boxShadow: {
-        card: '0 1px 0 rgba(206,221,244,0.05), 0 16px 40px -20px rgba(0,0,0,0.55)',
-        glow: '0 0 0 1px rgba(87,147,170,0.35), 0 0 24px -6px rgba(87,147,170,0.4)'
-      },
-      transitionTimingFunction: {
-        smooth: 'cubic-bezier(0.22, 1, 0.36, 1)'
+        card: '0 8px 24px -12px rgba(0,0,0,0.6)',
+        glow: '0 0 0 1px rgba(0,168,225,0.4), 0 0 24px -6px rgba(0,168,225,0.45)'
       }
     }
-  },
-  plugins: []
+  }
 };

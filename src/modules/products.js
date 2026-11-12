@@ -84,11 +84,6 @@ export function getStartingPrice(app) {
   return min === Infinity ? 0 : min;
 }
 
-function countPlanCards(app) {
-  if (!app || !Array.isArray(app.plans)) return 0;
-  return app.plans.reduce((sum, plan) => sum + Object.keys(plan.durations || {}).length, 0);
-}
-
 const categoryLabels = {
   streaming: 'Streaming Video',
   design: 'Desain & Editing',
@@ -109,82 +104,102 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
   if (emptyStateEl) emptyStateEl.classList.add('hidden');
   container.classList.remove('hidden');
 
-  container.innerHTML = apps
-    .map((app) => {
+  const seenApp = new Set();
+
+  const cards = apps
+    .flatMap((app) => {
       const startPrice = getStartingPrice(app);
-      const totalVariants = countPlanCards(app);
-      const gridColsClass =
-        totalVariants === 1
-          ? 'grid-cols-1 max-w-md'
-          : totalVariants === 2
-            ? 'grid-cols-1 md:grid-cols-2'
-            : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4';
+      const categoryLabel = categoryLabels[app.category] || app.category;
+      const isFirstCard = !seenApp.has(app.id);
+      seenApp.add(app.id);
 
-      const planCardsHtml = app.plans
-        .flatMap((plan) =>
-          Object.entries(plan.durations || {}).map(([durationKey, durationData]) => {
-            const isBest = Boolean(plan.bestSeller);
-            const durMeta = durationLabels[durationKey] || { label: durationKey, unit: durationKey };
+      return app.plans.flatMap((plan) =>
+        Object.entries(plan.durations || {}).map(([durationKey, durationData]) => {
+          const isBest = Boolean(plan.bestSeller);
+          const durMeta = durationLabels[durationKey] || { label: durationKey, unit: durationKey };
+          const features = (durationData.features || []).slice(0, 3);
 
-            return `
-              <div
-                data-catalog-card
-                data-motion-hover
-                class="flex h-full flex-col justify-between rounded-xl border p-5 transition-colors ${
-                  isBest
-                    ? 'border-accent/40 bg-surface'
-                    : 'border-line bg-canvas-subtle hover:border-accent/30'
-                }"
-              >
-                <div class="flex flex-col">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="inline-flex shrink-0 items-center whitespace-nowrap rounded-full border border-line px-2.5 py-1 text-[11px] font-semibold text-ink-secondary">
-                      ${escapeHtml(durMeta.label)}
-                    </span>
-                    ${
-                      isBest
-                        ? `<span class="inline-flex shrink-0 items-center whitespace-nowrap rounded-full bg-accent-subtle px-2.5 py-1 text-[11px] font-semibold text-ink">
-                             Paling laris
-                           </span>`
-                        : ''
-                    }
-                  </div>
+          return `
+            <article
+              ${isFirstCard ? `id="app-${escapeHtml(app.id)}"` : ''}
+              data-catalog-card
+              data-motion-hover
+              aria-label="Produk: ${escapeHtml(app.name)} — ${escapeHtml(plan.name)} (${escapeHtml(durMeta.label)})"
+              class="group flex h-full scroll-mt-24 flex-col overflow-hidden rounded-xl border border-line bg-surface transition-colors hover:border-accent/40"
+            >
+              <div class="relative m-2 mb-0 aspect-[16/9] overflow-hidden rounded-lg bg-[radial-gradient(circle_at_28%_18%,rgba(0,168,225,0.28),transparent_62%),linear-gradient(150deg,#141824_0%,#0F171E_72%)]">
+                <i
+                  data-lucide="${escapeHtml(app.icon || 'layers')}"
+                  class="absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-accent/20 transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
+                  aria-hidden="true"
+                ></i>
 
-                  <h4 class="mt-4 text-base font-semibold leading-snug text-ink">
-                    ${escapeHtml(plan.name)}
-                  </h4>
-
-                  <div
-                    class="mt-2 flex items-baseline gap-1"
-                    aria-label="Harga: ${escapeHtml(durationData.price)} per ${escapeHtml(durMeta.unit)}"
-                  >
-                    <span class="text-2xl font-bold tracking-tight text-ink">
-                      ${escapeHtml(durationData.price)}
-                    </span>
-                    <span class="text-xs font-medium text-ink-secondary">
-                      /${escapeHtml(durMeta.unit)}
-                    </span>
-                  </div>
-
+                <div class="absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-3">
                   ${
-                    durationData.description
-                      ? `<p class="mt-3 min-h-[58px] text-[13px] leading-relaxed text-ink-secondary">${escapeHtml(durationData.description)}</p>`
-                      : ''
+                    isBest
+                      ? `<span class="inline-flex items-center rounded-full bg-accent px-2.5 py-1 text-[11px] font-bold text-canvas">
+                           Paling laris
+                         </span>`
+                      : `<span class="inline-flex items-center rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
+                           ${escapeHtml(categoryLabel)}
+                         </span>`
                   }
-
-                  <ul class="mb-5 mt-4 flex-1 space-y-2 border-t border-line pt-4">
-                    ${(durationData.features || [])
-                      .map(
-                        (feat) => `
-                          <li class="flex items-start gap-2 text-[13px] leading-snug text-ink-secondary">
-                            <i data-lucide="check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" aria-hidden="true"></i>
-                            <span>${escapeHtml(feat)}</span>
-                          </li>
-                        `
-                      )
-                      .join('')}
-                  </ul>
+                  <span class="inline-flex items-center rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
+                    ${escapeHtml(durMeta.label)}
+                  </span>
                 </div>
+
+                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-canvas/90 to-transparent p-3 pt-8">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
+                    ${escapeHtml(categoryLabel)}
+                  </p>
+                  <div class="mt-0.5 flex items-end justify-between gap-2">
+                    <h3 class="text-lg font-bold tracking-tight text-ink">${escapeHtml(app.name)}</h3>
+                    <span class="shrink-0 text-xs font-semibold text-ink-secondary">
+                      Mulai ${escapeHtml(formatRupiah(startPrice))}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-1 flex-col p-4">
+                <div class="flex items-start justify-between gap-2">
+                  <h4 class="text-sm font-semibold leading-snug text-ink">${escapeHtml(plan.name)}</h4>
+                  <span class="shrink-0 rounded-full bg-badge px-2 py-0.5 text-[10px] font-medium text-badge-text">
+                    ${escapeHtml(durMeta.label)}
+                  </span>
+                </div>
+
+                <div
+                  class="mt-2 flex items-baseline gap-1"
+                  aria-label="Harga: ${escapeHtml(durationData.price)} per ${escapeHtml(durMeta.unit)}"
+                >
+                  <span class="text-2xl font-bold tracking-tight text-ink">
+                    ${escapeHtml(durationData.price)}
+                  </span>
+                  <span class="text-xs font-medium text-ink-secondary">
+                    /${escapeHtml(durMeta.unit)}
+                  </span>
+                </div>
+
+                ${
+                  durationData.description
+                    ? `<p class="mt-2 line-clamp-2 text-[13px] leading-relaxed text-ink-secondary">${escapeHtml(durationData.description)}</p>`
+                    : ''
+                }
+
+                <ul class="mb-4 mt-3 flex-1 space-y-1.5 border-t border-line pt-3">
+                  ${features
+                    .map(
+                      (feat) => `
+                        <li class="flex items-start gap-2 text-[12px] leading-snug text-ink-secondary">
+                          <i data-lucide="check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" aria-hidden="true"></i>
+                          <span>${escapeHtml(feat)}</span>
+                        </li>
+                      `
+                    )
+                    .join('')}
+                </ul>
 
                 <div class="flex items-center gap-2">
                   <button
@@ -211,63 +226,24 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
                     data-duration-label="${escapeHtml(durMeta.label)}"
                     aria-label="Tambah ${escapeHtml(app.name)} ${escapeHtml(plan.name)} (${escapeHtml(durMeta.label)}) ke keranjang"
                     title="Tambah ke keranjang"
-                    class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-accent/50 text-accent transition-colors hover:bg-accent-subtle"
+                    class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-action text-ink transition-colors hover:bg-action-active"
                   >
                     <i data-lucide="plus" class="h-4 w-4" aria-hidden="true"></i>
                   </button>
                 </div>
               </div>
-            `;
-          })
-        )
-        .join('');
-
-      return `
-        <article
-          id="app-${escapeHtml(app.id)}"
-          aria-label="Produk: ${escapeHtml(app.name)}"
-          class="scroll-mt-24 rounded-xl border border-line bg-surface p-5 sm:p-7"
-        >
-          <div class="flex flex-col justify-between gap-4 border-b border-line pb-5 sm:flex-row sm:items-center">
-            <div class="flex items-start gap-4 sm:items-center">
-              <div
-                class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-accent-subtle text-accent"
-                aria-hidden="true"
-              >
-                <i data-lucide="${escapeHtml(app.icon || 'layers')}" class="h-6 w-6"></i>
-              </div>
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="text-xl font-bold tracking-tight text-ink sm:text-2xl">
-                    ${escapeHtml(app.name)}
-                  </h3>
-                  <span class="inline-flex items-center rounded-full border border-line px-2.5 py-0.5 text-[11px] font-medium text-ink-faint">
-                    ${escapeHtml(categoryLabels[app.category] || app.category)}
-                  </span>
-                </div>
-                ${
-                  app.tagline
-                    ? `<p class="mt-0.5 text-sm text-ink-secondary">${escapeHtml(app.tagline)}</p>`
-                    : ''
-                }
-              </div>
-            </div>
-
-            <div class="flex items-center gap-3 self-start sm:self-center">
-              <span class="text-xs font-medium text-ink-faint">${totalVariants} paket</span>
-              <span class="text-sm font-semibold text-accent-hover">
-                Mulai ${escapeHtml(formatRupiah(startPrice))}
-              </span>
-            </div>
-          </div>
-
-          <div class="mt-6 grid ${gridColsClass} gap-4">
-            ${planCardsHtml}
-          </div>
-        </article>
-      `;
+            </article>
+          `;
+        })
+      );
     })
     .join('');
+
+  container.innerHTML = `
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      ${cards}
+    </div>
+  `;
 
   if (!container.dataset.delegated) {
     container.addEventListener('click', (e) => {

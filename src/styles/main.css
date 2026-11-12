@@ -2,17 +2,26 @@
 @config "../../tailwind.config.js";
 
 :root {
-  --canvas: #1e2134;
-  --canvas-subtle: #23263b;
-  --surface: #22254e;
-  --surface-hover: #2a2e5a;
-  --line: rgba(206, 221, 244, 0.1);
-  --line-strong: rgba(206, 221, 244, 0.18);
-  --ink: #ceddf4;
-  --ink-secondary: #bcbac5;
-  --accent: #5793aa;
-  --accent-hover: #6ba5ba;
-  --accent-subtle: rgba(87, 147, 170, 0.14);
+  --canvas: #05070a;
+  --rail: #070a0e;
+  --surface: #0f171e;
+  --surface-2: #141824;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --ink: #ffffff;
+  --ink-secondary: #9aa9b4;
+  --ink-tertiary: #8a98a3;
+  --ink-muted: #7c8b96;
+  --accent: #00a8e1;
+  --accent-hover: #33bbeb;
+  --accent-subtle: rgba(0, 168, 225, 0.15);
+  --action: rgba(51, 65, 75, 0.6);
+  --action-active: #414e58;
+  --badge-bg: #1e2830;
+  --badge-text: #8c9da8;
+  --progress-track: #4a5863;
+  --progress-fill: #ffffff;
+  --shell-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -67,9 +76,195 @@
   will-change: transform;
 }
 
-/* Minimal sticky header — flat canvas tone, no glass/cream wash */
-.header-top-mask {
-  background-color: #1e2134;
+/* ── Desktop sidebar rail ───────────────────────────────────────────── */
+#desktop-sidebar {
+  width: 68px;
+  transition: width 300ms var(--shell-ease), box-shadow 300ms var(--shell-ease);
+  will-change: width;
+}
+#desktop-sidebar.is-expanded {
+  width: 240px;
+  box-shadow: 24px 0 48px -32px rgba(0, 0, 0, 0.9);
+}
+#desktop-sidebar .sidebar-label {
+  display: block;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    max-width 300ms var(--shell-ease),
+    opacity 220ms var(--shell-ease),
+    transform 300ms var(--shell-ease);
+}
+#desktop-sidebar.is-expanded .sidebar-label {
+  max-width: 170px;
+  opacity: 1;
+  transform: translateX(0);
+}
+#desktop-sidebar .sidebar-toggle-icon {
+  transition: transform 300ms var(--shell-ease);
+}
+#desktop-sidebar.is-expanded .sidebar-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.sidebar-link {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 8px;
+  padding: 0 0.75rem;
+  color: var(--ink-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+.sidebar-link:hover {
+  background-color: var(--surface);
+  color: var(--ink);
+}
+.sidebar-link.nav-link.active {
+  background-color: var(--accent-subtle);
+  color: var(--ink);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+/* ── Page shell: content offset follows the rail ───────────────────── */
+.app-shell {
+  padding-left: 0;
+  transition: padding-left 300ms var(--shell-ease);
+}
+@media (min-width: 1024px) {
+  .app-shell {
+    padding-left: 68px;
+  }
+  body.sidebar-expanded .app-shell {
+    padding-left: 240px;
+  }
+}
+
+/* ── Hero carousel ──────────────────────────────────────────────────── */
+.hero-carousel {
+  background-color: var(--canvas);
+}
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.hero-slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 7, 10, 0.97) 0%,
+    rgba(5, 7, 10, 0.78) 38%,
+    rgba(5, 7, 10, 0.12) 64%,
+    transparent 100%
+  );
+}
+.hero-slide.is-active {
+  pointer-events: auto;
+}
+.hero-art {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 26%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 26%, #000 100%);
+  will-change: transform;
+}
+.hero-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, rgba(5, 7, 10, 0.92) 100%);
+  pointer-events: none;
+}
+.hero-dot {
+  display: flex;
+  height: 44px;
+  width: 44px;
+  align-items: center;
+}
+.hero-dot-track {
+  display: block;
+  height: 3px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 9999px;
+  background-color: var(--progress-track);
+}
+.hero-dot-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background-color: var(--progress-fill);
+  will-change: transform;
+}
+.hero-dot[aria-current='true'] .hero-dot-track {
+  background-color: rgba(255, 255, 255, 0.24);
+}
+
+/* ── Mobile drawer ──────────────────────────────────────────────────── */
+#mobile-drawer-backdrop {
+  transition: opacity 260ms var(--shell-ease);
+}
+#mobile-drawer-panel {
+  transition: transform 320ms var(--shell-ease);
+  will-change: transform;
+}
+#mobile-drawer-root.mobile-menu-closed {
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 320ms;
+}
+#mobile-drawer-root.mobile-menu-open {
+  pointer-events: auto;
+  visibility: visible;
+  transition: none;
+}
+.mobile-menu-closed #mobile-drawer-backdrop {
+  opacity: 0;
+  pointer-events: none;
+}
+.mobile-menu-closed #mobile-drawer-panel {
+  transform: translateX(-100%);
+}
+.mobile-menu-open #mobile-drawer-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-menu-open #mobile-drawer-panel {
+  transform: translateX(0);
+}
+
+.drawer-link {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 8px;
+  padding: 0 0.75rem;
+  color: var(--ink-secondary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+.drawer-link:hover {
+  background-color: var(--surface);
+  color: var(--ink);
+}
+.drawer-link.nav-link.active {
+  background-color: var(--accent-subtle);
+  color: var(--ink);
 }
 
 /* Hide scrollbars cleanly */
@@ -91,21 +286,8 @@
   flex-shrink: 0;
 }
 
-/* Hero word-mask reveal lines */
-.hero-line {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.2em;
-  margin-bottom: -0.2em;
-}
-.js-motion .hero-line-inner {
-  opacity: 0;
-  transform: translateY(110%);
-}
-
 /* Navigation active states */
 .nav-link.active {
-  background-color: var(--accent-subtle);
   color: var(--ink);
 }
 
@@ -124,20 +306,13 @@
   border-color: var(--accent);
 }
 .category-pill.active .pill-count {
-  background-color: rgba(30, 33, 52, 0.18);
+  background-color: rgba(5, 7, 10, 0.18);
   color: var(--canvas);
-}
-
-/* Interactive deck progress fill */
-.deck-segment-fill {
-  transform-origin: left center;
-  transform: scaleX(0);
-  will-change: transform;
 }
 
 /* Card hover: border warms to the single accent (motion handled in JS) */
 [data-motion-hover]:hover {
-  border-color: rgba(87, 147, 170, 0.45);
+  border-color: rgba(0, 168, 225, 0.4);
 }
 
 /* Scroll to top visibility */
@@ -162,7 +337,15 @@
   transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 #cart-drawer-panel {
-  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 300ms var(--shell-ease);
+}
+#cart-drawer-root.drawer-closed {
+  visibility: hidden;
+  transition: visibility 0s linear 300ms;
+}
+#cart-drawer-root.drawer-open {
+  visibility: visible;
+  transition: none;
 }
 .drawer-closed #cart-drawer-backdrop {
   opacity: 0;
@@ -226,7 +409,7 @@
   }
 }
 .toast-in {
-  animation: toastSlideIn 300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: toastSlideIn 300ms var(--shell-ease) forwards;
 }
 .toast-out {
   animation: toastSlideOut 200ms ease-in forwards;
@@ -236,10 +419,10 @@
 @keyframes targetFlash {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(87, 147, 170, 0);
+    box-shadow: 0 0 0 0 rgba(0, 168, 225, 0);
   }
   40% {
-    box-shadow: 0 0 0 2px rgba(87, 147, 170, 0.55);
+    box-shadow: 0 0 0 2px rgba(0, 168, 225, 0.55);
   }
 }
 .target-highlight {
@@ -250,10 +433,6 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .js-motion .hero-line-inner {
-    opacity: 1;
-    transform: none;
   }
   *,
   *::before,
