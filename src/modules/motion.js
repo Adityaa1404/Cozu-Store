@@ -142,18 +142,45 @@ function buildHeroSlide(app, index) {
   const titleTag = 'h2';
   const logoMarkup = meta.logo
     ? `
-        <div class="relative grid h-32 w-32 place-items-center sm:h-40 sm:w-40">
+        <div class="relative flex items-center justify-center">
+          <!-- Multi-tier ambient aura -->
           <span
-            class="absolute inset-0 rounded-full opacity-35 blur-2xl"
-            style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 68%)"
+            class="pointer-events-none absolute h-64 w-64 rounded-full opacity-35 blur-3xl sm:h-80 sm:w-80"
+            style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 70%)"
           ></span>
-          <img
-            src="${escapeHtml(meta.logo)}"
-            alt=""
-            class="relative h-20 w-20 object-contain sm:h-24 sm:w-24"
-            loading="eager"
-            decoding="async"
-          />
+          <span
+            class="pointer-events-none absolute h-40 w-40 rounded-full opacity-55 blur-xl sm:h-52 sm:w-52"
+            style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 65%)"
+          ></span>
+
+          <!-- 3D Card Backdrop -->
+          <div
+            data-motion-hover
+            class="group/stage relative flex h-60 w-52 flex-col items-center justify-center rounded-2xl border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.06)_0%,rgba(15,23,30,0.85)_100%)] p-6 shadow-2xl backdrop-blur-md transition-all duration-300 sm:h-72 sm:w-60"
+            style="transform: perspective(1000px) rotateY(-8deg) rotateX(4deg); transform-style: preserve-3d;"
+          >
+            <!-- Reflective highlight top edge -->
+            <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+
+            <!-- Brand logo -->
+            <div class="relative grid h-24 w-24 place-items-center sm:h-28 sm:w-28" style="transform: translateZ(24px);">
+              <img
+                src="${escapeHtml(meta.logo)}"
+                alt="${escapeHtml(app.name)} logo"
+                class="h-16 w-16 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)] sm:h-20 sm:w-20"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+
+            <!-- Card footer chip -->
+            <div class="mt-4 flex flex-col items-center gap-1 text-center" style="transform: translateZ(16px);">
+              <span class="text-xs font-bold tracking-tight text-ink sm:text-sm">${escapeHtml(app.name)}</span>
+              <span class="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-semibold text-ink-secondary">
+                Mulai ${escapeHtml(start.price)}
+              </span>
+            </div>
+          </div>
         </div>
       `
     : `
@@ -366,7 +393,7 @@ export function initHeroCarousel(products, { onAddToCart, onDirectBuy } = {}) {
       slide.style.zIndex = i === index ? '2' : i === previous ? '3' : '1';
     });
     setSlideState(index);
-    document.dispatchEvent(new CustomEvent('cozu:hero-slide', { detail: { appId: orderedApps[index]?.id } }));
+    document.dispatchEvent(new CustomEvent('cozu:hero-slide', { detail: { appId: apps[index]?.id } }));
 
     if (!doAnimate || reduceMotion) {
       animate(incoming, { opacity: 1 }, { duration: 0.15, ease: 'linear' });
