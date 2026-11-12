@@ -224,12 +224,7 @@ function buildHeroSlide(app, index) {
 
       <div class="relative z-10 mx-auto flex h-full max-w-[1280px] items-center px-4 pb-28 pt-20 sm:px-6 lg:px-10">
         <div class="w-full max-w-[34rem] lg:w-[42%]">
-          <p class="inline-flex items-center gap-2 rounded-full bg-badge px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-ink">
-            <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-            ${escapeHtml(trend)}
-          </p>
-
-          <p class="mt-4 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
+          <p class="text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
             ${escapeHtml(eyebrow)}
           </p>
 
@@ -249,13 +244,6 @@ function buildHeroSlide(app, index) {
             <span class="text-2xl font-bold tracking-tight text-ink">${escapeHtml(start.price)}</span>
             <span class="text-xs font-medium text-ink-secondary">/${escapeHtml(start.unitShort)}</span>
           </p>
-
-          <div class="mt-4 flex flex-wrap items-center gap-1.5">
-            <span class="inline-flex items-center gap-1.5 rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
-              <i data-lucide="check-circle-2" class="h-3 w-3 text-accent" aria-hidden="true"></i>
-              Aktivasi kilat
-            </span>
-          </div>
 
           <div class="mt-7 flex flex-wrap items-center gap-2.5">
             <button
@@ -936,9 +924,27 @@ export function initMicroInteractions() {
   };
 }
 
+export function initHeroParallax() {
+  const hero = document.getElementById('home');
+  if (!hero) return;
+
+  const onScroll = () => {
+    const rect = hero.getBoundingClientRect();
+    if (rect.bottom <= 0) return;
+    const progress = Math.max(0, -rect.top / (rect.height || 1));
+    const stages = hero.querySelectorAll('.group\\/stage');
+    stages.forEach((stage) => {
+      stage.style.transform = `perspective(1000px) rotateY(-8deg) rotateX(4deg) translateY(${progress * 42}px)`;
+    });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
 export function initMotionSystem(products, { onAddToCart, onDirectBuy } = {}) {
   initScrollProgressBar();
   initHeroCarousel(products, { onAddToCart, onDirectBuy });
+  initHeroParallax();
   initScrollReveals();
   initStepsSpine();
   initStepsScroll();
