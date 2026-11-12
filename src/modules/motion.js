@@ -55,18 +55,6 @@ const clamp01 = (value) => Math.max(0, Math.min(1, value));
 
 export function shouldAnimate() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return false;
-  if (prefersReducedMotion.current === null) {
-    initPrefersReducedMotion();
-  }
-  if (prefersReducedMotion.current === true) return false;
-  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
-  if (
-    typeof navigator !== 'undefined' &&
-    navigator.hardwareConcurrency > 0 &&
-    navigator.hardwareConcurrency <= 2
-  ) {
-    return false;
-  }
   return true;
 }
 
@@ -237,8 +225,8 @@ function buildHeroSlide(app, index) {
 
           <div class="mt-4 flex flex-wrap items-center gap-1.5">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
-              <i data-lucide="shield-check" class="h-3 w-3 text-ink-secondary" aria-hidden="true"></i>
-              Garansi penuh
+              <i data-lucide="check-circle-2" class="h-3 w-3 text-accent" aria-hidden="true"></i>
+              Aktivasi kilat
             </span>
           </div>
 
@@ -259,7 +247,7 @@ function buildHeroSlide(app, index) {
             </button>
             <a
               href="#layanan"
-              class="inline-flex h-12 items-center rounded-full px-4 text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
+              class="inline-flex h-12 items-center rounded-full border border-white/20 bg-white/[0.04] px-5 text-sm font-semibold text-white transition-colors hover:border-accent hover:bg-white/[0.10]"
             >
               Lihat paket
             </a>

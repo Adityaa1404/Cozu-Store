@@ -147,10 +147,11 @@ export function initCozuStore() {
   const { resetAll } = initSearch({
     products: productsData,
     categories: categoriesData,
-    onUpdate: (filteredApps) => {
+    onUpdate: (filteredApps, meta) => {
       renderCatalog(catalogContainer, emptyStateEl, filteredApps, {
         onAddToCart: addToCart,
-        onDirectBuy: directBuy
+        onDirectBuy: directBuy,
+        sort: meta?.sort || 'price-low'
       });
     }
   });

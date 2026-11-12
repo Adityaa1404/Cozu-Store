@@ -1,7 +1,7 @@
 import { escapeHtml, parsePrice } from './products.js';
 
 let activeApp = 'all';
-let activeSort = 'popular';
+let activeSort = 'price-low';
 let searchQuery = '';
 
 export function getMinPrice(app) {
@@ -113,12 +113,12 @@ export function initSearch({ products, onUpdate }) {
 
   const notify = () => {
     const filtered = filterAppsByApp(products, activeApp, searchQuery, activeSort);
-    onUpdate?.(filtered);
+    onUpdate?.(filtered, { sort: activeSort });
   };
 
   const resetAll = () => {
     activeApp = 'all';
-    activeSort = 'popular';
+    activeSort = 'price-low';
     searchQuery = '';
     if (appSelect) appSelect.value = 'all';
     if (searchInput) searchInput.value = '';
@@ -126,7 +126,7 @@ export function initSearch({ products, onUpdate }) {
       clearBtn.classList.add('hidden');
       clearBtn.classList.remove('flex');
     }
-    if (sortSelect) sortSelect.value = 'popular';
+    if (sortSelect) sortSelect.value = 'price-low';
     notify();
   };
 

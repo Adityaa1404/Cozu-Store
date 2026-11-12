@@ -417,10 +417,8 @@
                     id="sort-select"
                     class="h-11 w-full appearance-none rounded-full border border-line bg-canvas px-4 pr-10 text-sm font-medium text-ink-secondary focus:border-line-strong focus:outline-none focus:ring-2 focus:ring-white/15"
                   >
-                    <option value="popular">Urutkan: Terpopuler</option>
-                    <option value="price-low">Urutkan: Harga Termurah</option>
+                    <option value="price-low">Urutkan: Harga Terendah</option>
                     <option value="price-high">Urutkan: Harga Tertinggi</option>
-                    <option value="name-asc">Urutkan: Nama A–Z</option>
                   </select>
                   <span
                     class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink-muted"
@@ -470,47 +468,56 @@
                   Sharing, Semi Private, atau Private?
                 </h3>
                 <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
-                  Istilah <em>Less Limit</em> dan <em>Anti On-Hold</em> dijelaskan singkat di sini.
+                  Istilah <em class="text-ink not-italic font-medium">Less Limit</em> dan <em class="text-ink not-italic font-medium">Anti On-Hold</em> dijelaskan singkat di sini.
                 </p>
               </div>
 
               <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-                <div data-motion-hover class="rounded-xl bg-surface-2 p-5">
-                  <div class="flex items-center gap-2.5">
-                    <span class="grid h-8 w-8 place-items-center rounded-lg bg-badge text-ink-secondary" aria-hidden="true">
-                      <i data-lucide="smartphone" class="h-4 w-4"></i>
-                    </span>
-                    <h4 class="text-sm font-semibold text-ink">Sharing Profile</h4>
+                <div data-motion-hover class="flex flex-col rounded-xl border border-line bg-surface-2 p-5">
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                      <span class="grid h-8 w-8 place-items-center rounded-lg bg-badge text-ink" aria-hidden="true">
+                        <i data-lucide="smartphone" class="h-4 w-4"></i>
+                      </span>
+                      <h4 class="text-sm font-semibold text-ink">Sharing Profile</h4>
+                    </div>
                   </div>
-                  <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink-secondary">
+                  <ul class="mt-3.5 space-y-2 text-sm leading-relaxed text-ink-secondary">
                     <li>1 profile di 1 device tetap</li>
                     <li>Harga paling hemat untuk harian/bulanan</li>
                     <li>Less Limit: antrean nonton minimal</li>
                   </ul>
                 </div>
 
-                <div data-motion-hover class="rounded-xl bg-surface-2 p-5 ring-1 ring-line-strong">
-                  <div class="flex items-center gap-2.5">
-                    <span class="grid h-8 w-8 place-items-center rounded-lg bg-action-active text-ink" aria-hidden="true">
-                      <i data-lucide="lock" class="h-4 w-4"></i>
+                <div data-motion-hover class="flex flex-col rounded-xl border border-accent/50 bg-[linear-gradient(180deg,rgba(0,168,225,0.10)_0%,#141824_100%)] p-5 shadow-[0_0_24px_-12px_rgba(0,168,225,0.4)]">
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                      <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent text-canvas" aria-hidden="true">
+                        <i data-lucide="lock" class="h-4 w-4"></i>
+                      </span>
+                      <h4 class="text-sm font-semibold text-ink">Semi Private</h4>
+                    </div>
+                    <span class="rounded-full bg-accent/20 px-2.5 py-0.5 text-[11px] font-semibold text-accent">
+                      Populer
                     </span>
-                    <h4 class="text-sm font-semibold text-ink">Semi Private</h4>
                   </div>
-                  <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink">
+                  <ul class="mt-3.5 space-y-2 text-sm leading-relaxed text-ink">
                     <li>1 profile untuk 2 device (HP + laptop)</li>
                     <li>Anti On-Hold: akun lebih stabil</li>
                     <li>Cocok untuk pemakaian aktif</li>
                   </ul>
                 </div>
 
-                <div data-motion-hover class="rounded-xl bg-surface-2 p-5">
-                  <div class="flex items-center gap-2.5">
-                    <span class="grid h-8 w-8 place-items-center rounded-lg bg-badge text-ink-secondary" aria-hidden="true">
-                      <i data-lucide="crown" class="h-4 w-4"></i>
-                    </span>
-                    <h4 class="text-sm font-semibold text-ink">Private</h4>
+                <div data-motion-hover class="flex flex-col rounded-xl border border-line bg-surface-2 p-5">
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                      <span class="grid h-8 w-8 place-items-center rounded-lg bg-badge text-ink" aria-hidden="true">
+                        <i data-lucide="crown" class="h-4 w-4"></i>
+                      </span>
+                      <h4 class="text-sm font-semibold text-ink">Private</h4>
+                    </div>
                   </div>
-                  <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-ink-secondary">
+                  <ul class="mt-3.5 space-y-2 text-sm leading-relaxed text-ink-secondary">
                     <li>Akun pribadi penuh, tanpa berbagi</li>
                     <li>Fleksibel untuk kerja &amp; editing</li>
                     <li>Bebas limit perangkat orang lain</li>
@@ -519,17 +526,23 @@
               </div>
             </div>
 
-            <!-- Warranty -->
+            <!-- Warranty / WhatsApp Support -->
             <div
-              class="mt-4 flex flex-col justify-between gap-5 rounded-xl border border-line bg-surface p-6 sm:p-8 lg:flex-row lg:items-center"
+              class="mt-4 flex flex-col justify-between gap-5 rounded-xl border border-[#25D366]/30 bg-[linear-gradient(120deg,rgba(37,211,102,0.08)_0%,#0F171E_55%)] p-6 sm:p-8 lg:flex-row lg:items-center"
             >
               <div class="flex items-start gap-4">
-                <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-badge text-ink-secondary" aria-hidden="true">
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#25D366]/15 text-[#25D366] ring-1 ring-[#25D366]/30" aria-hidden="true">
                   <i data-lucide="shield-check" class="h-5 w-5"></i>
                 </span>
                 <div class="max-w-2xl">
-                  <h3 class="text-base font-semibold text-ink">Garansi penuh selama durasi paket</h3>
-                  <p class="mt-1.5 text-sm leading-relaxed text-ink-secondary">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-base font-semibold text-ink">Garansi penuh selama durasi paket</h3>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[#25D366]/15 px-2.5 py-0.5 text-[11px] font-semibold text-[#4ADE80]">
+                      <span class="h-1.5 w-1.5 rounded-full bg-[#25D366]" aria-hidden="true"></span>
+                      Respon 5–15 menit
+                    </span>
+                  </div>
+                  <p class="mt-1.5 text-sm leading-relaxed text-[#CBD5E1]">
                     Kendala login atau akun terputus? Kirim screenshot ke WhatsApp admin. Kami
                     perbaiki atau ganti akun baru dalam 5–15 menit di jam operasional (08.00–22.00
                     WIB).
@@ -541,9 +554,9 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 data-motion-press
-                class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-action px-5 text-sm font-semibold text-ink transition-colors hover:bg-action-active"
+                class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-bold text-[#05070A] shadow-[0_0_24px_-6px_rgba(37,211,102,0.55)] transition-colors hover:bg-[#1EBE5D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
               >
-                <i data-lucide="message-circle" class="h-4 w-4 text-ink-secondary" aria-hidden="true"></i>
+                <i data-lucide="message-circle" class="h-4 w-4" aria-hidden="true"></i>
                 <span>Tanya admin</span>
               </a>
             </div>

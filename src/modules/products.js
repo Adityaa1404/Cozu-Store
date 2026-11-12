@@ -101,7 +101,7 @@ const categoryLabels = {
   productivity: 'AI & Produktivitas'
 };
 
-export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDirectBuy } = {}) {
+export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDirectBuy, sort } = {}) {
   if (!container) return;
 
   if (!Array.isArray(apps) || apps.length === 0) {
@@ -116,86 +116,101 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
 
   const seenApp = new Set();
 
-  const cards = apps
-    .flatMap((app) => {
+  const entries = apps.flatMap((app) =>
+    app.plans.flatMap((plan) =>
+      Object.entries(plan.durations || {}).map(([durationKey, durationData]) => ({
+        app,
+        plan,
+        durationKey,
+        durationData,
+        numericPrice: parsePrice(durationData.price)
+      }))
+    )
+  );
+
+  if (sort === 'price-low') {
+    entries.sort((a, b) => a.numericPrice - b.numericPrice);
+  } else if (sort === 'price-high') {
+    entries.sort((a, b) => b.numericPrice - a.numericPrice);
+  }
+
+  const cards = entries
+    .map(({ app, plan, durationKey, durationData }) => {
       const categoryLabel = categoryLabels[app.category] || app.category;
       const isFirstCard = !seenApp.has(app.id);
       seenApp.add(app.id);
-
-      return app.plans.flatMap((plan) =>
-        Object.entries(plan.durations || {}).map(([durationKey, durationData]) => {
-          const isBest = Boolean(plan.bestSeller);
-          const durMeta = durationLabels[durationKey] || { label: durationKey, unit: durationKey };
-          const features = (durationData.features || []).slice(0, 3);
-          const meta = getAppTheme(app.id);
-          const logoMarkup = meta.logo
-            ? `
-                <div class="pointer-events-none flex h-full w-full items-center justify-center p-8" aria-hidden="true">
-                  <div class="relative grid h-20 w-20 place-items-center">
-                    <span
-                      class="absolute inset-0 rounded-full opacity-35 blur-xl"
-                      style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 68%)"
-                    ></span>
-                    <img
-                      src="${escapeHtml(meta.logo)}"
-                      alt=""
-                      class="relative h-12 w-12 object-contain"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              `
-            : `
-                <i
-                  data-lucide="${escapeHtml(app.icon || 'layers')}"
-                  class="pointer-events-none absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-white/[0.08] transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
-                  aria-hidden="true"
-                ></i>
-              `;
-
-          return `
-            <article
-              ${isFirstCard ? `id="app-${escapeHtml(app.id)}"` : ''}
-              data-catalog-card
-              data-motion-hover
-              aria-label="Produk: ${escapeHtml(app.name)} — ${escapeHtml(plan.name)} (${escapeHtml(durMeta.label)})"
-              class="group flex h-full scroll-mt-24 flex-col overflow-hidden rounded-xl border border-line bg-surface transition-colors hover:border-line-strong"
-            >
-              <div class="relative m-2 mb-0 aspect-[16/9] overflow-hidden rounded-lg bg-[radial-gradient(circle_at_28%_18%,rgba(255,255,255,0.10),transparent_62%),linear-gradient(150deg,#141824_0%,#0F171E_72%)]">
-                ${logoMarkup}
-
-                <div class="absolute inset-x-0 top-0 flex flex-nowrap items-center justify-between gap-2 p-3">
-                  ${
-                    isBest
-                      ? `<span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-ink px-2.5 text-[11px] font-bold leading-none text-canvas">
-                           Paling laris
-                         </span>`
-                      : `<span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-badge px-2.5 text-[11px] font-medium leading-none text-badge-text">
-                           ${escapeHtml(categoryLabel)}
-                         </span>`
-                  }
-                  <span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-badge px-2.5 text-[11px] font-medium leading-none text-badge-text">
-                    ${escapeHtml(durMeta.label)}
-                  </span>
-                </div>
+      const isBest = Boolean(plan.bestSeller);
+      const durMeta = durationLabels[durationKey] || { label: durationKey, unit: durationKey };
+      const features = (durationData.features || []).slice(0, 3);
+      const meta = getAppTheme(app.id);
+      const logoMarkup = meta.logo
+        ? `
+            <div class="pointer-events-none flex h-full w-full items-center justify-center p-8" aria-hidden="true">
+              <div class="relative grid h-20 w-20 place-items-center">
+                <span
+                  class="absolute inset-0 rounded-full opacity-35 blur-xl"
+                  style="background: radial-gradient(circle, ${meta.brand} 0%, transparent 68%)"
+                ></span>
+                <img
+                  src="${escapeHtml(meta.logo)}"
+                  alt=""
+                  class="relative h-12 w-12 object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
+            </div>
+          `
+        : `
+            <i
+              data-lucide="${escapeHtml(app.icon || 'layers')}"
+              class="pointer-events-none absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-white/[0.08] transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
+              aria-hidden="true"
+            ></i>
+          `;
 
-              <div class="flex flex-1 flex-col p-4">
-                <h3 class="text-base font-bold leading-snug tracking-tight text-ink">${escapeHtml(app.name)}</h3>
-                <p class="mt-0.5 text-sm font-medium leading-snug text-ink-secondary">${escapeHtml(plan.name)}</p>
+      return `
+        <article
+          ${isFirstCard ? `id="app-${escapeHtml(app.id)}"` : ''}
+          data-catalog-card
+          data-motion-hover
+          aria-label="Produk: ${escapeHtml(app.name)} — ${escapeHtml(plan.name)} (${escapeHtml(durMeta.label)})"
+          class="group flex h-full scroll-mt-24 flex-col overflow-hidden rounded-xl border border-line bg-surface transition-colors hover:border-line-strong"
+        >
+          <div class="relative m-2 mb-0 aspect-[16/9] overflow-hidden rounded-lg bg-[radial-gradient(circle_at_28%_18%,rgba(255,255,255,0.10),transparent_62%),linear-gradient(150deg,#141824_0%,#0F171E_72%)]">
+            ${logoMarkup}
 
-                <div
-                  class="mt-2 flex items-baseline gap-1"
-                  aria-label="Harga: ${escapeHtml(durationData.price)} per ${escapeHtml(durMeta.unit)}"
-                >
-                  <span class="text-2xl font-bold tracking-tight text-ink">
-                    ${escapeHtml(durationData.price)}
-                  </span>
-                  <span class="text-xs font-medium text-ink-secondary">
-                    /${escapeHtml(durMeta.unit)}
-                  </span>
-                </div>
+            <div class="absolute inset-x-0 top-0 flex flex-nowrap items-center justify-between gap-2 p-3">
+              ${
+                isBest
+                  ? `<span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-ink px-2.5 text-[11px] font-bold leading-none text-canvas">
+                       Paling laris
+                     </span>`
+                  : `<span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-badge px-2.5 text-[11px] font-medium leading-none text-badge-text">
+                       ${escapeHtml(categoryLabel)}
+                     </span>`
+              }
+              <span class="inline-flex min-h-[26px] items-center justify-center whitespace-nowrap rounded-full bg-badge px-2.5 text-[11px] font-medium leading-none text-badge-text">
+                ${escapeHtml(durMeta.label)}
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-1 flex-col p-4">
+            <h3 class="text-base font-bold leading-snug tracking-tight text-ink">${escapeHtml(app.name)}</h3>
+            <p class="mt-0.5 text-sm font-medium leading-snug text-ink-secondary">${escapeHtml(plan.name)}</p>
+
+            <div
+              class="mt-2 flex items-baseline gap-1"
+              aria-label="Harga: ${escapeHtml(durationData.price)} per ${escapeHtml(durMeta.unit)}"
+            >
+              <span class="text-2xl font-bold tracking-tight text-ink">
+                ${escapeHtml(durationData.price)}
+              </span>
+              <span class="text-xs font-medium text-ink-secondary">
+                /${escapeHtml(durMeta.unit)}
+              </span>
+            </div>
 
                 ${
                   durationData.description
@@ -249,8 +264,6 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
               </div>
             </article>
           `;
-        })
-      );
     })
     .join('');
 
