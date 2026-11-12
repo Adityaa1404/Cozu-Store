@@ -411,17 +411,24 @@
                   </span>
                 </div>
 
-                <div class="relative w-full md:w-52 lg:w-56">
-                  <label for="sort-select" class="sr-only">Urutkan katalog</label>
+                <div class="relative w-full md:w-44 lg:w-48">
+                  <span
+                    class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted"
+                    aria-hidden="true"
+                  >
+                    <i data-lucide="arrow-up-down" class="h-4 w-4"></i>
+                  </span>
+                  <label for="sort-select" class="sr-only">Urutkan harga katalog</label>
                   <select
                     id="sort-select"
-                    class="h-11 w-full appearance-none rounded-full border border-line bg-canvas px-4 pr-10 text-sm font-medium text-ink-secondary focus:border-line-strong focus:outline-none focus:ring-2 focus:ring-white/15"
+                    aria-label="Urutkan harga katalog"
+                    class="h-11 w-full appearance-none rounded-full border border-line bg-canvas pl-10 pr-9 text-sm font-medium text-ink-secondary focus:border-line-strong focus:outline-none focus:ring-2 focus:ring-white/15"
                   >
-                    <option value="price-low">Urutkan: Harga Terendah</option>
-                    <option value="price-high">Urutkan: Harga Tertinggi</option>
+                    <option value="price-low">Harga Terendah</option>
+                    <option value="price-high">Harga Tertinggi</option>
                   </select>
                   <span
-                    class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink-muted"
+                    class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-ink-muted"
                     aria-hidden="true"
                   >
                     <i data-lucide="chevron-down" class="h-4 w-4"></i>

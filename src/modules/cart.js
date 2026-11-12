@@ -1,5 +1,5 @@
 import { showToast } from './toast.js';
-import { parsePrice, formatRupiah, escapeHtml, getIndonesianDate } from './products.js';
+import { parsePrice, formatRupiah, escapeHtml, getIndonesianDate, getAppTheme } from './products.js';
 
 export const WA_ADMIN_NUMBER = '6287862481038';
 
@@ -548,13 +548,34 @@ function renderCartDrawer() {
   listContainer.innerHTML = items
     .map((item) => {
       const itemSubtotal = item.unitPrice * item.quantity;
+      const theme = getAppTheme(item.appId);
+      const logoMarkup = theme.logo
+        ? `
+            <div class="relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-surface border border-line p-1.5" aria-hidden="true">
+              <span
+                class="absolute inset-0 rounded-lg opacity-30 blur-sm"
+                style="background: radial-gradient(circle, ${theme.brand} 0%, transparent 70%)"
+              ></span>
+              <img
+                src="${escapeHtml(theme.logo)}"
+                alt=""
+                class="relative h-6 w-6 object-contain"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          `
+        : `
+            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-badge text-ink-secondary" aria-hidden="true">
+              <i data-lucide="${escapeHtml(item.appIcon || 'layers')}" class="h-5 w-5"></i>
+            </div>
+          `;
+
       return `
         <div class="rounded-xl border border-line bg-surface-2 p-3.5">
           <div class="flex items-start justify-between gap-3">
             <div class="flex min-w-0 items-center gap-3">
-              <div class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-badge text-ink-secondary" aria-hidden="true">
-                <i data-lucide="${escapeHtml(item.appIcon || 'layers')}" class="h-5 w-5"></i>
-              </div>
+              ${logoMarkup}
               <div class="min-w-0">
                 <div class="mb-0.5 flex items-center gap-1.5">
                   <span class="truncate text-sm font-semibold text-ink">${escapeHtml(item.appName)}</span>
