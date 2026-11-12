@@ -212,6 +212,14 @@ export function updateCartBadge() {
     badge.classList.toggle('inline-flex', !isEmpty);
   });
 
+  // Keep the desktop floating cart out of the way while there is nothing in it.
+  const floatingBtn = document.getElementById('cart-floating-btn');
+  if (floatingBtn) {
+    const isEmpty = totalCount <= 0;
+    floatingBtn.classList.toggle('lg:hidden', isEmpty);
+    floatingBtn.classList.toggle('lg:inline-flex', !isEmpty);
+  }
+
   const totalBadge = document.getElementById('cart-total-badge');
   if (totalBadge) {
     totalBadge.textContent = formatRupiah(totalPrice);
@@ -337,7 +345,7 @@ function renderDynamicAppFields() {
       <div class="space-y-3.5 rounded-xl border border-line bg-surface-2 p-4">
         <div class="flex items-center justify-between gap-2 border-b border-line pb-2.5">
           <div class="flex items-center gap-2">
-            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-subtle text-accent" aria-hidden="true">
+            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-badge text-ink-secondary" aria-hidden="true">
               <i data-lucide="tv" class="h-4 w-4"></i>
             </span>
             <h5 class="text-xs font-semibold uppercase tracking-[0.08em] text-ink">Netflix device management</h5>
@@ -359,7 +367,7 @@ function renderDynamicAppFields() {
               placeholder="085854577353"
               value="${escapeHtml(CartStore.extraData.netflixPhone || '')}"
               data-extra-field="netflixPhone"
-              class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+              class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-line-strong focus:outline-none focus:ring-2 focus:ring-white/15"
             />
           </div>
 
@@ -374,7 +382,7 @@ function renderDynamicAppFields() {
               placeholder="Contoh: Surabaya"
               value="${escapeHtml(CartStore.extraData.netflixLocation || '')}"
               data-extra-field="netflixLocation"
-              class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+              class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-line-strong focus:outline-none focus:ring-2 focus:ring-white/15"
             />
           </div>
 
@@ -416,17 +424,17 @@ function renderDynamicAppFields() {
             placeholder="Contoh: Laptop Asus Vivobook / iPhone XR / TV Samsung"
             value="${escapeHtml(CartStore.extraData.netflixDevice || '')}"
             data-extra-field="netflixDevice"
-            class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+            class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-line-strong focus:outline-none focus:ring-2 focus:ring-white/15"
           />
         </div>
 
         <div class="space-y-1.5 rounded-xl border border-line bg-canvas p-3 text-xs leading-relaxed text-ink-secondary">
           <p class="flex items-start gap-2">
-            <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true"></i>
+            <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-ink-secondary" aria-hidden="true"></i>
             <span>Tulis device lengkap beserta merk (contoh: <strong class="font-medium text-ink">iPhone XR, TV Samsung, Redmi Pad SE</strong>).</span>
           </p>
           <p class="flex items-start gap-2">
-            <i data-lucide="shield-check" class="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true"></i>
+            <i data-lucide="shield-check" class="mt-0.5 h-4 w-4 shrink-0 text-ink-secondary" aria-hidden="true"></i>
             <span>Selain paket Semi Private (2 device), wajib <strong class="font-medium text-ink">login 1 device saja</strong> agar garansi tetap berlaku.</span>
           </p>
         </div>
@@ -473,7 +481,7 @@ function renderDynamicAppFields() {
       html += `
         <div class="space-y-2 rounded-xl border border-line bg-surface-2 p-4">
           <div class="flex items-center gap-2">
-            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-subtle text-accent" aria-hidden="true">
+            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-badge text-ink-secondary" aria-hidden="true">
               <i data-lucide="${app.icon}" class="h-4 w-4"></i>
             </span>
             <h5 class="text-xs font-semibold text-ink">${app.title}</h5>
@@ -488,7 +496,7 @@ function renderDynamicAppFields() {
             placeholder="${app.placeholder}"
             value="${escapeHtml(CartStore.extraData[app.key] || '')}"
             data-extra-field="${app.key}"
-            class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25"
+            class="h-11 w-full rounded-lg border border-line bg-canvas px-3 text-sm text-ink placeholder:text-ink-muted focus:border-line-strong focus:outline-none focus:ring-2 focus:ring-white/15"
           />
           <p class="text-xs text-ink-muted">${app.hint}</p>
         </div>
@@ -558,7 +566,7 @@ function renderCartDrawer() {
         <div class="rounded-xl border border-line bg-surface-2 p-3.5">
           <div class="flex items-start justify-between gap-3">
             <div class="flex min-w-0 items-center gap-3">
-              <div class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-accent-subtle text-accent" aria-hidden="true">
+              <div class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-badge text-ink-secondary" aria-hidden="true">
                 <i data-lucide="${escapeHtml(item.appIcon || 'layers')}" class="h-5 w-5"></i>
               </div>
               <div class="min-w-0">

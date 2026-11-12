@@ -33,26 +33,30 @@ export function showToast(title, message, type = 'success') {
 
   const variants = {
     success: {
-      box: 'bg-surface text-ink border-accent/50',
+      box: 'bg-surface text-ink border-line-strong',
       icon: 'check-circle-2',
+      iconColor: 'text-ink',
       subtext: 'text-ink-secondary',
       close: 'text-ink-muted hover:text-ink'
     },
     error: {
       box: 'bg-surface text-ink border-error/60',
       icon: 'alert-triangle',
+      iconColor: 'text-error',
       subtext: 'text-ink-secondary',
       close: 'text-ink-muted hover:text-ink'
     },
     warning: {
       box: 'bg-surface text-ink border-line-strong',
       icon: 'alert-triangle',
+      iconColor: 'text-ink-secondary',
       subtext: 'text-ink-secondary',
       close: 'text-ink-muted hover:text-ink'
     },
     info: {
       box: 'bg-surface text-ink border-line',
       icon: 'info',
+      iconColor: 'text-ink-secondary',
       subtext: 'text-ink-secondary',
       close: 'text-ink-muted hover:text-ink'
     }
@@ -62,7 +66,7 @@ export function showToast(title, message, type = 'success') {
 
   toast.className = `toast-in pointer-events-auto flex max-w-sm min-w-[280px] items-start gap-3 rounded-xl border p-4 shadow-card sm:min-w-[320px] ${style.box}`;
   toast.innerHTML = `
-    <span class="mt-0.5 shrink-0 text-accent" aria-hidden="true">
+    <span class="mt-0.5 shrink-0 ${style.iconColor}" aria-hidden="true">
       <i data-lucide="${style.icon}" class="h-5 w-5"></i>
     </span>
     <div class="min-w-0 flex-1">

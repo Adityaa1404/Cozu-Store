@@ -144,39 +144,14 @@ function getStartingOffer(app) {
   };
 }
 
-function getDurationBadges(app) {
-  const seen = new Set();
-  const badges = [];
-  (app.plans || []).forEach((plan) => {
-    Object.entries(plan.durations || {}).forEach(([key, data]) => {
-      if (seen.has(key) || !data?.price) return;
-      seen.add(key);
-      const meta = durationLabels[key] || { label: key, unit: key };
-      badges.push({ key, label: meta.label, price: data.price });
-    });
-  });
-  return badges.slice(0, 3);
-}
-
 function buildHeroSlide(app, index) {
   const meta = getAppTheme(app.id);
   const featured = getFeaturedPlanData(app);
   const start = getStartingOffer(app);
-  const badges = getDurationBadges(app);
   const trend = TREND_LABELS[index % TREND_LABELS.length];
   const category = CATEGORY_LABELS[app.category] || 'Akun Premium';
   const eyebrow = `${category} · ${meta.chips?.[0] || 'Full Garansi'}`;
   const titleTag = 'h2';
-
-  const badgeHtml = badges
-    .map(
-      (badge) => `
-        <span class="inline-flex items-center gap-1.5 rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
-          <span class="font-semibold text-ink">${escapeHtml(badge.label)}</span>
-          ${escapeHtml(badge.price)}
-        </span>`
-    )
-    .join('');
 
   return `
     <article
@@ -187,20 +162,15 @@ function buildHeroSlide(app, index) {
       aria-hidden="true"
     >
       <div class="hero-art absolute inset-y-0 right-0 w-full sm:w-[72%] lg:w-[60%]" aria-hidden="true">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_68%_38%,rgba(0,168,225,0.22),transparent_58%),linear-gradient(150deg,#141824_0%,#0F171E_55%,#05070A_100%)]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_68%_38%,rgba(255,255,255,0.08),transparent_58%),linear-gradient(150deg,#141824_0%,#0F171E_55%,#05070A_100%)]"></div>
         <div class="absolute inset-0 grid place-items-center">
-          <i data-lucide="${escapeHtml(app.icon || 'layers')}" class="h-[13rem] w-[13rem] text-accent/25 sm:h-[18rem] sm:w-[18rem]"></i>
-        </div>
-        <div class="absolute inset-x-0 bottom-24 hidden justify-end px-10 lg:flex">
-          <span class="text-[clamp(3rem,7vw,6rem)] font-extrabold leading-none tracking-[-0.04em] text-white/5">
-            ${escapeHtml(app.name)}
-          </span>
+          <i data-lucide="${escapeHtml(app.icon || 'layers')}" class="h-[13rem] w-[13rem] text-white/[0.06] sm:h-[18rem] sm:w-[18rem]"></i>
         </div>
       </div>
 
       <div class="relative z-10 mx-auto flex h-full max-w-[1280px] items-center px-4 pb-28 pt-20 sm:px-6 lg:px-10">
         <div class="w-full max-w-[34rem] lg:w-[42%]">
-          <p class="inline-flex items-center gap-2 rounded-full bg-accent-subtle px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-accent">
+          <p class="inline-flex items-center gap-2 rounded-full bg-badge px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-ink">
             <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
             ${escapeHtml(trend)}
           </p>
@@ -224,9 +194,8 @@ function buildHeroSlide(app, index) {
           </p>
 
           <div class="mt-4 flex flex-wrap items-center gap-1.5">
-            ${badgeHtml}
             <span class="inline-flex items-center gap-1.5 rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
-              <i data-lucide="shield-check" class="h-3 w-3 text-accent" aria-hidden="true"></i>
+              <i data-lucide="shield-check" class="h-3 w-3 text-ink-secondary" aria-hidden="true"></i>
               Garansi penuh
             </span>
           </div>
@@ -246,26 +215,11 @@ function buildHeroSlide(app, index) {
               <i data-lucide="play" class="h-4 w-4 fill-current" aria-hidden="true"></i>
               <span>Beli</span>
             </button>
-            <button
-              type="button"
-              data-catalog-action="add"
-              data-motion-press
-              data-app-id="${escapeHtml(app.id)}"
-              data-plan-name="${escapeHtml(featured.planName)}"
-              data-price="${escapeHtml(featured.price)}"
-              data-duration-key="${escapeHtml(featured.durationKey)}"
-              data-duration-label="${escapeHtml(featured.durationLabel)}"
-              aria-label="Tambah ${escapeHtml(app.name)} ${escapeHtml(featured.planName)} ke keranjang"
-              title="Tambah ke keranjang"
-              class="grid h-12 w-12 place-items-center rounded-full bg-action text-ink transition-colors hover:bg-action-active"
-            >
-              <i data-lucide="plus" class="h-5 w-5" aria-hidden="true"></i>
-            </button>
             <a
               href="#layanan"
               class="inline-flex h-12 items-center rounded-full px-4 text-sm font-medium text-ink-secondary transition-colors hover:text-ink"
             >
-              Lihat semua paket
+              Lihat paket
             </a>
           </div>
         </div>

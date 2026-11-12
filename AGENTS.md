@@ -4,7 +4,7 @@
 Vite 6 + Tailwind v4 + Vanilla ES Modules (`src/modules/*`) + JSON (`src/data/*`) + `motion` v14. Tests: `test_cart.js` (7 ESM). Deploy: Vercel static.
 
 ## Mission: v5 Streaming Dark Redesign (Prime Video-inspired)
-Ganti total palet Gojo navy → near-black + cyan. Hero carousel auto 3s seamless. Sidebar desktop + drawer mobile. Section order baru. Motion mulus di semua elemen.
+Ganti total palet Gojo navy → near-black + cyan. Hero carousel auto 3s seamless. Sidebar desktop + bottom nav mobile. Section order baru. Motion mulus di semua elemen.
 
 ## Palette (design.md — READ IT, exact hex)
 | Token | Hex | Role |
@@ -14,28 +14,33 @@ Ganti total palet Gojo navy → near-black + cyan. Hero carousel auto 3s seamles
 | rail | `#070A0E` | sidebar |
 | text | `#FFFFFF` | judul |
 | text-secondary | `#9AA9B4` | body |
-| text-tertiary | `#8A98A3` | eyebrow |
-| accent | `#00A8E1` | CTA/ranking/check/aktif |
+| text-tertiary | `#94A3B8` | eyebrow / meta |
+| text-muted | `#94A3B8` | label sekunder |
+| accent | `#00A8E1` | CTA utama / ranking / dash / counter |
 | action | `rgba(51,65,75,0.6)` | tombol aksi |
 | action-active | `#414E58` | pill aktif |
-| badge-bg | `#1E2830` | badge durasi/rating |
+| badge-bg | `#1E2830` | badge durasi/verifikasi |
+| badge-text | `#E2E8F0` | teks badge |
 | progress-track | `#4A5863` | track |
 
-Single accent: cyan `#00A8E1` saja. Judul putih, body abu. Tanpa hue kedua.
+**Cyan discipline**: cyan `#00A8E1` hanya untuk CTA utama, dot `#1 Paling Laris`,
+dash carousel aktif, dan counter keranjang. Logo `CZ` transparan + teks cyan.
+Ikon shield/check, star, nav aktif, focus ring, thumbnail glow = netral. Judul
+putih, body abu `#9AA9B4`, meta minimal `#94A3B8`. Tanpa hue kedua.
 
 ## Font
 SF tunggal: `-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif`.
 
 ## Layout & Navigasi
 - **Desktop sidebar**: rail kiri `68px` collapse → `240px` expand (ikon+label), tombol toggle hide panel. Item: Beranda, Katalog, Testimoni, FAQ, Keranjang, Chat Admin. Konten `max-w-[1280px]` offset kiri.
-- **Mobile**: hamburger drawer (slide kiri) + bottom nav 4 item (Beranda/Katalog/Testimoni/Keranjang).
+- **Mobile**: top bar logo + bottom nav 4 item (Beranda/Katalog/Testimoni/Keranjang). Tanpa hamburger drawer. Bottom nav pakai `padding-bottom: env(safe-area-inset-bottom)`.
 - Radius: card `rounded-xl`(12), thumb `rounded-lg`(8), pill `rounded-full`. Shadow: `card`+`glow`.
 
 ## Section Order (BARU)
 1. Hero carousel (rekomendasi 4 app + intro brand) 2. Testimoni 3. Katalog 4. FAQ + Cara Pesan 5. CTA 6. Footer.
 
 ## Hero Carousel (MUST)
-- Full-bleed `~75vh`. Slide = 4 app (Netflix/Canva/CapCut/Bstation). Key-art kanan 60% masked, konten kiri 42%: trend label (#1 Paling Laris) → eyebrow → judul app → harga "Mulai RpX" → badge row → CTA row (tombol `Beli` bulat putih + ikon `+` keranjang).
+- Full-bleed `~75vh`. Slide = 4 app (Netflix/Canva/CapCut/Bstation). Key-art kanan 60% masked, konten kiri 42%: trend label (#1 Paling Laris) → eyebrow → judul app → harga "Mulai RpX" → `Garansi penuh` → CTA row (tombol `Beli` bulat putih + `Lihat paket` ghost). Tanpa duration pills, tanpa tombol `+`, tanpa ghost text app di belakang.
 - Auto-advance **3 dtk** seamless (crossfade opacity + slide x, durasi 0.5s). Pause on hover/focus. Dot progress + arrow prev/next. Keyboard ←/→. `aria-roledescription="carousel"`.
 - Reduced-motion: crossfade-only ≤0.2s, no slide.
 
@@ -43,7 +48,7 @@ SF tunggal: `-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
 - Scroll progress bar (`scaleX` ← `scroll()`).
 - Scroll-reveal fade-up once (`inView` + rAF sweep, no stranded opacity-0).
 - Parallax hero key-art (`translateY` via scroll, kecil).
-- Hover lift `y:-2`+border accent; press scale 0.97; badge pop.
+- Hover lift `y:-2`+border netral; press scale 0.97; badge pop.
 - Carousel interval 3000ms.
 
 ## PROTECTED CONTRACTS (do not break)

@@ -10,15 +10,14 @@ colors:
   line: "rgba(255,255,255,0.08)"
   text: "#FFFFFF"
   text-secondary: "#9AA9B4"
-  text-tertiary: "#8A98A3"
-  text-muted: "#7C8B96"
+  text-tertiary: "#94A3B8"
+  text-muted: "#94A3B8"
   accent: "#00A8E1"
   accent-hover: "#33BBEB"
-  accent-subtle: "rgba(0,168,225,0.15)"
   action: "rgba(51,65,75,0.6)"
   action-active: "#414E58"
   badge-bg: "#1E2830"
-  badge-text: "#8C9DA8"
+  badge-text: "#E2E8F0"
   progress-track: "#4A5863"
   progress-fill: "#FFFFFF"
 typography:
@@ -36,7 +35,7 @@ radius:
   thumb: 8px
 shadow:
   card: "0 8px 24px -12px rgba(0,0,0,0.6)"
-  glow: "0 0 0 1px rgba(0,168,225,0.4), 0 0 24px -6px rgba(0,168,225,0.45)"
+  glow: "0 0 0 1px rgba(255,255,255,0.18), 0 0 24px -6px rgba(255,255,255,0.12)"
 spacing: { unit: 4, scale: [4, 8, 12, 16, 24, 32, 48, 64, 96] }
 grid: { container: 1280, rail: 68, gutter: 24, columns: 12 }
 motion:
@@ -60,21 +59,24 @@ motion:
 | `rail` | `#070A0E` | sidebar rail |
 | `text` | `#FFFFFF` | judul / harga |
 | `text-secondary` | `#9AA9B4` | body |
-| `text-tertiary` | `#8A98A3` | eyebrow |
-| `accent` | `#00A8E1` | CTA / ranking / checkmark / aktif |
-| `action` | `rgba(51,65,75,0.6)` | tombol aksi + / info |
+| `text-tertiary` | `#94A3B8` | eyebrow / meta |
+| `accent` | `#00A8E1` | CTA utama / ranking / dash / counter |
+| `action` | `rgba(51,65,75,0.6)` | tombol aksi netral |
 | `action-active` | `#414E58` | pill aktif |
-| `badge-bg` | `#1E2830` | badge rating 18+ / durasi |
+| `badge-bg` | `#1E2830` | badge durasi / verifikasi |
+| `badge-text` | `#E2E8F0` | teks badge |
 | `progress-track` | `#4A5863` | track progress |
 
-**Single-accent rule**: cyan hanya untuk interaktif & ranking. Judul putih, body
-abu `#9AA9B4`. Tanpa hue kedua.
+**Single-accent rule**: cyan hanya untuk CTA utama, dot `#1 Paling Laris`, dash
+carousel aktif, dan counter keranjang. Logo `CZ` transparan dengan teks cyan.
+Selain itu netral: putih untuk judul, abu `#9AA9B4` untuk body, `#94A3B8` untuk
+meta. Tanpa hue kedua dan tanpa cyan glow pada ikon/ilustrasi.
 
 ## 2. Typography
 San Francisco tunggal. Hirarki = size/weight/tracking.
 - H1 display: 800 / -0.02em / `clamp(2rem,5vw,3.5rem)`
 - H2: 700 / -0.01em · H3: 600 · body 400 (`#9AA9B4`)
-- Overline: 600 / 0.08em / uppercase 0.72rem (`#8A98A3`)
+- Overline: 600 / 0.08em / uppercase 0.72rem (`#94A3B8`)
 
 ## 3. Layout
 - Sidebar rail kiri `68px` (ikon), expand `240px` (ikon+label), toggle hide.
@@ -86,9 +88,10 @@ San Francisco tunggal. Hirarki = size/weight/tracking.
 
 ### Hero Carousel
 Full-bleed `~75vh`. Slide: key-art kanan (60% lebar, masked), konten kiri (42%):
-trend label → eyebrow → judul → harga/synopsis → badge row → CTA row (tombol
-`Beli` bulat-putih + ikon `+`/`i`). Auto-advance 3 dtk, crossfade+slide seamless,
-pause on hover/focus, dot progress + arrow, keyboard ←/→, `aria-roledescription="carousel"`.
+trend label → eyebrow → judul → harga/synopsis → `Garansi penuh` → CTA row
+(tombol `Beli` bulat-putih + `Lihat paket` ghost). Tanpa duration pills dan tanpa
+tombol `+`. Auto-advance 3 dtk, crossfade+slide seamless, pause on hover/focus,
+dot progress + arrow, keyboard ←/→, `aria-roledescription="carousel"`.
 
 ### Sidebar (desktop)
 Rail kiri `68px` collapse → `240px` expand. Item: Beranda, Katalog, Testimoni,
@@ -96,16 +99,18 @@ FAQ, + Keranjang & Chat Admin. Toggle tombol di atas/bawah. Hide panel = rail
 menyusut jadi strip tipis.
 
 ### Mobile
-Hamburger drawer (slide dari kiri) + bottom nav 4 item (Beranda, Katalog,
-Testimoni, Keranjang).
+Top bar logo + bottom nav 4 item (Beranda, Katalog, Testimoni, Keranjang).
+Tanpa hamburger drawer; bottom nav menghormati `env(safe-area-inset-bottom)`.
 
 ### Testimoni (Prime-style row)
-Horizontal scroll row kartu `16:9`, gap 12px: avatar + nama + quote + rating.
-Snapshot feedback header di atas.
+Horizontal scroll row kartu `16:9` rata tinggi, gap 12px. Header bintang +
+pill `Terverifikasi`, quote, avatar/nama di bottom via `mt-auto`. Right-edge
+gradient mask memberi partial peek kartu berikutnya.
 
 ### Katalog
-Grid app-card: thumbnail gradient + icon, nama, "Mulai RpX", badge "Paling laris",
-CTA `Beli Langsung` + `+` keranjang. Pertahankan `data-catalog-action`.
+Grid app-card: thumbnail gradient + icon + badge kategori/durasi, nama app &
+paket di body, harga, CTA `Beli Langsung` + `+` keranjang yang di-pin bawah via
+`mt-auto`. Pertahankan `data-catalog-action`.
 
 ## 5. Motion (motion v14, transform+opacity only)
 - **Carousel**: interval 3000ms, durasi transisi 0.5s, crossfade `opacity` +
@@ -113,13 +118,13 @@ CTA `Beli Langsung` + `+` keranjang. Pertahankan `data-catalog-action`.
 - **Scroll progress** bar atas (`scaleX` ← `scroll()`).
 - **Scroll-reveal** fade-up `y:16→0` sekali (`inView` + rAF sweep).
 - **Parallax** hero key-art (`translateY` via scroll, kecil).
-- **Hover/press**: lift `y:-2` + border accent, press scale 0.97.
+- **Hover/press**: lift `y:-2` + border netral, press scale 0.97.
 - **Reduced motion**: carousel jadi crossfade-only ≤0.2s, semua transform off.
 
 ## 6. Responsive
 | Breakpoint | Sidebar | Hero | Katalog |
 |---|---|---|---|
-| <768 | drawer + bottom nav | stacked, key-art di belakang | 1-col |
+| <768 | bottom nav | stacked, key-art di belakang | 1-col |
 | 768-1024 | rail 68px | split | 2-col |
 | ≥1024 | rail expandable | split 42/60 | 3-col grid / rows |
 

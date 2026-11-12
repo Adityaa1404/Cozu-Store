@@ -10,15 +10,14 @@
   --line-strong: rgba(255, 255, 255, 0.16);
   --ink: #ffffff;
   --ink-secondary: #9aa9b4;
-  --ink-tertiary: #8a98a3;
-  --ink-muted: #7c8b96;
+  --ink-tertiary: #94a3b8;
+  --ink-muted: #94a3b8;
   --accent: #00a8e1;
   --accent-hover: #33bbeb;
-  --accent-subtle: rgba(0, 168, 225, 0.15);
   --action: rgba(51, 65, 75, 0.6);
   --action-active: #414e58;
   --badge-bg: #1e2830;
-  --badge-text: #8c9da8;
+  --badge-text: #e2e8f0;
   --progress-track: #4a5863;
   --progress-fill: #ffffff;
   --shell-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -53,12 +52,12 @@
   }
 
   ::selection {
-    background-color: var(--accent);
+    background-color: var(--ink);
     color: var(--canvas);
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--ink-secondary);
     outline-offset: 2px;
   }
 
@@ -127,9 +126,8 @@
   color: var(--ink);
 }
 .sidebar-link.nav-link.active {
-  background-color: var(--accent-subtle);
+  background-color: var(--surface-2);
   color: var(--ink);
-  box-shadow: inset 2px 0 0 var(--accent);
 }
 
 /* ── Page shell: content offset follows the rail ───────────────────── */
@@ -212,59 +210,8 @@
 .hero-dot[aria-current='true'] .hero-dot-track {
   background-color: rgba(255, 255, 255, 0.24);
 }
-
-/* ── Mobile drawer ──────────────────────────────────────────────────── */
-#mobile-drawer-backdrop {
-  transition: opacity 260ms var(--shell-ease);
-}
-#mobile-drawer-panel {
-  transition: transform 320ms var(--shell-ease);
-  will-change: transform;
-}
-#mobile-drawer-root.mobile-menu-closed {
-  pointer-events: none;
-  visibility: hidden;
-  transition: visibility 0s linear 320ms;
-}
-#mobile-drawer-root.mobile-menu-open {
-  pointer-events: auto;
-  visibility: visible;
-  transition: none;
-}
-.mobile-menu-closed #mobile-drawer-backdrop {
-  opacity: 0;
-  pointer-events: none;
-}
-.mobile-menu-closed #mobile-drawer-panel {
-  transform: translateX(-100%);
-}
-.mobile-menu-open #mobile-drawer-backdrop {
-  opacity: 1;
-  pointer-events: auto;
-}
-.mobile-menu-open #mobile-drawer-panel {
-  transform: translateX(0);
-}
-
-.drawer-link {
-  display: flex;
-  min-height: 44px;
-  align-items: center;
-  gap: 0.75rem;
-  border-radius: 8px;
-  padding: 0 0.75rem;
-  color: var(--ink-secondary);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  transition: background-color 180ms ease, color 180ms ease;
-}
-.drawer-link:hover {
-  background-color: var(--surface);
-  color: var(--ink);
-}
-.drawer-link.nav-link.active {
-  background-color: var(--accent-subtle);
-  color: var(--ink);
+.hero-dot[aria-current='true'] .hero-dot-fill {
+  background-color: var(--accent);
 }
 
 /* Hide scrollbars cleanly */
@@ -286,6 +233,12 @@
   flex-shrink: 0;
 }
 
+/* Right-edge fade signals more cards are available (partial peek) */
+#testimonial-carousel {
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 0%, #000 93%, transparent 100%);
+}
+
 /* Navigation active states */
 .nav-link.active {
   color: var(--ink);
@@ -295,24 +248,25 @@
   color: var(--ink);
 }
 .mobile-nav-link.active .mobile-nav-icon {
-  background-color: var(--accent);
-  color: var(--canvas);
+  background-color: var(--surface-2);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
 }
 
 /* Category filter pills */
 .category-pill.active {
-  background-color: var(--accent);
-  color: var(--canvas);
-  border-color: var(--accent);
+  background-color: var(--action-active);
+  color: var(--ink);
+  border-color: var(--line-strong);
 }
 .category-pill.active .pill-count {
-  background-color: rgba(5, 7, 10, 0.18);
-  color: var(--canvas);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--ink);
 }
 
-/* Card hover: border warms to the single accent (motion handled in JS) */
+/* Card hover: neutral border lift (motion handled in JS) */
 [data-motion-hover]:hover {
-  border-color: rgba(0, 168, 225, 0.4);
+  border-color: var(--line-strong);
 }
 
 /* Scroll to top visibility */
@@ -419,10 +373,10 @@
 @keyframes targetFlash {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(0, 168, 225, 0);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
   }
   40% {
-    box-shadow: 0 0 0 2px rgba(0, 168, 225, 0.55);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.45);
   }
 }
 .target-highlight {

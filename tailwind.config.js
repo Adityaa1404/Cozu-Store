@@ -37,13 +37,12 @@ export default {
         ink: {
           DEFAULT: '#FFFFFF',
           secondary: '#9AA9B4',
-          tertiary: '#8A98A3',
-          muted: '#7C8B96'
+          tertiary: '#94A3B8',
+          muted: '#94A3B8'
         },
         accent: {
           DEFAULT: '#00A8E1',
-          hover: '#33BBEB',
-          subtle: 'rgba(0,168,225,0.15)'
+          hover: '#33BBEB'
         },
         action: {
           DEFAULT: 'rgba(51,65,75,0.6)',
@@ -51,7 +50,7 @@ export default {
         },
         badge: {
           DEFAULT: '#1E2830',
-          text: '#8C9DA8'
+          text: '#E2E8F0'
         },
         progress: {
           track: '#4A5863',
@@ -64,7 +63,7 @@ export default {
       },
       boxShadow: {
         card: '0 8px 24px -12px rgba(0,0,0,0.6)',
-        glow: '0 0 0 1px rgba(0,168,225,0.4), 0 0 24px -6px rgba(0,168,225,0.45)'
+        glow: '0 0 0 1px rgba(255,255,255,0.18), 0 0 24px -6px rgba(255,255,255,0.12)'
       }
     }
   }

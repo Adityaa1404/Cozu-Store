@@ -19,28 +19,30 @@ export function initTestimonials(testimonials) {
         const starsHtml = Array.from({ length: ratingCount })
           .map(
             () =>
-              `<svg class="h-3.5 w-3.5 fill-accent text-accent" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
+              `<svg class="h-3.5 w-3.5 fill-current text-ink" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
           )
           .join('');
 
         return `
           <article
             data-motion-hover
-            class="carousel-item flex aspect-[16/9] w-[300px] flex-col justify-between overflow-hidden rounded-xl border border-line bg-surface p-4 sm:w-[360px] sm:p-5"
+            class="carousel-item flex aspect-[16/9] w-[300px] flex-col overflow-hidden rounded-xl border border-line bg-surface p-4 sm:w-[360px] sm:p-5"
           >
             <div class="min-h-0">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-0.5" aria-label="Rating ${ratingCount} dari 5 bintang">
                   ${starsHtml}
                 </div>
-                <span class="text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">Terverifikasi</span>
+                <span class="inline-flex shrink-0 items-center rounded-full bg-badge px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-ink">
+                  Terverifikasi
+                </span>
               </div>
               <p class="mt-2 line-clamp-3 text-[13px] leading-relaxed text-ink-secondary sm:text-sm">
                 “${escapeHtml(item.text)}”
               </p>
             </div>
-            <div class="mt-3 flex items-center gap-2.5 border-t border-line pt-3">
-              <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent-subtle text-[11px] font-semibold text-ink">
+            <div class="mt-auto flex items-center gap-2.5 border-t border-line pt-3">
+              <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-badge text-[11px] font-semibold text-ink">
                 ${escapeHtml(item.initials)}
               </div>
               <div class="min-w-0">
@@ -48,7 +50,7 @@ export function initTestimonials(testimonials) {
                 <p class="flex items-center gap-1 truncate text-[11px] text-ink-muted">
                   ${
                     item.verified
-                      ? `<i data-lucide="check-circle-2" class="h-3 w-3 shrink-0 text-accent" aria-hidden="true"></i>`
+                      ? `<i data-lucide="check-circle-2" class="h-3 w-3 shrink-0 text-ink-secondary" aria-hidden="true"></i>`
                       : ''
                   }
                   <span class="truncate">${escapeHtml(item.role || 'Pembeli Terverifikasi')}</span>

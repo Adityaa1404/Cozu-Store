@@ -108,7 +108,6 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
 
   const cards = apps
     .flatMap((app) => {
-      const startPrice = getStartingPrice(app);
       const categoryLabel = categoryLabels[app.category] || app.category;
       const isFirstCard = !seenApp.has(app.id);
       seenApp.add(app.id);
@@ -125,19 +124,19 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
               data-catalog-card
               data-motion-hover
               aria-label="Produk: ${escapeHtml(app.name)} — ${escapeHtml(plan.name)} (${escapeHtml(durMeta.label)})"
-              class="group flex h-full scroll-mt-24 flex-col overflow-hidden rounded-xl border border-line bg-surface transition-colors hover:border-accent/40"
+              class="group flex h-full scroll-mt-24 flex-col overflow-hidden rounded-xl border border-line bg-surface transition-colors hover:border-line-strong"
             >
-              <div class="relative m-2 mb-0 aspect-[16/9] overflow-hidden rounded-lg bg-[radial-gradient(circle_at_28%_18%,rgba(0,168,225,0.28),transparent_62%),linear-gradient(150deg,#141824_0%,#0F171E_72%)]">
+              <div class="relative m-2 mb-0 aspect-[16/9] overflow-hidden rounded-lg bg-[radial-gradient(circle_at_28%_18%,rgba(255,255,255,0.10),transparent_62%),linear-gradient(150deg,#141824_0%,#0F171E_72%)]">
                 <i
                   data-lucide="${escapeHtml(app.icon || 'layers')}"
-                  class="absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-accent/20 transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
+                  class="absolute -right-4 top-1/2 h-28 w-28 -translate-y-1/2 text-white/[0.08] transition-transform duration-500 group-hover:scale-105 sm:h-32 sm:w-32"
                   aria-hidden="true"
                 ></i>
 
                 <div class="absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-3">
                   ${
                     isBest
-                      ? `<span class="inline-flex items-center rounded-full bg-accent px-2.5 py-1 text-[11px] font-bold text-canvas">
+                      ? `<span class="inline-flex items-center rounded-full bg-ink px-2.5 py-1 text-[11px] font-bold text-canvas">
                            Paling laris
                          </span>`
                       : `<span class="inline-flex items-center rounded-full bg-badge px-2.5 py-1 text-[11px] font-medium text-badge-text">
@@ -148,27 +147,11 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
                     ${escapeHtml(durMeta.label)}
                   </span>
                 </div>
-
-                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-canvas/90 to-transparent p-3 pt-8">
-                  <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-tertiary">
-                    ${escapeHtml(categoryLabel)}
-                  </p>
-                  <div class="mt-0.5 flex items-end justify-between gap-2">
-                    <h3 class="text-lg font-bold tracking-tight text-ink">${escapeHtml(app.name)}</h3>
-                    <span class="shrink-0 text-xs font-semibold text-ink-secondary">
-                      Mulai ${escapeHtml(formatRupiah(startPrice))}
-                    </span>
-                  </div>
-                </div>
               </div>
 
               <div class="flex flex-1 flex-col p-4">
-                <div class="flex items-start justify-between gap-2">
-                  <h4 class="text-sm font-semibold leading-snug text-ink">${escapeHtml(plan.name)}</h4>
-                  <span class="shrink-0 rounded-full bg-badge px-2 py-0.5 text-[10px] font-medium text-badge-text">
-                    ${escapeHtml(durMeta.label)}
-                  </span>
-                </div>
+                <h3 class="text-base font-bold leading-snug tracking-tight text-ink">${escapeHtml(app.name)}</h3>
+                <p class="mt-0.5 text-sm font-medium leading-snug text-ink-secondary">${escapeHtml(plan.name)}</p>
 
                 <div
                   class="mt-2 flex items-baseline gap-1"
@@ -188,12 +171,12 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
                     : ''
                 }
 
-                <ul class="mb-4 mt-3 flex-1 space-y-1.5 border-t border-line pt-3">
+                <ul class="mt-3 space-y-1.5 border-t border-line pt-3">
                   ${features
                     .map(
                       (feat) => `
                         <li class="flex items-start gap-2 text-[12px] leading-snug text-ink-secondary">
-                          <i data-lucide="check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" aria-hidden="true"></i>
+                          <i data-lucide="check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-ink-secondary" aria-hidden="true"></i>
                           <span>${escapeHtml(feat)}</span>
                         </li>
                       `
@@ -201,7 +184,7 @@ export function renderCatalog(container, emptyStateEl, apps, { onAddToCart, onDi
                     .join('')}
                 </ul>
 
-                <div class="flex items-center gap-2">
+                <div class="mt-auto flex items-center gap-2 pt-4">
                   <button
                     type="button"
                     data-catalog-action="buy"

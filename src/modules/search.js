@@ -93,14 +93,14 @@ export function renderCategoryPills(container, categories, products, onSelect) {
           aria-pressed="${isActive ? 'true' : 'false'}"
           class="category-pill inline-flex h-11 shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 text-xs font-semibold transition-colors sm:text-sm focus-visible:outline-none ${
             isActive
-              ? 'active border-accent bg-accent text-canvas'
-              : 'border-line bg-canvas text-ink-secondary hover:border-accent/40 hover:text-ink'
+              ? 'active border-line-strong bg-action-active text-ink'
+              : 'border-line bg-canvas text-ink-secondary hover:border-line-strong hover:text-ink'
           }"
         >
           <i data-lucide="${escapeHtml(c.icon || 'layers')}" class="h-4 w-4" aria-hidden="true"></i>
           <span>${escapeHtml(c.name)}</span>
           <span class="pill-count rounded-full px-2 py-0.5 text-xs font-semibold ${
-            isActive ? 'bg-canvas/20 text-canvas' : 'bg-surface-2 text-ink-muted'
+            isActive ? 'bg-white/10 text-ink' : 'bg-surface-2 text-ink-secondary'
           }">
             ${count}
           </span>
